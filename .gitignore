@@ -10,3 +10,4 @@ buildNumber.properties
 .git
 .settings
 RemoteSystemsTempFiles
+src/main/resources/properties/database.properties

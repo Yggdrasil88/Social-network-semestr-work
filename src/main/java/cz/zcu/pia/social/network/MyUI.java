@@ -1,44 +1,66 @@
 package cz.zcu.pia.social.network;
 
-import javax.servlet.annotation.WebServlet;
-
 import com.vaadin.annotations.Theme;
-import com.vaadin.annotations.VaadinServletConfiguration;
-import com.vaadin.annotations.Widgetset;
 import com.vaadin.server.VaadinRequest;
-import com.vaadin.server.VaadinServlet;
-import com.vaadin.ui.Button;
-import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.Label;
+import com.vaadin.ui.Alignment;
+
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
+import cz.zcu.pia.social.network.frontend.components.header.ComponentHeader;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
+import ru.xpoft.vaadin.DiscoveryNavigator;
 
 /**
+ * Application UI
+ *
+ * @author Frantisek Kolenak
  *
  */
+@Component
+@Scope("prototype")
 @Theme("mytheme")
-@Widgetset("cz.zcu.pia.social.network.MyAppWidgetset")
 public class MyUI extends UI {
+
+    private final Logger logger = LoggerFactory.getLogger(MyUI.class);
+    /**
+     *
+     */
+    private static final long serialVersionUID = 2177360609828565097L;
+    @Autowired
+    private ComponentHeader header;
 
     @Override
     protected void init(VaadinRequest vaadinRequest) {
-        final VerticalLayout layout = new VerticalLayout();
-        layout.setMargin(true);
-        setContent(layout);
+        VerticalLayout main = new VerticalLayout();
 
-        Button button = new Button("Click Me");
-        button.addClickListener(new Button.ClickListener() {
-            @Override
-            public void buttonClick(ClickEvent event) {
-                layout.addComponent(new Label("Thank you for clicking"));
-            }
-        });
-        layout.addComponent(button);
+        main.setSpacing(true);
+        // main.setMargin(true);
+        main.setWidth(60, Unit.PERCENTAGE);
+
+        VerticalLayout content = new VerticalLayout();
+        content.setSizeFull();
+        main.addComponent(header);
+
+        main.addComponent(content);
+        main.setComponentAlignment(header, Alignment.TOP_CENTER);
+
+        main.setComponentAlignment(content, Alignment.TOP_CENTER);
+        setContent(main);
+        new DiscoveryNavigator(this, content);
 
     }
 
-    @WebServlet(urlPatterns = "/*", name = "MyUIServlet", asyncSupported = true)
-    @VaadinServletConfiguration(ui = MyUI.class, productionMode = false)
-    public static class MyUIServlet extends VaadinServlet {
+    /**
+     * Method returns header
+     *
+     * @return header
+     */
+    public ComponentHeader getHeader() {
+        return this.header;
     }
+
 }

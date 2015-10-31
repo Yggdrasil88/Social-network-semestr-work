@@ -27,10 +27,318 @@
 // For more information, see: https://vaadin.com/book/-/page/themes.valo.html
 // Example variants can be copy/pasted from https://vaadin.com/wiki/-/wiki/Main/Valo+Examples
 
-@import "../valo/valo.scss";
-
+@import "../reindeer/reindeer.scss";
 @mixin mytheme {
-  @include valo;
+    @include reindeer;
 
-  // Insert your own theme rules here
+    // Insert your own theme rules here
+    .v-scrollable.v-panel-content > .v-widget {
+        padding-left: 0px;
+        padding-right: 0px;
+        padding-top: 10px;
+        padding-bottom: 20px;
+    }
+
+    .view-wrapper {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+
+    }
+
+    .v-app {
+        backround: grey;
+    }
+
+    .v-ui {
+        text-align: center;
+        margin-top: 2px;
+    }
+    .v-ui .v-verticallayout .v-spacing {
+        height: 15px;
+    }
+
+    .v-panel-content {
+        border:none;
+        background-color: transparent;		
+    }
+
+    .v-panel-deco {
+        display:none;
+    }
+
+    .v-panel-captionwrap {
+        display:none;
+    }
+    /* -----------HEADER------------*/
+    .header{
+        border-bottom-style: solid;
+        border-bottom-width: thin;
+        border-color: #0f3755;
+    }
+
+    .header-menu {
+        background-image:none;
+    }
+
+
+    .v-menubar .v-menubar-menuitem,
+    .v-menubar-menuitem{
+        padding: 0px 0px 0px 0px;
+        height: 23px;
+    }
+
+    .v-menubar-header-menu,
+    .v-menubar-menuitem-header-menuitem,
+    .v-menubar-menuitem-header-menuitem > v-menubar-menuitem-caption {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        border: 0;
+        line-height: 1;
+
+    }
+    .v-menubar-menuitem-header-menuitem > v-menubar-menuitem-caption{
+        padding-top: 3px;
+        margin-bottom: 0px;
+        padding-bottom: 4px;
+    }
+
+
+    .v-expand > v-slot v-slot-header-menu v-align-right v-align-bottom {
+        border: 1px solid #133e40;
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        -ms-border-radius: 5px;
+        -o-border-radius: 5px;
+        border-radius: 5px;
+        height: 35px;
+        width: auto;
+        text-align: center;
+        /*width: 285px;*/
+    }
+    .v-menubar-header-menu {
+        zoom: 1;
+        background: #00A4E8;
+        background: -moz-linear-gradient(top, #00A4E8 0%, #0f3755 100%);
+        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #00A4E0), color-stop(100%, #0f3755));
+        background: -webkit-linear-gradient(top, #00A4E0 0%, #0f3755 100%);
+        background: -o-linear-gradient(top, #00A4E8 0%,  #0f3755 100%);
+        background: -ms-linear-gradient(top, #00A4E8 0%,  #0f3755 100%);
+        background: linear-gradient(top, #00A4E8 0%,  #0f3755 100%);
+        filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='@top-color', endColorstr='@bottom-color', GradientType=0);
+        padding: 5px 10px;
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        -ms-border-radius: 5px;
+        -o-border-radius: 5px;
+        border-radius: 5px;
+        /*width: 285px;*/
+        padding-left: 15px;
+    }
+    .v-menubar-header-menu:before {
+        content: '';
+        display: block;
+    }
+    .v-menubar-header-menu:after {
+        content: '';
+        display: table;
+        clear: both;
+    }
+    .v-menubar-menuitem-header-menuitem {
+        float: left;
+        margin: 0 5px 0 0;
+        border: 1px solid transparent;
+
+        padding: 0px 0px 0px 0px;
+        height: 23px;
+        width: 45px;
+    }
+    .v-menubar-menuitem-header-menuitem span {
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        -ms-border-radius: 5px;
+        -o-border-radius: 5px;
+        border-radius: 5px;
+        padding-bottom: 3px;
+        padding-left: 0px;
+        padding-top: 4px;
+        padding-right: 0px;
+        height: 15px;
+        cursor: pointer;
+        text-align: center;
+        margin-bottom: 0px;
+        display: block;
+        text-decoration: none;
+        color: #ffffff;
+        border: 1px solid transparent;
+        font-size: 11px;
+        align-content: center;
+    }
+    .v-menubar-menuitem-header-menuitem.active {
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        -ms-border-radius: 5px;
+        -o-border-radius: 5px;
+        border-radius: 5px;
+        border: 1px solid #3B9BA0;
+    }
+    .v-menubar-menuitem-header-menuitem.active span {
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        -ms-border-radius: 5px;
+        -o-border-radius: 5px;
+        border-radius: 5px;
+        display: block;
+        background: #0f3755;
+        border: 1px solid #0C293F;
+        -moz-box-shadow: inset 0 5px 10px #0C293F;
+        -webkit-box-shadow: inset 0 5px 10px #0C293F;
+        box-shadow: inset 0 5px 10px #0C293F;
+    }
+    .v-menubar-menuitem-header-menuitem:hover {
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        -ms-border-radius: 5px;
+        -o-border-radius: 5px;
+        border-radius: 5px;
+        border: 1px solid #3B9BA0;
+    }
+    .v-menubar-menuitem-header-menuitem:hover span {
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        -ms-border-radius: 5px;
+        -o-border-radius: 5px;
+        border-radius: 5px;
+        display: block;
+        background: #0f3755;
+        border: 1px solid #0C293F;
+        -moz-box-shadow: inset 0 5px 10px #0C293F;
+        -webkit-box-shadow: inset 0 5px 10px #0C293F;
+        box-shadow: inset 0 5px 10px #0C293F;
+    }
+    /* ----------------Name Info -----------------*/
+
+    .header-name {
+        color: #000000;
+        margin-right: 15px;
+        padding-top: 5px;
+    }
+
+    /* ----------------  Button ----------------*/	
+    .v-button:focus {
+        background-image: none;
+        outline: none;
+        margin-left: 0px;
+        margin-right: 0px;
+        padding-right: 0px;
+        padding-left: 0px;
+
+
+        zoom: 1;
+        background: #00A4E8;
+        background: -moz-linear-gradient(top, #00A4E8 0%, #0f3755 100%);
+        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #00A4E0), color-stop(100%, #0f3755));
+        background: -webkit-linear-gradient(top, #00A4E0 0%, #0f3755 100%);
+        background: -o-linear-gradient(top, #00A4E8 0%,  #0f3755 100%);
+        background: -ms-linear-gradient(top, #00A4E8 0%,  #0f3755 100%);
+        background: linear-gradient(top, #00A4E8 0%,  #0f3755 100%);
+        filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='@top-color', endColorstr='@bottom-color', GradientType=0);
+
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        -ms-border-radius: 5px;
+        -o-border-radius: 5px;
+        border-radius: 5px;
+    }
+
+    .v-button:focus .v-button-wrap {
+        background-image: none;
+        outline: none;
+
+    }
+
+    .v-button:active,
+        .v-button.v-pressed {
+        background-image: none;
+        outline: none;
+        /*float: left;*/
+        margin: 0 5px 0 0;
+        border: 1px solid transparent;
+
+        padding: 0px 0px 0px 0px;
+
+    }
+
+    .v-button:active .v-button-wrap,
+        .v-button.v-pressed .v-button-wrap {
+        background-image: none;
+        outline: none;
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        -ms-border-radius: 5px;
+        -o-border-radius: 5px;
+        border-radius: 5px;
+        display: block;
+        background: #0f3755;
+        border: 1px solid #0C293F;
+        -moz-box-shadow: inset 0 5px 10px #0C293F;
+        -webkit-box-shadow: inset 0 5px 10px #0C293F;
+        box-shadow: inset 0 5px 10px #0C293F;
+    }
+
+    .v-button,
+    .v-disabled.v-button {
+        height: 26px;
+        padding: 0 0 0 6px;
+        background-color: transparent;
+        background-repeat: no-repeat;
+        background-image: none;
+        border: none;
+        cursor: default;
+
+        margin-left: 0px;
+        margin-right: 0px;
+        padding-right: 0px;
+        padding-left: 0px;
+
+
+        zoom: 1;
+        background: #00A4E8;
+        background: -moz-linear-gradient(top, #00A4E8 0%, #0f3755 100%);
+        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #00A4E0), color-stop(100%, #0f3755));
+        background: -webkit-linear-gradient(top, #00A4E0 0%, #0f3755 100%);
+        background: -o-linear-gradient(top, #00A4E8 0%,  #0f3755 100%);
+        background: -ms-linear-gradient(top, #00A4E8 0%,  #0f3755 100%);
+        background: linear-gradient(top, #00A4E8 0%,  #0f3755 100%);
+        filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='@top-color', endColorstr='@bottom-color', GradientType=0);
+
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        -ms-border-radius: 5px;
+        -o-border-radius: 5px;
+        border-radius: 5px;
+    }
+
+    .v-button-wrap,
+    .v-disabled.v-button .v-button-wrap {
+        display: block;
+        height: 18px;
+        padding-top: 5px;
+        padding-bottom: 3px;
+
+        margin: auto;
+        background-color: transparent;
+        background-repeat: no-repeat;
+        background-position: right top;
+        background-image: none;
+    }
+
+    .v-button-caption {
+        color: white;
+        text-shadow: none;
+        font-weight: bold;
+        font-size: 11px;
+        line-height: 16px;
+    }
 }
