@@ -1,6 +1,5 @@
 package cz.zcu.pia.social.network.frontend.components.header;
 
-import java.util.List;
 
 import javax.annotation.PostConstruct;
 
@@ -16,12 +15,12 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.MenuBar;
-import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.MenuBar.MenuItem;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import cz.zcu.pia.social.network.MyUI;
 import cz.zcu.pia.social.network.frontend.views.ViewHome;
+import cz.zcu.pia.social.network.frontend.views.ViewProfile;
 import cz.zcu.pia.social.network.helpers.MessagesLoader;
 
 /**
@@ -158,25 +157,7 @@ public class ComponentHeader extends HorizontalLayout {
      */
     private void addBasicMenu() {
         addMenuItem(msgs.getMessage("header.home"));
-        addMenuItem(msgs.getMessage("header.training"));
-    }
-
-    /**
-     * Adds menu for managers
-     */
-    public void addManagerMenu() {
-        addMenuItem(msgs.getMessage("header.manage"));
-        addMenuItem(msgs.getMessage("header.reports"));
-        addMenuItem(msgs.getMessage("header.people"));
-    }
-
-    /**
-     * Remove managers menu
-     */
-    private void removeManagerMenu() {
-
-        menuBar.removeItems();
-        addBasicMenu();
+        addMenuItem(msgs.getMessage("header.profile"));
     }
 
     /**
@@ -227,19 +208,10 @@ public class ComponentHeader extends HorizontalLayout {
                 if (msgs.getMessage("header.home").equals(value)) {
                     ((MyUI) UI.getCurrent().getUI()).getNavigator()
                         .navigateTo(ViewHome.NAME);
-                } /*else if (msgs.getMessage("header.people").equals(value)) {
+                } else if (msgs.getMessage("header.profile").equals(value)) {
                  ((MyUI) UI.getCurrent().getUI()).getNavigator()
-                 .navigateTo(ViewPeople.NAME);
-                 } else if (msgs.getMessage("header.training").equals(value)) {
-                 ((MyUI) UI.getCurrent().getUI()).getNavigator()
-                 .navigateTo(ViewTraining.NAME);
-                 } else if (msgs.getMessage("header.reports").equals(value)) {
-                 ((MyUI) UI.getCurrent().getUI()).getNavigator()
-                 .navigateTo(ViewReports.NAME);
-                 } else if (msgs.getMessage("header.manage").equals(value)) {
-                 ((MyUI) UI.getCurrent().getUI()).getNavigator()
-                 .navigateTo(ViewManage.NAME);
-                 }*/
+                 .navigateTo(ViewProfile.NAME);
+                 }
 
             }
 

@@ -7,7 +7,6 @@ package cz.zcu.pia.social.network.frontend.views;
 
 import com.vaadin.ui.Button;
 import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.VerticalLayout;
 import javax.annotation.PostConstruct;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,12 +20,13 @@ import ru.xpoft.vaadin.VaadinView;
  */
 @Component
 @Scope("prototype")
-@VaadinView(ViewHome.NAME)
-public class ViewHome extends ViewBase {
+@VaadinView(ViewProfile.NAME)
+public class ViewProfile extends ViewBase {
 
-    public static final String NAME = "";
+    public static final String NAME = "profile";
 
-    private static final Logger logger = LoggerFactory.getLogger(ViewHome.class);
+    private static final Logger logger
+        = LoggerFactory.getLogger(ViewProfile.class);
 
     /**
      * PostConstruct
@@ -42,5 +42,4 @@ public class ViewHome extends ViewBase {
         this.getContentWrapper().addComponent(content);
 
     }
-
 }

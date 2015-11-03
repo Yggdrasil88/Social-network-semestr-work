@@ -57,7 +57,12 @@
     .v-ui .v-verticallayout .v-spacing {
         height: 15px;
     }
-
+    
+    .main-wrapper {
+        min-width: 600px;
+        max-width: 800px;
+    }
+    
     .v-panel-content {
         border:none;
         background-color: transparent;		

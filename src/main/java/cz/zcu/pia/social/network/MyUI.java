@@ -26,6 +26,7 @@ import ru.xpoft.vaadin.DiscoveryNavigator;
 public class MyUI extends UI {
 
     private final Logger logger = LoggerFactory.getLogger(MyUI.class);
+    private static final String MAIN_STYLE = "main-wrapper";
     /**
      *
      */
@@ -36,7 +37,7 @@ public class MyUI extends UI {
     @Override
     protected void init(VaadinRequest vaadinRequest) {
         VerticalLayout main = new VerticalLayout();
-
+        main.setStyleName(MAIN_STYLE);
         main.setSpacing(true);
         // main.setMargin(true);
         main.setWidth(60, Unit.PERCENTAGE);
