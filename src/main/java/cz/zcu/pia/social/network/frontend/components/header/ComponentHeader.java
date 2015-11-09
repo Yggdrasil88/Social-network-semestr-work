@@ -1,6 +1,5 @@
 package cz.zcu.pia.social.network.frontend.components.header;
 
-
 import javax.annotation.PostConstruct;
 
 import org.slf4j.Logger;
@@ -20,6 +19,7 @@ import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import cz.zcu.pia.social.network.MyUI;
 import cz.zcu.pia.social.network.frontend.views.ViewHome;
+import cz.zcu.pia.social.network.frontend.views.ViewLogin;
 import cz.zcu.pia.social.network.frontend.views.ViewProfile;
 import cz.zcu.pia.social.network.helpers.MessagesLoader;
 
@@ -33,10 +33,10 @@ import cz.zcu.pia.social.network.helpers.MessagesLoader;
 @Scope("prototype")
 @SuppressWarnings("serial")
 public class ComponentHeader extends HorizontalLayout {
-
-    private final String CLASS_NAME = "header";
-    private final int HEADER_WIDTH = 100;
-    private final int HEADER_HEIGHT = 150;
+    
+    private static final String CLASS_NAME = "header";
+    private static final int HEADER_WIDTH = 100;
+    private static final int HEADER_HEIGHT = 150;
     /**
      * Messages helper
      */
@@ -87,7 +87,7 @@ public class ComponentHeader extends HorizontalLayout {
 
         // Init
         imageSide = createImageLayout();
-
+        
         HorizontalLayout rightSide = new HorizontalLayout();
         rightSide.setSizeFull();
         menuSide = createMenuLayout();
@@ -95,11 +95,11 @@ public class ComponentHeader extends HorizontalLayout {
         // A layout structure used for composition
         addComponent(imageSide);
         addComponent(rightSide);
-
+        
         rightSide.addComponent(menuSide);
-
+        
         rightSide.setComponentAlignment(menuSide, Alignment.TOP_RIGHT);
-
+        
         setWidth(HEADER_WIDTH, Unit.PERCENTAGE);
         setHeight(HEADER_HEIGHT, Unit.PIXELS);
 
@@ -121,9 +121,9 @@ public class ComponentHeader extends HorizontalLayout {
     private VerticalLayout createImageLayout() {
         VerticalLayout imageLayout = new VerticalLayout();
         imageLayout.setStyleName(CLASS_NAME + "-image");
-
+        
         Label l = new Label();
-        l.setIcon(new ThemeResource("./images/logo/logo.png"));
+        // l.setIcon(new ThemeResource("./images/logo/logo.png"));
         l.setSizeUndefined();
         imageLayout.addComponent(l);
         imageLayout.setComponentAlignment(l, Alignment.BOTTOM_LEFT);
@@ -140,16 +140,16 @@ public class ComponentHeader extends HorizontalLayout {
     private MenuBar createMenuBar() {
         menuBar = new MenuBar();
         menuBar.setStyleName(CLASS_NAME + "-menu");
-
+        
         addBasicMenu();
-
+        
         for (MenuItem i : menuBar.getItems()) {
             i.setStyleName(CLASS_NAME + "-menuitem");
-
+            
         }
         menuBar.setHeight(35, Unit.PIXELS);
         return menuBar;
-
+        
     }
 
     /**
@@ -203,18 +203,18 @@ public class ComponentHeader extends HorizontalLayout {
                  }
                  */
                 setActiveItem(selectedItem);
-
+                
                 String value = selectedItem.getText();
                 if (msgs.getMessage("header.home").equals(value)) {
                     ((MyUI) UI.getCurrent().getUI()).getNavigator()
                         .navigateTo(ViewHome.NAME);
                 } else if (msgs.getMessage("header.profile").equals(value)) {
-                 ((MyUI) UI.getCurrent().getUI()).getNavigator()
-                 .navigateTo(ViewProfile.NAME);
-                 }
-
+                    ((MyUI) UI.getCurrent().getUI()).getNavigator()
+                        .navigateTo(ViewProfile.NAME);
+                }
+                
             }
-
+            
         };
         return mycommand;
     }
@@ -225,7 +225,7 @@ public class ComponentHeader extends HorizontalLayout {
      * @param selectedItem menuitem selected
      */
     private void setActiveItem(MenuItem selectedItem) {
-
+        
         if (selectedMenu != null) {
             selectedMenu.setStyleName(CLASS_NAME + "-menuitem");
         }
@@ -242,24 +242,24 @@ public class ComponentHeader extends HorizontalLayout {
         VerticalLayout menuLayout = new VerticalLayout();
         menuLayout.setSizeFull();
         menu = createMenuBar();
-
+        
         HorizontalLayout userLayout = createUserLayout();
-
+        
         userLayout.setSizeFull();
-
+        
         HorizontalLayout menuHolder = new HorizontalLayout();
         menuHolder.addComponent(menu);
         menuHolder.setComponentAlignment(menu, Alignment.BOTTOM_RIGHT);
         menuHolder.setSizeFull();
-
+        
         menuLayout.addComponent(userLayout);
         menuLayout.addComponent(menuHolder);
-
+        
         menuLayout.setMargin(false);
-
+        
         menuLayout.setWidth(HEADER_WIDTH, Unit.PERCENTAGE);
         menuLayout.setHeight(HEADER_HEIGHT, Unit.PIXELS);
-
+        
         return menuLayout;
     }
 
@@ -273,19 +273,19 @@ public class ComponentHeader extends HorizontalLayout {
         userLayout.setSizeFull();
         userInfo = createNameLabel("");
         Button logout = createLogout();
-
+        
         userLayout.addComponent(userInfo);
         userLayout.addComponent(logout);
-
+        
         userLayout.setExpandRatio(userInfo, 3);
         userLayout.setExpandRatio(logout, 1);
-
+        
         userLayout.setComponentAlignment(userInfo, Alignment.TOP_RIGHT);
         userLayout.setComponentAlignment(logout, Alignment.TOP_RIGHT);
-
+        
         userLayout.setWidth(HEADER_WIDTH, Unit.PERCENTAGE);
         userLayout.setHeight(HEADER_HEIGHT / 2, Unit.PIXELS);
-
+        
         return userLayout;
     }
 
@@ -295,21 +295,22 @@ public class ComponentHeader extends HorizontalLayout {
      * @return logout button
      */
     private Button createLogout() {
-        Button logoutButton = new Button(msgs.getMessage("header.logout"));
+        Button logoutButton = new Button(msgs.getMessage("header.login"));
         logoutButton.setStyleName("my-button");
-        /*logoutButton.addClickListener(new Button.ClickListener() {
+        
+        logoutButton.addClickListener(new Button.ClickListener() {
+            
+            @Override
+            public void buttonClick(Button.ClickEvent event) {
+                //securityHelper.setLogedInUser(null);
 
-         @Override
-         public void buttonClick(ClickEvent event) {
-         securityHelper.setLogedInUser(null);
-
-         userInfo.setValue("");
-         removeManagerMenu();
-
-         ((MyVaadinUI) UI.getCurrent().getUI()).getNavigator()
-         .navigateTo(ViewLogin.NAME);
-         }
-         });*/
+                userInfo.setValue("");
+                //removeManagerMenu();
+                
+                ((MyUI) UI.getCurrent().getUI()).getNavigator()
+                    .navigateTo(ViewLogin.NAME);
+            }
+        });
         logoutButton.setSizeUndefined();
         return logoutButton;
     }
@@ -335,7 +336,7 @@ public class ComponentHeader extends HorizontalLayout {
     public MenuBar getMenuBar() {
         return this.menu;
     }
-
+    
     public void setUsersFullName(String fullName) {
         userInfo.setValue(fullName);
     }

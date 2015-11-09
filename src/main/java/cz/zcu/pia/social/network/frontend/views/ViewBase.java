@@ -18,11 +18,11 @@ import org.springframework.beans.factory.annotation.Autowired;
  * @author Frantisek Kolenak
  */
 public class ViewBase extends Panel implements View {
-
+    private static final String CONTENT_WRAPPER_STYLE_NAME = "content-wrapper";
     /**
      * Content wrapper
      */
-    private VerticalLayout contentWrapper;
+    protected VerticalLayout contentWrapper;
 
     /**
      * Messages helper
@@ -38,7 +38,7 @@ public class ViewBase extends Panel implements View {
         setSizeFull();
 
         contentWrapper = new VerticalLayout();
-        //contentWrapper.setStyleName(CONTENT_WRAPPER_STYLE_NAME);
+        contentWrapper.setStyleName(CONTENT_WRAPPER_STYLE_NAME);
 
         contentWrapper.setSpacing(true);
         contentWrapper.setMargin(true);

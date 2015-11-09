@@ -57,12 +57,12 @@
     .v-ui .v-verticallayout .v-spacing {
         height: 15px;
     }
-    
+
     .main-wrapper {
         min-width: 600px;
         max-width: 800px;
     }
-    
+
     .v-panel-content {
         border:none;
         background-color: transparent;		
@@ -345,5 +345,31 @@
         font-weight: bold;
         font-size: 11px;
         line-height: 16px;
+    }
+
+    /****  POST ***/
+    .content-wrapper {
+        text-align: center;
+    }
+    
+    
+    .post {
+        background-color: rgb(206, 206, 206);
+        border: 1px solid #133e40;
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        -ms-border-radius: 5px;
+        -o-border-radius: 5px;
+        border-radius: 5px;
+        //min-width: 400px;
+    }
+
+    .post-layout-name {
+        font-size: 18px; 
+    }
+    
+    .v-textarea-focus {
+        background-color: rgb(206, 206, 206) !important;
+
     }
 }
