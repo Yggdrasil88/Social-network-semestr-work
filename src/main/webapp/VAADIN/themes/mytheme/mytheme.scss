@@ -43,12 +43,10 @@
         display: block;
         margin-left: auto;
         margin-right: auto;
-
+        background-color: black;
     }
 
-    .v-app {
-        backround: grey;
-    }
+
 
     .v-ui {
         text-align: center;
@@ -300,7 +298,7 @@
         background-repeat: no-repeat;
         background-image: none;
         border: none;
-        cursor: default;
+        cursor: pointer;
 
         margin-left: 0px;
         margin-right: 0px;
@@ -351,10 +349,10 @@
     .content-wrapper {
         text-align: center;
     }
-    
-    
+
+
     .post {
-        background-color: rgb(206, 206, 206);
+        background-color: rgba(0, 162, 222, 0.23);
         border: 1px solid #133e40;
         -webkit-border-radius: 5px;
         -moz-border-radius: 5px;
@@ -367,9 +365,27 @@
     .post-layout-name {
         font-size: 18px; 
     }
-    
+
     .v-textarea-focus {
         background-color: rgb(206, 206, 206) !important;
 
+    }
+
+    .small-margin {
+        padding-top: 6px !important;
+    }
+
+    .button-label, .button-label .v-button-wrap, .button-label.v-pressed, .button-label:active, .button-label:focus, 
+        .button-label.v-pressed .v-button-wrap{
+        border: none !important;
+        background: none !important;
+        color: black !important;
+        box-shadow: none !important;
+    }
+
+    .button-label span{
+        color: grey ;
+        text-decoration: underline;
+        cursor: pointer;
     }
 }

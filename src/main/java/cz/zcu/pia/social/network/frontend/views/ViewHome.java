@@ -5,6 +5,7 @@
  */
 package cz.zcu.pia.social.network.frontend.views;
 
+import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.VerticalLayout;
@@ -29,12 +30,14 @@ import ru.xpoft.vaadin.VaadinView;
 public class ViewHome extends ViewBase {
 
     public static final String NAME = "";
+    public static final String BUTTON_DESCRIPTION = "view.home.add-description";
 
     private static final Logger logger = LoggerFactory.getLogger(ViewHome.class);
 
     @Autowired
     private ApplicationContext applicationContext;
-
+    
+    private Button addPost;
     /**
      * PostConstruct
      */
@@ -42,6 +45,16 @@ public class ViewHome extends ViewBase {
     @Override
     public void postConstruct() {
         super.postConstruct();
+        
+        addPost =  new Button("+");
+        addPost.setDescription(msgs.getMessage(BUTTON_DESCRIPTION));
+        addPost.setWidth(25, Unit.PIXELS);
+        HorizontalLayout addButtonWrapper = new HorizontalLayout();
+        addButtonWrapper.setSizeFull();
+        addButtonWrapper.addComponent(addPost);
+        addButtonWrapper.setComponentAlignment(addPost, Alignment.TOP_RIGHT);
+        this.getContentWrapper().addComponent(addButtonWrapper);
+        
         //long postId, String name, int numberOflikes, int numberOfdisagrees, String postMessage, int numberOfComments) {
         Post post = applicationContext.getBean(Post.class, 1, "Frantisek Kolenak", new Date(), 3, 1, "This is post message", 3);
         Post post2 = applicationContext.getBean(Post.class, 1, "Frantisek Kolenak", new Date(), 3, 1, "This is very long post message.This is very long post message.This is very long post message.This is very long post message.This is very long post message.This is very long post message.This is very long post message.This is very long post message.This is very long post message.This is very long post message.This is very long post message.This is very long post message.This is very long post message.This is very long post message.This is very long post message.This is very long post message.This is very long post message.This is very long post message.This is very long post message.This is very long post message.This is very long post message.", 3);

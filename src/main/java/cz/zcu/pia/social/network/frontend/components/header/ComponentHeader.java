@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import com.vaadin.server.ThemeResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.HorizontalLayout;
@@ -22,6 +21,7 @@ import cz.zcu.pia.social.network.frontend.views.ViewHome;
 import cz.zcu.pia.social.network.frontend.views.ViewLogin;
 import cz.zcu.pia.social.network.frontend.views.ViewProfile;
 import cz.zcu.pia.social.network.helpers.MessagesLoader;
+import cz.zcu.pia.social.network.helpers.SecurityHelper;
 
 /**
  * Represents header of the app / menubar
@@ -31,9 +31,8 @@ import cz.zcu.pia.social.network.helpers.MessagesLoader;
  */
 @Component
 @Scope("prototype")
-@SuppressWarnings("serial")
 public class ComponentHeader extends HorizontalLayout {
-    
+
     private static final String CLASS_NAME = "header";
     private static final int HEADER_WIDTH = 100;
     private static final int HEADER_HEIGHT = 150;
@@ -50,8 +49,8 @@ public class ComponentHeader extends HorizontalLayout {
     /**
      * Sec. helper
      */
-    // @Autowired
-    // private SecurityHelper securityHelper;
+    @Autowired
+    private SecurityHelper securityHelper;
     /**
      * Selected menu item
      */
@@ -87,7 +86,7 @@ public class ComponentHeader extends HorizontalLayout {
 
         // Init
         imageSide = createImageLayout();
-        
+
         HorizontalLayout rightSide = new HorizontalLayout();
         rightSide.setSizeFull();
         menuSide = createMenuLayout();
@@ -95,11 +94,11 @@ public class ComponentHeader extends HorizontalLayout {
         // A layout structure used for composition
         addComponent(imageSide);
         addComponent(rightSide);
-        
+
         rightSide.addComponent(menuSide);
-        
+
         rightSide.setComponentAlignment(menuSide, Alignment.TOP_RIGHT);
-        
+
         setWidth(HEADER_WIDTH, Unit.PERCENTAGE);
         setHeight(HEADER_HEIGHT, Unit.PIXELS);
 
@@ -121,7 +120,7 @@ public class ComponentHeader extends HorizontalLayout {
     private VerticalLayout createImageLayout() {
         VerticalLayout imageLayout = new VerticalLayout();
         imageLayout.setStyleName(CLASS_NAME + "-image");
-        
+
         Label l = new Label();
         // l.setIcon(new ThemeResource("./images/logo/logo.png"));
         l.setSizeUndefined();
@@ -140,16 +139,16 @@ public class ComponentHeader extends HorizontalLayout {
     private MenuBar createMenuBar() {
         menuBar = new MenuBar();
         menuBar.setStyleName(CLASS_NAME + "-menu");
-        
+
         addBasicMenu();
-        
+
         for (MenuItem i : menuBar.getItems()) {
             i.setStyleName(CLASS_NAME + "-menuitem");
-            
+
         }
         menuBar.setHeight(35, Unit.PIXELS);
         return menuBar;
-        
+
     }
 
     /**
@@ -203,7 +202,7 @@ public class ComponentHeader extends HorizontalLayout {
                  }
                  */
                 setActiveItem(selectedItem);
-                
+
                 String value = selectedItem.getText();
                 if (msgs.getMessage("header.home").equals(value)) {
                     ((MyUI) UI.getCurrent().getUI()).getNavigator()
@@ -212,9 +211,9 @@ public class ComponentHeader extends HorizontalLayout {
                     ((MyUI) UI.getCurrent().getUI()).getNavigator()
                         .navigateTo(ViewProfile.NAME);
                 }
-                
+
             }
-            
+
         };
         return mycommand;
     }
@@ -225,12 +224,15 @@ public class ComponentHeader extends HorizontalLayout {
      * @param selectedItem menuitem selected
      */
     private void setActiveItem(MenuItem selectedItem) {
-        
+
         if (selectedMenu != null) {
             selectedMenu.setStyleName(CLASS_NAME + "-menuitem");
         }
+
         this.selectedMenu = selectedItem;
-        selectedItem.setStyleName(CLASS_NAME + "-menuitem" + " active");
+        if (selectedItem != null) {
+            selectedItem.setStyleName(CLASS_NAME + "-menuitem" + " active");
+        }
     }
 
     /**
@@ -242,24 +244,24 @@ public class ComponentHeader extends HorizontalLayout {
         VerticalLayout menuLayout = new VerticalLayout();
         menuLayout.setSizeFull();
         menu = createMenuBar();
-        
+
         HorizontalLayout userLayout = createUserLayout();
-        
+
         userLayout.setSizeFull();
-        
+
         HorizontalLayout menuHolder = new HorizontalLayout();
         menuHolder.addComponent(menu);
         menuHolder.setComponentAlignment(menu, Alignment.BOTTOM_RIGHT);
         menuHolder.setSizeFull();
-        
+
         menuLayout.addComponent(userLayout);
         menuLayout.addComponent(menuHolder);
-        
+
         menuLayout.setMargin(false);
-        
+
         menuLayout.setWidth(HEADER_WIDTH, Unit.PERCENTAGE);
         menuLayout.setHeight(HEADER_HEIGHT, Unit.PIXELS);
-        
+
         return menuLayout;
     }
 
@@ -272,20 +274,20 @@ public class ComponentHeader extends HorizontalLayout {
         HorizontalLayout userLayout = new HorizontalLayout();
         userLayout.setSizeFull();
         userInfo = createNameLabel("");
-        Button logout = createLogout();
-        
+        Button logout = createLogButton();
+
         userLayout.addComponent(userInfo);
         userLayout.addComponent(logout);
-        
-        userLayout.setExpandRatio(userInfo, 3);
+
+        userLayout.setExpandRatio(userInfo, 2);
         userLayout.setExpandRatio(logout, 1);
-        
+
         userLayout.setComponentAlignment(userInfo, Alignment.TOP_RIGHT);
         userLayout.setComponentAlignment(logout, Alignment.TOP_RIGHT);
-        
+
         userLayout.setWidth(HEADER_WIDTH, Unit.PERCENTAGE);
         userLayout.setHeight(HEADER_HEIGHT / 2, Unit.PIXELS);
-        
+
         return userLayout;
     }
 
@@ -294,25 +296,32 @@ public class ComponentHeader extends HorizontalLayout {
      *
      * @return logout button
      */
-    private Button createLogout() {
-        Button logoutButton = new Button(msgs.getMessage("header.login"));
-        logoutButton.setStyleName("my-button");
-        
-        logoutButton.addClickListener(new Button.ClickListener() {
-            
+    private Button createLogButton() {
+        Button logButton;
+        if (securityHelper.isAuthenticated()) {
+            logButton = new Button(msgs.getMessage("header.logout"));
+        } else {
+            logButton = new Button(msgs.getMessage("header.login"));
+        }
+        logButton.addClickListener(new Button.ClickListener() {
+
             @Override
             public void buttonClick(Button.ClickEvent event) {
-                //securityHelper.setLogedInUser(null);
-
+                event.getButton().setCaption(msgs.getMessage("header.login"));
+                if (securityHelper.isAuthenticated()) {
+                    ((MyUI) UI.getCurrent().getUI()).getNavigator()
+                        .navigateTo(ViewHome.NAME);
+                } else {
+                    ((MyUI) UI.getCurrent().getUI()).getNavigator()
+                        .navigateTo(ViewLogin.NAME);
+                }
+                securityHelper.setLogedInUser(null);
                 userInfo.setValue("");
-                //removeManagerMenu();
-                
-                ((MyUI) UI.getCurrent().getUI()).getNavigator()
-                    .navigateTo(ViewLogin.NAME);
+                setActiveItem(null);
             }
         });
-        logoutButton.setSizeUndefined();
-        return logoutButton;
+        logButton.setSizeUndefined();
+        return logButton;
     }
 
     /**
@@ -336,7 +345,7 @@ public class ComponentHeader extends HorizontalLayout {
     public MenuBar getMenuBar() {
         return this.menu;
     }
-    
+
     public void setUsersFullName(String fullName) {
         userInfo.setValue(fullName);
     }

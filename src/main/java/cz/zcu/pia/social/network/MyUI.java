@@ -1,12 +1,17 @@
 package cz.zcu.pia.social.network;
 
 import com.vaadin.annotations.Theme;
+import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.ui.Alignment;
 
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import cz.zcu.pia.social.network.frontend.components.header.ComponentHeader;
+import cz.zcu.pia.social.network.frontend.views.ViewError;
+import cz.zcu.pia.social.network.frontend.views.ViewLogin;
+import cz.zcu.pia.social.network.frontend.views.ViewRegister;
+import cz.zcu.pia.social.network.helpers.SecurityHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +39,12 @@ public class MyUI extends UI {
     @Autowired
     private ComponentHeader header;
 
+    /**
+     * Sec. helper
+     */
+    @Autowired
+    private SecurityHelper securityHelper;
+
     @Override
     protected void init(VaadinRequest vaadinRequest) {
         VerticalLayout main = new VerticalLayout();
@@ -52,6 +63,29 @@ public class MyUI extends UI {
         main.setComponentAlignment(content, Alignment.TOP_CENTER);
         setContent(main);
         new DiscoveryNavigator(this, content);
+        
+        getNavigator().setErrorView(ViewError.class);
+        
+        //Disable checking
+        getNavigator().addViewChangeListener(new ViewChangeListener() {
+
+            @Override
+            public boolean beforeViewChange(ViewChangeEvent event) {
+                
+                if (securityHelper.isAuthenticated()) {
+                    if (event.getNewView() instanceof ViewLogin
+                        || event.getNewView() instanceof ViewRegister) {
+                        return false;
+                    }
+                }
+                return true;
+            }
+
+            @Override
+            public void afterViewChange(ViewChangeEvent event) {
+            }
+
+        });
 
     }
 
