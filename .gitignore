@@ -11,3 +11,6 @@ buildNumber.properties
 .settings
 RemoteSystemsTempFiles
 src/main/resources/properties/database.properties
+.designer
+.classpath
+.project

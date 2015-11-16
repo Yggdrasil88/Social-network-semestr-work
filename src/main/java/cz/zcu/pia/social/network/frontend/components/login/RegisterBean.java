@@ -17,31 +17,38 @@ public class RegisterBean {
      * Name
      */
     @NotNull
-    @javax.validation.constraints.Size(min=2, max=10)
+    @javax.validation.constraints.Size(min = 2, max = 10)
     private String name;
     /**
      * surname
      */
     @NotNull
-    @javax.validation.constraints.Size(min=2, max=10)
+    @javax.validation.constraints.Size(min = 2, max = 10)
     private String surname;
     /**
      * username
      */
     @NotNull
-    @javax.validation.constraints.Size(min=2, max=10)
+    @javax.validation.constraints.Size(min = 2, max = 10)
     private String username;
     /**
      * password
      */
     @NotNull
-    @javax.validation.constraints.Size(min=2, max=10)
+    @javax.validation.constraints.Size(min = 2, max = 10)
     private String password;
+    /**
+     * password
+     */
+    @NotNull
+    @javax.validation.constraints.Size(min = 2, max = 10)
+    private String passwordRepeat;
+
     /**
      * validation
      */
     @NotNull
-    @javax.validation.constraints.Size(min=2, max=10)
+    @javax.validation.constraints.Size(min = 2, max = 10)
     private String validation;
 
     public String getValidation() {
@@ -84,4 +91,11 @@ public class RegisterBean {
         this.password = password;
     }
 
+    public String getPasswordRepeat() {
+        return passwordRepeat;
+    }
+
+    public void setPasswordRepeat(String passwordRepeat) {
+        this.passwordRepeat = passwordRepeat;
+    }
 }

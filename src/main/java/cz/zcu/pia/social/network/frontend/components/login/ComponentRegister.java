@@ -9,6 +9,7 @@ import com.vaadin.data.fieldgroup.FieldGroup;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.data.validator.BeanValidator;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.CustomLayout;
 import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.PasswordField;
@@ -34,6 +35,7 @@ public class ComponentRegister extends FormLayout {
     public static final String SURNAME = "component.register.surname";
     public static final String USERNAME = "component.register.username";
     public static final String PASSWORD = "component.register.password";
+    public static final String PASSWORD_REPEAT = "component.register.password-repeat";
     public static final String VALIDATION = "component.register.validation";
     public static final String CONFIRM = "component.register.confirm";
 
@@ -47,10 +49,12 @@ public class ComponentRegister extends FormLayout {
     private TextField surname;
     private TextField username;
     private PasswordField password;
+    private PasswordField passwordRepeat;
     private TextField validation;
     private Button confirm;
 
     public ComponentRegister() {
+        this.setSpacing(true);
         this.setSpacing(true);
         this.setSizeUndefined();
     }
@@ -62,14 +66,19 @@ public class ComponentRegister extends FormLayout {
 
         basicFieldSettings();
         addValidators();
-        this.addComponent(name);
-        this.addComponent(surname);
-        this.addComponent(username);
-        this.addComponent(password);
-        this.addComponent(validation);
+        
+        CustomLayout layout = new CustomLayout("register");
+        
+        layout.addComponent(name, "name");
+        layout.addComponent(surname, "surname");
+        layout.addComponent(username, "username");
+        layout.addComponent(password, "password");
+        layout.addComponent(passwordRepeat, "password2");
+        layout.addComponent(validation, "validation");
+        
 
         confirm = new Button(msgs.getMessage(CONFIRM));
-        this.addComponent(confirm);
+        layout.addComponent(confirm, "okbutton");
 
         confirm.addClickListener(new Button.ClickListener() {
 
@@ -79,6 +88,8 @@ public class ComponentRegister extends FormLayout {
             }
 
         });
+        
+        this.addComponent(layout);
     }
 
     private void confirmButtonFunction(Button.ClickEvent event) {
@@ -97,6 +108,7 @@ public class ComponentRegister extends FormLayout {
         surname = group.buildAndBind(msgs.getMessage(SURNAME), "surname", TextField.class);
         username = group.buildAndBind(msgs.getMessage(USERNAME), "username", TextField.class);
         password = group.buildAndBind(msgs.getMessage(PASSWORD), "password", PasswordField.class);
+        passwordRepeat =  group.buildAndBind(msgs.getMessage(PASSWORD_REPEAT), "passwordRepeat", PasswordField.class);
         validation = group.buildAndBind(msgs.getMessage(VALIDATION), "validation", TextField.class);
     }
 
@@ -105,6 +117,7 @@ public class ComponentRegister extends FormLayout {
         surname.setNullRepresentation("");
         username.setNullRepresentation("");
         password.setNullRepresentation("");
+        passwordRepeat.setNullRepresentation("");
         validation.setNullRepresentation("");
     }
 
@@ -113,6 +126,7 @@ public class ComponentRegister extends FormLayout {
         surname.addValidator(new BeanValidator(RegisterBean.class, "surname"));
         username.addValidator(new BeanValidator(RegisterBean.class, "username"));
         password.addValidator(new BeanValidator(RegisterBean.class, "password"));
+        passwordRepeat.addValidator(new BeanValidator(RegisterBean.class, "passwordRepeat"));
         validation.addValidator(new BeanValidator(RegisterBean.class, "validation"));
     }
 }

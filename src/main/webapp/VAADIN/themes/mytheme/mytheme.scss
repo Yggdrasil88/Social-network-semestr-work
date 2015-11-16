@@ -352,7 +352,7 @@
 
 
     .post {
-        background-color: rgba(0, 162, 222, 0.23);
+        background-color: rgb(189, 226, 240);
         border: 1px solid #133e40;
         -webkit-border-radius: 5px;
         -moz-border-radius: 5px;
@@ -366,10 +366,28 @@
         font-size: 18px; 
     }
 
-    .v-textarea-focus {
-        background-color: rgb(206, 206, 206) !important;
-
+    .post .v-textarea-focus {
+        background-color: rgb(189, 226, 240) !important;
     }
+
+
+    .float-left, .post .float-left > div {
+        float: left;
+    }
+    .float-right {
+        float: right;
+    }
+    .height-small-fixed {
+        height: 20px;
+    }
+    .margin-left {
+        margin-left: 5px;
+    }
+    .margin-top {
+        margin-top: 5px;
+    }
+
+    /*** POST END  ***/
 
     .small-margin {
         padding-top: 6px !important;
