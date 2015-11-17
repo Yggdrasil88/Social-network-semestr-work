@@ -389,6 +389,27 @@
 
     /*** POST END  ***/
 
+    /*** ADD POST ***/
+
+    .new-tag {
+        margin-top: 11px;
+        margin-left: 6px;
+    }
+
+    .add-post-ok-button {
+        width: 100%;
+    }
+    .add-post-ok-button > div {
+        float: right;
+    }
+    .tag {
+        display: inline;
+        display: inline-block;
+        zoom: 1;
+        vertical-align:top;
+        margin-top: 10px;
+    }
+
     .small-margin {
         padding-top: 6px !important;
     }
