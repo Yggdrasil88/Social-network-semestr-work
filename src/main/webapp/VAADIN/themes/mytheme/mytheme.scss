@@ -369,7 +369,9 @@
     .post .v-textarea-focus {
         background-color: rgb(189, 226, 240) !important;
     }
-
+    .width-hundred-percent {
+        width:100%;
+    }
 
     .float-left, .post .float-left > div {
         float: left;
@@ -383,8 +385,14 @@
     .margin-left {
         margin-left: 5px;
     }
+    .margin-left-big {
+        margin-left: 15px;
+    }
     .margin-top {
         margin-top: 5px;
+    }
+    .margin-top-big {
+        margin-top: 15px;
     }
 
     /*** POST END  ***/
@@ -426,5 +434,149 @@
         color: grey ;
         text-decoration: underline;
         cursor: pointer;
+    }
+
+    /*** PROFILE ***/
+
+
+    .name div {
+        font-size: 18px; 
+    }
+
+    /*** TABSHEET ***/
+
+
+    .v-tabsheet-spacertd, .v-tabsheet-spacertd div  {
+        background-image: none;
+    }
+
+    .v-tabsheet-tabitemcell-first {
+        background-image: none;
+        padding-left: 0px;
+    }
+    .v-tabsheet-tabitemcell {
+        background-image: none;
+        padding-left: 0px;
+        min-width: 40px;
+    }
+
+    .v-tabsheet-tabitem {
+        zoom: 1;
+        background: #00A4E8;
+        background: -moz-linear-gradient(top, #00A4E8 0%, #0f3755 100%);
+        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #00A4E0), color-stop(100%, #0f3755));
+        background: -webkit-linear-gradient(top, #00A4E0 0%, #0f3755 100%);
+        background: -o-linear-gradient(top, #00A4E8 0%,  #0f3755 100%);
+        background: -ms-linear-gradient(top, #00A4E8 0%,  #0f3755 100%);
+        background: linear-gradient(top, #00A4E8 0%,  #0f3755 100%);
+        filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='@top-color', endColorstr='@bottom-color', GradientType=0);
+
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        -ms-border-radius: 5px;
+        -o-border-radius: 5px;
+        border-radius: 5px;
+    }
+
+    .v-tabsheet-tabitem-selected {
+        background-image: none;
+        outline: none;
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        -ms-border-radius: 5px;
+        -o-border-radius: 5px;
+        border-radius: 5px;
+        display: block;
+        background: #0f3755;
+        border: 1px solid #0C293F;
+        -moz-box-shadow: inset 0 5px 10px #0C293F;
+        -webkit-box-shadow: inset 0 5px 10px #0C293F;
+        box-shadow: inset 0 5px 10px #0C293F;
+
+    }
+
+    .v-tabsheet-tabitem .v-caption {
+        background-image: none;
+    }
+
+    .v-tabsheet-tabitem .v-caption .v-captiontext {
+        color: white;
+        font-size: 11px;
+        text-shadow: rgba(0, 0, 0, 0.901961) 0px 1px 0px;
+    }
+
+    .v-tabsheet-content {
+
+        margin-top: 0px;
+        margin-left: 0px;
+        border:none;
+        background: whitesmoke;
+
+    }
+
+    .v-layout.v-margin-top {
+        padding-top: 14px;
+    }
+
+    .tabsheet-base {
+        background: whitesmoke;
+        -webkit-border-radius: 5px 5px 5px 5px;
+        -moz-border-radius: 5px 5px 5px 5px;
+        -ms-border-radius: 5px 5px 5px 5px;
+        -o-border-radius: 5px 5px 5px 5px;
+        border-radius: 5px 5px 5px 5px;
+
+        border: 1px solid #0f3755; 
+    }
+
+    .v-tabsheet-deco {
+        display:none;
+    }
+
+    .v-slot-tabsheet-info {
+        background: #00A4E8;
+    }
+
+
+    .tabsheet-holder::before {
+        content: '';
+        width: 2px;
+        height: 33px;
+        display: -webkit-inline-box;
+        display: inline-box;
+        -webkit-border-radius: 5px 0px 0px 5px;
+        -moz-border-radius: 5px 0px 0px 5px;
+        -ms-border-radius: 5px 0px 0px 5px;
+        -o-border-radius: 5px 0px 0px 5px;
+        border-radius: 5px 0px 0px 5px;
+        background: #00A4E8;
+        border: 1px solid #00A4E8;
+    }
+    .tabsheet-holder .v-expand {
+        display: inline;
+    }
+
+    .v-slot-tabsheet-filler::before {
+        content: '';
+        width: 2px;
+        height: 33px;
+        display: -webkit-inline-box;
+        display: inline-box;
+        -webkit-border-radius: 0px 5px 5px 0px;
+        -moz-border-radius: 0px 5px 5px 0px;
+        -ms-border-radius: 0px 5px 5px 0px;
+        -o-border-radius: 0px 5px 5px 0px;
+        border-radius: 0px 5px 5px 0px;
+        background: #00A4E8;
+        border: 1px solid #00A4E8; 
+    }
+    .v-slot-tabsheet-info .tabsheet-info {
+        text-align: center;
+        margin-top: 9px;
+        margin-bottom: 8px;
+        color: white;
+    }
+    .v-tabsheet-tabsheetpanel {
+        background-color: whitesmoke;
     }
 }

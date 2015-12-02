@@ -31,10 +31,10 @@ import org.springframework.stereotype.Component;
 @Scope("prototype")
 public class ComponentRegister extends FormLayout {
 
-    public static final String NAME = "component.register.name";
-    public static final String SURNAME = "component.register.surname";
-    public static final String USERNAME = "component.register.username";
-    public static final String PASSWORD = "component.register.password";
+    public static final String NAME = "name";
+    public static final String SURNAME = "surname";
+    public static final String USERNAME = "username";
+    public static final String PASSWORD = "password";
     public static final String PASSWORD_REPEAT = "component.register.password-repeat";
     public static final String VALIDATION = "component.register.validation";
     public static final String CONFIRM = "component.register.confirm";

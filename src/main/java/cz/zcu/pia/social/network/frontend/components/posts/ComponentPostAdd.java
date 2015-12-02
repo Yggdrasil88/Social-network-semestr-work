@@ -9,8 +9,6 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.CustomLayout;
 import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.Label;
-import com.vaadin.ui.Panel;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
@@ -27,19 +25,24 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @Scope("prototype")
-public class PostAdd extends VerticalLayout {
+public class ComponentPostAdd extends VerticalLayout {
 
     @Autowired
     private MessagesLoader msgs;
-
+    @Autowired
+    private Visibility visibility;
+    
     private CustomLayout layout = new CustomLayout("addPost");
-    private ComboBox visibility = Visibility.getVisibilityComboBox();
+    
+    
+    
+    private ComboBox visibilityComboBox;
     private TextArea message = new TextArea();
     private HorizontalLayout tags;
     private TextField newTag;
     private Button confirmButton;
 
-    public PostAdd() {
+    public ComponentPostAdd() {
         this.setSpacing(true);
 
         message.setWidth(100, Unit.PERCENTAGE);
@@ -72,11 +75,14 @@ public class PostAdd extends VerticalLayout {
 
     @PostConstruct
     public void postConstruct() {
+        visibilityComboBox = visibility.getVisibilityComboBox();
+        
+        
         confirmButton = new Button(msgs.getMessage("post.add.new"));
 
         this.addComponent(layout);
 
-        layout.addComponent(visibility, "selector");
+        layout.addComponent(visibilityComboBox, "selector");
         layout.addComponent(message, "message");
         layout.addComponent(tags, "tags");
 

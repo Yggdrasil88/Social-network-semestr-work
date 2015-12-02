@@ -15,22 +15,35 @@ import org.springframework.stereotype.Component;
  * @author Frantisek Kolenak
  */
 @Component
-public class Visibility {
-    
-    public static final String PUBLIC = "Veřejné";
-    public static final String FRIENDS = "Přátelé";
-        
+public enum Visibility {
+
+    PUBLIC, FRIENDS;
+
     @Autowired
     private MessagesLoader msgs;
-    
-    public static ComboBox getVisibilityComboBox(){
+
+    public ComboBox getVisibilityComboBox() {
         ComboBox cb = new ComboBox();
-        cb.addItem(PUBLIC);
-        cb.addItem(FRIENDS);
-        cb.setValue(PUBLIC);
+        cb.addItem(this.getPublicValue());
+        cb.addItem(this.getFriendsValue());
+        cb.setValue(this.getPublicValue());
         cb.setNullSelectionAllowed(false);
         cb.setFilteringMode(FilteringMode.OFF);
-        cb.setDescription(PUBLIC);
+        cb.setDescription(this.getPublicValue());
         return cb;
+    }
+
+    public String getPublicValue() {
+        if(msgs == null){
+            return "";
+        }
+        return msgs.getMessage("visibility.public");
+    }
+
+    public String getFriendsValue() {
+        if(msgs == null){
+            return "";
+        }
+        return msgs.getMessage("visibility.friends");
     }
 }

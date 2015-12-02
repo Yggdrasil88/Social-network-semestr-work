@@ -27,7 +27,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @Scope("prototype")
-public class Post extends VerticalLayout {
+public class ComponentPost extends VerticalLayout {
     private static final int POST_WIDTH = 450;
     private static final String POST_STYLE_NAME = "post";
     private static final String LAYOUT_NAME = "post-layout-name";
@@ -47,7 +47,7 @@ public class Post extends VerticalLayout {
     
     private CustomLayout layout = new CustomLayout("post");
 
-    public Post() {
+    public ComponentPost() {
         wrapper = new VerticalLayout();
         wrapper.setMargin(true);
         this.setSizeUndefined();
@@ -62,7 +62,7 @@ public class Post extends VerticalLayout {
         
     }
 
-    public Post(long postId, String name, Date date, int numberOflikes, int numberOfdisagrees, String postMessage, int numberOfComments) {
+    public ComponentPost(long postId, String name, Date date, int numberOflikes, int numberOfdisagrees, String postMessage, int numberOfComments) {
         this();
         this.numberOfLikes = numberOflikes;
         this.numberOfDisagrees = numberOfdisagrees;

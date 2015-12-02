@@ -35,8 +35,8 @@ public class ComponentLogin extends VerticalLayout {
     private static final String STYLE_BUTTON_LABEL = "button-label";
     private static final String INFO_REGISTER = "view.login.info.register";
 
-    private static final String INFO_USERNAME = "login.username";
-    private static final String INFO_PASSWORD = "login.password";
+    private static final String INFO_USERNAME = "username";
+    private static final String INFO_PASSWORD = "password";
     private static final String INFO_LOG_IN_BUTTON = "login.login";
 
     @Autowired

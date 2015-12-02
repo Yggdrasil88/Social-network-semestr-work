@@ -11,8 +11,8 @@ import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.Window;
-import cz.zcu.pia.social.network.frontend.components.posts.Post;
-import cz.zcu.pia.social.network.frontend.components.posts.PostAdd;
+import cz.zcu.pia.social.network.frontend.components.posts.ComponentPost;
+import cz.zcu.pia.social.network.frontend.components.posts.ComponentPostAdd;
 import java.util.Date;
 import javax.annotation.PostConstruct;
 import org.slf4j.Logger;
@@ -80,8 +80,8 @@ public class ViewHome extends ViewBase {
         this.getContentWrapper().addComponent(addButtonWrapper);
 
         //long postId, String name, int numberOflikes, int numberOfdisagrees, String postMessage, int numberOfComments) {
-        Post post = applicationContext.getBean(Post.class, 1, "Frantisek Kolenak", new Date(), 3, 1, "This is post message", 3);
-        Post post2 = applicationContext.getBean(Post.class, 1, "Frantisek Kolenak", new Date(), 3, 1, "This is very long post message.This is very long post message.This is very long post message.This is very long post message.This is very long post message.This is very long post message.This is very long post message.This is very long post message.This is very long post message.This is very long post message.This is very long post message.This is very long post message.This is very long post message.This is very long post message.This is very long post message.This is very long post message.This is very long post message.This is very long post message.This is very long post message.This is very long post message.This is very long post message.", 3);
+        ComponentPost post = applicationContext.getBean(ComponentPost.class, 1, "Frantisek Kolenak", new Date(), 3, 1, "This is post message", 3);
+        ComponentPost post2 = applicationContext.getBean(ComponentPost.class, 1, "Frantisek Kolenak", new Date(), 3, 1, "This is very long post message.This is very long post message.This is very long post message.This is very long post message.This is very long post message.This is very long post message.This is very long post message.This is very long post message.This is very long post message.This is very long post message.This is very long post message.This is very long post message.This is very long post message.This is very long post message.This is very long post message.This is very long post message.This is very long post message.This is very long post message.This is very long post message.This is very long post message.This is very long post message.", 3);
 
         this.getContentWrapper().addComponent(post);
         this.getContentWrapper().addComponent(post2);
@@ -94,7 +94,7 @@ public class ViewHome extends ViewBase {
         subWindow.center();
         subWindow.setWidth(400, Unit.PIXELS);
         subWindow.setHeight(300, Unit.PIXELS);
-        PostAdd postAdd = applicationContext.getBean(PostAdd.class);
+        ComponentPostAdd postAdd = applicationContext.getBean(ComponentPostAdd.class);
         postAdd.setMargin(true);
         subWindow.setContent(postAdd);
         UI.getCurrent().addWindow(subWindow);
