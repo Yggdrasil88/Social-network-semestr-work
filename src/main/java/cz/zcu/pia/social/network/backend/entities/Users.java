@@ -15,15 +15,11 @@ import javax.persistence.Entity;
  * @author Frantisek Kolenak
  */
 @Entity
-public class Users extends BaseEntity implements Serializable {
-
-    private static final long serialVersionUID = 1L;
+public class Users extends BaseEntity {
 
     private String name;
 
     private String surname;
-
-    private String nick;
 
     private String username;
 
@@ -49,15 +45,6 @@ public class Users extends BaseEntity implements Serializable {
 
     public void setSurname(String surname) {
         this.surname = surname;
-    }
-
-    @Column(name = "nick", nullable = true, length = 40)
-    public String getNick() {
-        return nick;
-    }
-
-    public void setNick(String nick) {
-        this.nick = nick;
     }
 
     @Column(name = "user_name", nullable = false, length = 40, unique = true)
@@ -101,7 +88,6 @@ public class Users extends BaseEntity implements Serializable {
         int hash = 7;
         hash = 53 * hash + Objects.hashCode(this.name);
         hash = 53 * hash + Objects.hashCode(this.surname);
-        hash = 53 * hash + Objects.hashCode(this.nick);
         hash = 53 * hash + Objects.hashCode(this.username);
         hash = 53 * hash + Objects.hashCode(this.password);
         hash = 53 * hash + this.totalPosts;
@@ -124,9 +110,6 @@ public class Users extends BaseEntity implements Serializable {
         if (!Objects.equals(this.surname, other.surname)) {
             return false;
         }
-        if (!Objects.equals(this.nick, other.nick)) {
-            return false;
-        }
         if (!Objects.equals(this.username, other.username)) {
             return false;
         }
@@ -142,16 +125,12 @@ public class Users extends BaseEntity implements Serializable {
         return true;
     }
 
- 
-
     @Override
     public String toString() {
-        return "User{" + "name=" + name + ", surname=" + surname + 
-                ", nick=" + nick + ", username=" + username + 
-                ", totalPosts=" + totalPosts + 
-                ", totalFollowers=" + totalFollowers + '}';
+        return "User{" + "name=" + name + ", surname=" + surname
+            + ", username=" + username
+            + ", totalPosts=" + totalPosts
+            + ", totalFollowers=" + totalFollowers + '}';
     }
-
-  
 
 }
