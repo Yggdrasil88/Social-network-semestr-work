@@ -17,38 +17,38 @@ public class RegisterBean {
      * Name
      */
     @NotNull
-    @javax.validation.constraints.Size(min = 2, max = 10)
+    @javax.validation.constraints.Size(min = 1, max = 20)
     private String name;
     /**
      * surname
      */
     @NotNull
-    @javax.validation.constraints.Size(min = 2, max = 10)
+    @javax.validation.constraints.Size(min = 1, max = 20)
     private String surname;
     /**
      * username
      */
     @NotNull
-    @javax.validation.constraints.Size(min = 2, max = 10)
+    @javax.validation.constraints.Size(min = 1, max = 20)
     private String username;
     /**
      * password
      */
     @NotNull
-    @javax.validation.constraints.Size(min = 2, max = 10)
+    @javax.validation.constraints.Size(min = 1, max = 25)
     private String password;
     /**
      * password
      */
     @NotNull
-    @javax.validation.constraints.Size(min = 2, max = 10)
+    @javax.validation.constraints.Size(min = 1, max = 25)
     private String passwordRepeat;
 
     /**
      * validation
      */
     @NotNull
-    @javax.validation.constraints.Size(min = 2, max = 10)
+    @javax.validation.constraints.Size(min = 1, max = 10)
     private String validation;
 
     public String getValidation() {
