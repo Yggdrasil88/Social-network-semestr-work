@@ -14,8 +14,10 @@ import org.springframework.stereotype.Component;
  * @author Frantisek Kolenak
  */
 @Component
-public enum RateType {
-    LIKE, HATE;
+public class RateType {
+    public static final int LIKE = 0, HATE =  1;
+    
+    
     
     @Autowired
     private MessagesLoader msgs;

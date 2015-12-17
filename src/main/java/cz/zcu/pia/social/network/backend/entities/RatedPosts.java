@@ -25,7 +25,7 @@ public class RatedPosts extends BaseEntity {
     
     private Post post;
     
-    private RateType rateType;
+    private int rateType = RateType.LIKE;
 
     @ManyToOne
     @Cascade({CascadeType.SAVE_UPDATE})
@@ -48,11 +48,11 @@ public class RatedPosts extends BaseEntity {
         this.post = post;
     }
     @Column(name = "rateType", nullable = false)    
-    public RateType getRateType() {
+    public int getRateType() {
         return rateType;
     }
 
-    public void setRateType(RateType rateType) {
+    public void setRateType(int rateType) {
         this.rateType = rateType;
     }
 

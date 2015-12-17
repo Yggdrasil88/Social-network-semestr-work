@@ -81,7 +81,13 @@
             <version>${spring.version}</version>
         </dependency>
         
-        
+        <!-- Password encryption   -->
+        <dependency>
+            <groupId>org.jasypt</groupId>
+            <artifactId>jasypt</artifactId>
+            <version>1.9.2</version>
+        </dependency>
+
         <!--
         <dependency>
                 <groupId>commons-collections</groupId>
@@ -179,12 +185,12 @@
         </dependency>
         
         <!-- Login form-->
-        <!-- More info https://vaadin.com/directory#!addon/loginform -->
+        <!-- More info https://vaadin.com/directory#!addon/loginform
         <dependency>
             <groupId>org.vaadin.addons</groupId>
             <artifactId>loginform</artifactId>
             <version>0.6.1</version>
-        </dependency>
+        </dependency> -->
     </dependencies>
 
     <build>

@@ -12,7 +12,7 @@
     
     <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
         <property name="dataSource" ref="dataSource" />
-        <property name="packagesToScan" value="cz.zcu.skoleni.database.entities" />
+        <property name="packagesToScan" value="cz.zcu.pia.social.network.backend.entities" />
         <property name="hibernateProperties">
             <props>
                 <prop key="hibernate.hbm2ddl.auto">${hbm2ddl}</prop>

@@ -1,6 +1,0 @@
-<module>
-
-    <inherits name="com.ejt.vaadin.loginform.WidgetSet" />
-
-    <inherits name="com.vaadin.DefaultWidgetSet" />
-</module>

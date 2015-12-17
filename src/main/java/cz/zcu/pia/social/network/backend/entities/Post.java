@@ -29,7 +29,7 @@ public class Post extends BaseEntity {
     private int likeCount = 0;
     private int hateCount = 0;
     //TODO add default value
-    private Visibility visibility = Visibility.PUBLIC;
+    private int visibility = Visibility.PUBLIC;
     private Date dateSent = new Date();
 
     @ManyToOne
@@ -81,14 +81,17 @@ public class Post extends BaseEntity {
     }
 
     @Column(name = "visibility", nullable = false)
-    public Visibility getVisibility() {
+    public int getVisibility() {
         return visibility;
     }
 
-    public void setVisibility(Visibility visibility) {
-        this.visibility = visibility;
+    public void setVisibility(int visibility) {
+        if (visibility == Visibility.FRIENDS || visibility == Visibility.PUBLIC) {
+            this.visibility = visibility;
+        } else {
+            this.visibility = Visibility.PUBLIC;
+        }
     }
-
 
     @Override
     public int hashCode() {

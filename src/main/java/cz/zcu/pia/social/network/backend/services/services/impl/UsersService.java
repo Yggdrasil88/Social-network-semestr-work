@@ -29,9 +29,14 @@ public class UsersService extends AbstractService<Users> {
 
     /**
      * Gets dao
+     * @return dao
      */
     @Override
     protected GenericDAOInterface<Users> getDao() {
         return dao;
+    }
+
+    public Users getUserByUsername(String username) {
+        return dao.getUserByUsername(username);
     }
 }

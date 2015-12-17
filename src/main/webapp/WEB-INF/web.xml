@@ -41,11 +41,13 @@
             <param-name>systemMessagesBeanName</param-name>
             <param-value>DEFAULT</param-value>
         </init-param>
+        <!--
         <init-param>
             <description>Widget Set to Use</description>
             <param-name>widgetset</param-name>
             <param-value>cz.zcu.pia.social.network.appWidgetSet</param-value>
         </init-param>
+        -->
     </servlet>
 	
     <!-- Bind as an ordinary VaadingServlet -->

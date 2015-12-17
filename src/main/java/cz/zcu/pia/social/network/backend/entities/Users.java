@@ -5,10 +5,10 @@
  */
 package cz.zcu.pia.social.network.backend.entities;
 
-import java.io.Serializable;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Table;
 
 /**
  *
@@ -56,7 +56,7 @@ public class Users extends BaseEntity {
         this.username = username;
     }
 
-    @Column(name = "password", nullable = false, length = 40)
+    @Column(name = "password", nullable = false)
     public String getPassword() {
         return password;
     }

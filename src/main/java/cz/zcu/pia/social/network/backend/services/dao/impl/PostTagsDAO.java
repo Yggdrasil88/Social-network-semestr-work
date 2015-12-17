@@ -7,11 +7,13 @@ package cz.zcu.pia.social.network.backend.services.dao.impl;
 
 import cz.zcu.pia.social.network.backend.entities.PostTags;
 import cz.zcu.pia.social.network.backend.services.dao.GenericDAO;
+import org.springframework.stereotype.Component;
 
 /**
  *
  * @author Frantisek Kolenak
  */
+@Component
 public class PostTagsDAO extends GenericDAO<PostTags>{
     
 }

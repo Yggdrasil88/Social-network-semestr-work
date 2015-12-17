@@ -15,9 +15,9 @@ import org.springframework.stereotype.Component;
  * @author Frantisek Kolenak
  */
 @Component
-public enum Visibility {
+public class Visibility {
 
-    PUBLIC, FRIENDS;
+    public static final int PUBLIC = 0, FRIENDS = 1;
 
     @Autowired
     private MessagesLoader msgs;
