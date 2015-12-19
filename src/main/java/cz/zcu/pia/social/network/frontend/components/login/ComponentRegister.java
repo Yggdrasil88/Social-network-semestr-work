@@ -9,6 +9,7 @@ import com.vaadin.data.Validator;
 import com.vaadin.data.fieldgroup.FieldGroup;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.data.validator.BeanValidator;
+import com.vaadin.event.ShortcutAction;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.CustomLayout;
 import com.vaadin.ui.Field;
@@ -95,6 +96,7 @@ public class ComponentRegister extends FormLayout {
         layout.addComponent(validation, "validation");
 
         confirm = new Button(msgs.getMessage(CONFIRM));
+        confirm.setClickShortcut(ShortcutAction.KeyCode.ENTER);
         layout.addComponent(confirm, "okbutton");
 
         confirm.addClickListener(new Button.ClickListener() {
@@ -160,7 +162,7 @@ public class ComponentRegister extends FormLayout {
         Users user = new Users();
         user.setName(bean.getName());
         user.setSurname(bean.getSurname());
-        user.setUsername(bean.getSurname());
+        user.setUsername(bean.getUsername());
         StrongPasswordEncryptor passwordEncryptor = new StrongPasswordEncryptor();
         String encryptedPassword = passwordEncryptor.encryptPassword(bean.getPassword());
         user.setPassword(encryptedPassword);

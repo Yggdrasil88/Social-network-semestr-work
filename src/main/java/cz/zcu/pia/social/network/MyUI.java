@@ -10,6 +10,7 @@ import com.vaadin.ui.VerticalLayout;
 import cz.zcu.pia.social.network.frontend.components.header.ComponentHeader;
 import cz.zcu.pia.social.network.frontend.views.ViewError;
 import cz.zcu.pia.social.network.frontend.views.ViewLogin;
+import cz.zcu.pia.social.network.frontend.views.ViewProfile;
 import cz.zcu.pia.social.network.frontend.views.ViewRegister;
 import cz.zcu.pia.social.network.helpers.SecurityHelper;
 import org.slf4j.Logger;
@@ -63,18 +64,23 @@ public class MyUI extends UI {
         main.setComponentAlignment(content, Alignment.TOP_CENTER);
         setContent(main);
         new DiscoveryNavigator(this, content);
-        
+
         getNavigator().setErrorView(ViewError.class);
-        
+
         //Disable checking
         getNavigator().addViewChangeListener(new ViewChangeListener() {
 
             @Override
             public boolean beforeViewChange(ViewChangeEvent event) {
-                
+
                 if (securityHelper.isAuthenticated()) {
                     if (event.getNewView() instanceof ViewLogin
                         || event.getNewView() instanceof ViewRegister) {
+                        return false;
+                    } 
+                    
+                } else {
+                    if(event.getNewView() instanceof ViewProfile){
                         return false;
                     }
                 }

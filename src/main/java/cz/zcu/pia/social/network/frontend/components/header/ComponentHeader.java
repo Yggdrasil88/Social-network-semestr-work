@@ -76,6 +76,10 @@ public class ComponentHeader extends HorizontalLayout {
      * Users name info
      */
     private Label userInfo;
+    /**
+     * Login button
+     */
+    private Button loginButton;
 
     /**
      * PostConstruct
@@ -91,7 +95,6 @@ public class ComponentHeader extends HorizontalLayout {
         rightSide.setSizeFull();
         menuSide = createMenuLayout();
 
-        // A layout structure used for composition
         addComponent(imageSide);
         addComponent(rightSide);
 
@@ -102,14 +105,6 @@ public class ComponentHeader extends HorizontalLayout {
         setWidth(HEADER_WIDTH, Unit.PERCENTAGE);
         setHeight(HEADER_HEIGHT, Unit.PIXELS);
 
-        /*
-         if(securityHelper.getLogedInUser() != null){
-         if(securityHelper.getLogedInUserRole().equals(Constants.ROLE_MANAGER)){
-         addManagerMenu();
-         }
-         this.setUsersFullName(securityHelper.getLogedInUser().getFullName());
-         }
-         */
     }
 
     /**
@@ -139,9 +134,13 @@ public class ComponentHeader extends HorizontalLayout {
     private MenuBar createMenuBar() {
         menuBar = new MenuBar();
         menuBar.setStyleName(CLASS_NAME + "-menu");
-
-        addBasicMenu();
-
+        
+        if(securityHelper.isAuthenticated()){
+            addLogedInMenu();
+        } else {
+            addNotLogedInMenu();
+        }
+        
         for (MenuItem i : menuBar.getItems()) {
             i.setStyleName(CLASS_NAME + "-menuitem");
 
@@ -150,13 +149,20 @@ public class ComponentHeader extends HorizontalLayout {
         return menuBar;
 
     }
-
+    /**
+     * Adds menu for logged in users
+     */
+    public void addLogedInMenu(){
+        menuBar.removeItems();
+        addMenuItem(msgs.getMessage("header.home"));
+        addMenuItem(msgs.getMessage("header.profile"));
+    }
     /**
      * Adds basic menu all users have
      */
-    private void addBasicMenu() {
+    public void addNotLogedInMenu() {
+        menuBar.removeItems();
         addMenuItem(msgs.getMessage("header.home"));
-        addMenuItem(msgs.getMessage("header.profile"));
     }
 
     /**
@@ -194,13 +200,6 @@ public class ComponentHeader extends HorizontalLayout {
                 if (selectedMenu == selectedItem) {
                     return;
                 }
-                /*
-                 if (securityHelper.getLogedInUser() == null) {
-                 ((MyVaadinUI) UI.getCurrent().getUI()).getNavigator()
-                 .navigateTo(ViewLogin.NAME);
-                 return;
-                 }
-                 */
                 setActiveItem(selectedItem);
 
                 String value = selectedItem.getText();
@@ -274,16 +273,16 @@ public class ComponentHeader extends HorizontalLayout {
         HorizontalLayout userLayout = new HorizontalLayout();
         userLayout.setSizeFull();
         userInfo = createNameLabel("");
-        Button logout = createLogButton();
+        loginButton = createLogButton();
 
         userLayout.addComponent(userInfo);
-        userLayout.addComponent(logout);
+        userLayout.addComponent(loginButton);
 
         userLayout.setExpandRatio(userInfo, 2);
-        userLayout.setExpandRatio(logout, 1);
+        userLayout.setExpandRatio(loginButton, 1);
 
         userLayout.setComponentAlignment(userInfo, Alignment.TOP_RIGHT);
-        userLayout.setComponentAlignment(logout, Alignment.TOP_RIGHT);
+        userLayout.setComponentAlignment(loginButton, Alignment.TOP_RIGHT);
 
         userLayout.setWidth(HEADER_WIDTH, Unit.PERCENTAGE);
         userLayout.setHeight(HEADER_HEIGHT / 2, Unit.PIXELS);
@@ -300,24 +299,31 @@ public class ComponentHeader extends HorizontalLayout {
         Button logButton;
         if (securityHelper.isAuthenticated()) {
             logButton = new Button(msgs.getMessage("header.logout"));
+            setUsersFullName(securityHelper.getLogedInUser().getName() + " " + securityHelper.getLogedInUser().getSurname());
         } else {
             logButton = new Button(msgs.getMessage("header.login"));
         }
+        
         logButton.addClickListener(new Button.ClickListener() {
 
             @Override
             public void buttonClick(Button.ClickEvent event) {
-                event.getButton().setCaption(msgs.getMessage("header.login"));
+
                 if (securityHelper.isAuthenticated()) {
                     ((MyUI) UI.getCurrent().getUI()).getNavigator()
                         .navigateTo(ViewHome.NAME);
+                    securityHelper.setLogedInUser(null);
+                    setUsersFullName("");
+                    addNotLogedInMenu();
                 } else {
+                    
                     ((MyUI) UI.getCurrent().getUI()).getNavigator()
                         .navigateTo(ViewLogin.NAME);
+                    setActiveItem(null);
                 }
-                securityHelper.setLogedInUser(null);
-                userInfo.setValue("");
-                setActiveItem(null);
+                setLoginButtonCaption();
+                event.getButton().setCaption(msgs.getMessage("header.login"));
+
             }
         });
         logButton.setSizeUndefined();
@@ -345,8 +351,23 @@ public class ComponentHeader extends HorizontalLayout {
     public MenuBar getMenuBar() {
         return this.menu;
     }
-
+    /**
+     * Sets users name to the header
+     * @param fullName users name
+     */
     public void setUsersFullName(String fullName) {
         userInfo.setValue(fullName);
     }
+    /**
+     * Sets correct caption to the login/out button
+     */
+    public void setLoginButtonCaption() {
+        if (securityHelper.isAuthenticated()) {
+            loginButton.setCaption(msgs.getMessage("header.logout"));
+        } else {
+            loginButton.setCaption(msgs.getMessage("header.login"));
+        }
+    }
+
+
 }

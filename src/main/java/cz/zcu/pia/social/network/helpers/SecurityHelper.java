@@ -5,6 +5,7 @@
  */
 package cz.zcu.pia.social.network.helpers;
 
+import cz.zcu.pia.social.network.backend.entities.Users;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Scope;
@@ -21,7 +22,7 @@ import org.springframework.stereotype.Component;
 public class SecurityHelper {
     	private final Logger logger = LoggerFactory.getLogger(SecurityHelper.class);
         
-        private Object user = null;
+        private Users user = null;
         /**
 	 * Checks if user is logged in
 	 * @return is logged in
@@ -37,14 +38,14 @@ public class SecurityHelper {
 	 * Gets logged in user informations.
 	 * @return logged in user informations 
 	 */
-	public Object getLogedInUser(){
+	public Users getLogedInUser(){
 		return this.user;
 	}
 	/**
 	 * Sets informations about logged in user.
 	 * @param user Informations to set
 	 */
-	public void setLogedInUser(Object user){
+	public void setLogedInUser(Users user){
 		this.user = user;
 	}
 	
