@@ -28,7 +28,7 @@ import org.springframework.stereotype.Component;
 @Component
 @Scope("prototype")
 public class ComponentPost extends VerticalLayout {
-    private static final int POST_WIDTH = 450;
+    public static final int POST_WIDTH = 450;
     private static final String POST_STYLE_NAME = "post";
     private static final String LAYOUT_NAME = "post-layout-name";
     @Autowired

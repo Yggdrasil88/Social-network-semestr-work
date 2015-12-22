@@ -17,6 +17,7 @@ import com.vaadin.ui.MenuBar.MenuItem;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import cz.zcu.pia.social.network.MyUI;
+import cz.zcu.pia.social.network.backend.entities.Users;
 import cz.zcu.pia.social.network.frontend.views.ViewHome;
 import cz.zcu.pia.social.network.frontend.views.ViewLogin;
 import cz.zcu.pia.social.network.frontend.views.ViewProfile;
@@ -32,7 +33,7 @@ import cz.zcu.pia.social.network.helpers.SecurityHelper;
 @Component
 @Scope("prototype")
 public class ComponentHeader extends HorizontalLayout {
-
+    
     private static final String CLASS_NAME = "header";
     private static final int HEADER_WIDTH = 100;
     private static final int HEADER_HEIGHT = 150;
@@ -182,9 +183,25 @@ public class ComponentHeader extends HorizontalLayout {
      */
     public void setSelectedMenuItem(String menuName) {
         for (MenuItem item : menuBar.getItems()) {
+            
             if (item.getText().equals(menuName)) {
                 setActiveItem(item);
             }
+        }
+    }
+    /**
+     * Sets selected menu item, by number. 
+     * Number is the position in menu, starts with 1.
+     *  
+     * @param menuNumber menu number
+     */
+    public void setSelectedMenuItem(int menuNumber) {
+        int tmp = 1;
+        for (MenuItem item : menuBar.getItems()) {
+            if (tmp == menuNumber) {
+                setActiveItem(item);
+            }
+            tmp++;
         }
     }
 
@@ -310,9 +327,10 @@ public class ComponentHeader extends HorizontalLayout {
             public void buttonClick(Button.ClickEvent event) {
 
                 if (securityHelper.isAuthenticated()) {
+                    securityHelper.setLogedInUser(null);
                     ((MyUI) UI.getCurrent().getUI()).getNavigator()
                         .navigateTo(ViewHome.NAME);
-                    securityHelper.setLogedInUser(null);
+                    
                     setUsersFullName("");
                     addNotLogedInMenu();
                 } else {
@@ -357,6 +375,13 @@ public class ComponentHeader extends HorizontalLayout {
      */
     public void setUsersFullName(String fullName) {
         userInfo.setValue(fullName);
+    }
+    /**
+     * Sets users name to the header
+     * @param fullName users name
+     */
+    public void setUsersFullName(Users user) {
+        userInfo.setValue(user.getName() + " " + user.getSurname());
     }
     /**
      * Sets correct caption to the login/out button

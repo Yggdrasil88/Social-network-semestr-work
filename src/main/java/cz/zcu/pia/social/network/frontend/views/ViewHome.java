@@ -5,14 +5,17 @@
  */
 package cz.zcu.pia.social.network.frontend.views;
 
+import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.Window;
+import cz.zcu.pia.social.network.MyUI;
 import cz.zcu.pia.social.network.frontend.components.posts.ComponentPost;
 import cz.zcu.pia.social.network.frontend.components.posts.ComponentPostAdd;
+import cz.zcu.pia.social.network.helpers.SecurityHelper;
 import java.util.Date;
 import javax.annotation.PostConstruct;
 import org.slf4j.Logger;
@@ -39,6 +42,8 @@ public class ViewHome extends ViewBase {
 
     @Autowired
     private ApplicationContext applicationContext;
+    @Autowired
+    private SecurityHelper securityHelper;
     private ComboBox filterBy;
     private ComboBox filter;
     private Button addPost;
@@ -60,6 +65,9 @@ public class ViewHome extends ViewBase {
         filter.setValue("hodnota filtru");
 
         addPost = new Button("+");
+        if (!securityHelper.isAuthenticated()) {
+            addPost.setVisible(false);
+        }
         addPost.addClickListener(new Button.ClickListener() {
 
             @Override
@@ -71,12 +79,17 @@ public class ViewHome extends ViewBase {
         addPost.setDescription(msgs.getMessage(BUTTON_DESCRIPTION));
         addPost.setWidth(25, Unit.PIXELS);
         HorizontalLayout addButtonWrapper = new HorizontalLayout();
-        addButtonWrapper.setSizeFull();
+
+        addButtonWrapper.setWidth(ComponentPost.POST_WIDTH, Unit.PIXELS);
 
         addButtonWrapper.addComponent(filterBy);
         addButtonWrapper.addComponent(filter);
         addButtonWrapper.addComponent(addPost);
         addButtonWrapper.setComponentAlignment(addPost, Alignment.TOP_RIGHT);
+        
+        addButtonWrapper.setExpandRatio(filterBy, 5);
+        addButtonWrapper.setExpandRatio(filter, 5);
+        addButtonWrapper.setExpandRatio(addPost, 1);
         this.getContentWrapper().addComponent(addButtonWrapper);
 
         //long postId, String name, int numberOflikes, int numberOfdisagrees, String postMessage, int numberOfComments) {
@@ -100,4 +113,8 @@ public class ViewHome extends ViewBase {
         UI.getCurrent().addWindow(subWindow);
     }
 
+    @Override
+    public void enter(ViewChangeListener.ViewChangeEvent event) {
+        ((MyUI) UI.getCurrent()).getHeader().setSelectedMenuItem(1);
+    }
 }

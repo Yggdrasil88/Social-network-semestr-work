@@ -10,10 +10,12 @@ import com.vaadin.data.fieldgroup.FieldGroup;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.data.validator.BeanValidator;
 import com.vaadin.event.ShortcutAction;
+import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.CustomLayout;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.FormLayout;
+import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.PasswordField;
 import com.vaadin.ui.TextField;
@@ -37,7 +39,7 @@ import org.jasypt.util.password.StrongPasswordEncryptor;
 @Scope("prototype")
 public class ComponentRegister extends FormLayout {
 
-    public static final String TURRING_TEST = "dva";
+    protected static final String TURRING_TEST = "dva";
     public static final String NAME = "name";
     public static final String SURNAME = "surname";
     public static final String USERNAME = "username";
@@ -56,24 +58,23 @@ public class ComponentRegister extends FormLayout {
     
     public static final String INFO_REGISTERED = "component.register.info-registered";
 
-    private FieldGroup group;
-    private RegisterBean bean = new RegisterBean();
+    protected FieldGroup group;
+    protected RegisterBean bean = new RegisterBean();
     @Autowired
-    private MessagesLoader msgs;
+    protected MessagesLoader msgs;
 
     @Autowired
-    private UsersService usersService;
+    protected UsersService usersService;
 
-    private TextField name;
-    private TextField surname;
-    private TextField username;
-    private PasswordField password;
-    private PasswordField passwordRepeat;
-    private TextField validation;
-    private Button confirm;
+    protected TextField name;
+    protected TextField surname;
+    protected TextField username;
+    protected PasswordField password;
+    protected PasswordField passwordRepeat;
+    protected TextField validation;
+    protected Button confirm;
 
     public ComponentRegister() {
-        this.setSpacing(true);
         this.setSpacing(true);
         this.setSizeUndefined();
     }
@@ -95,10 +96,19 @@ public class ComponentRegister extends FormLayout {
         layout.addComponent(passwordRepeat, "password2");
         layout.addComponent(validation, "validation");
 
+        
+        layout.addComponent(getRegisterButton(), "okbutton");
+
+        
+
+        this.addComponent(layout);
+        name.focus();
+    }
+    
+    protected HorizontalLayout getRegisterButton(){
+        HorizontalLayout wrapper = new HorizontalLayout();
         confirm = new Button(msgs.getMessage(CONFIRM));
         confirm.setClickShortcut(ShortcutAction.KeyCode.ENTER);
-        layout.addComponent(confirm, "okbutton");
-
         confirm.addClickListener(new Button.ClickListener() {
 
             @Override
@@ -107,12 +117,11 @@ public class ComponentRegister extends FormLayout {
             }
 
         });
-
-        this.addComponent(layout);
-        name.focus();
+        wrapper.addComponent(confirm);
+        return wrapper;
     }
 
-    private void confirmButtonFunction(Button.ClickEvent event) {
+    protected void confirmButtonFunction(Button.ClickEvent event) {
         try {
             if (!group.isModified()) {
                 return;
@@ -142,7 +151,7 @@ public class ComponentRegister extends FormLayout {
         }
     }
 
-    private boolean isValid() {
+    protected boolean isValid() {
         if (!bean.getValidation().equals(TURRING_TEST)) {
             Notification.show(msgs.getMessage(ERROR_VALIDATION), Notification.Type.ERROR_MESSAGE);
             return false;
@@ -158,7 +167,7 @@ public class ComponentRegister extends FormLayout {
         return true;
     }
 
-    private void proccesValues() {
+    protected void proccesValues() {
         Users user = new Users();
         user.setName(bean.getName());
         user.setSurname(bean.getSurname());
@@ -173,7 +182,7 @@ public class ComponentRegister extends FormLayout {
         UI.getCurrent().getNavigator().navigateTo(ViewLogin.NAME);
     }
     
-    private void resetValues(){
+    protected void resetValues(){
         bean.setName("");
         bean.setPassword("");
         bean.setPasswordRepeat("");
