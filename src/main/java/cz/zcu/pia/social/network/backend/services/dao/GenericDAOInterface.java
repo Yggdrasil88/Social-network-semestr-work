@@ -20,7 +20,7 @@ public interface GenericDAOInterface<T extends Serializable> {
 	 * Save entity
 	 * @param entity entity
 	 */
-	public void persist(T entity);
+	public Long persist(T entity);
 	/**
 	 * Update entity
 	 * @param entity entity

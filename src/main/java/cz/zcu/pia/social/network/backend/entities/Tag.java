@@ -18,7 +18,14 @@ public class Tag extends BaseEntity{
     
     private String tagName;
     
-    @Column(name = "name", nullable = false)
+    public Tag(){
+    }
+    
+    public Tag(String tagName){
+        this.tagName = tagName;
+    }
+    
+    @Column(name = "name", nullable = false, unique = true)
     public String getTagName() {
         return tagName;
     }

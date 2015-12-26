@@ -32,6 +32,18 @@ public class Post extends BaseEntity {
     private int visibility = Visibility.PUBLIC;
     private Date dateSent = new Date();
 
+    public Post(){}
+    public Post(Users user, String message, int visibility){
+        this.user = user;
+        this.message = message;
+        this.visibility = visibility;
+    }
+    
+    public Post(Users user, String message){
+        this.user = user;
+        this.message = message;
+    }
+    
     @ManyToOne
     @Cascade({CascadeType.SAVE_UPDATE})
     @JoinColumn(name = "user_id", nullable = false)

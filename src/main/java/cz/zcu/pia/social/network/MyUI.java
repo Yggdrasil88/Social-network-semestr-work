@@ -13,6 +13,7 @@ import cz.zcu.pia.social.network.frontend.views.ViewLogin;
 import cz.zcu.pia.social.network.frontend.views.ViewProfile;
 import cz.zcu.pia.social.network.frontend.views.ViewRegister;
 import cz.zcu.pia.social.network.helpers.SecurityHelper;
+import org.apache.log4j.BasicConfigurator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +31,7 @@ import ru.xpoft.vaadin.DiscoveryNavigator;
 @Scope("prototype")
 @Theme("mytheme")
 public class MyUI extends UI {
-
+    
     private final Logger logger = LoggerFactory.getLogger(MyUI.class);
     private static final String MAIN_STYLE = "main-wrapper";
     /**
@@ -48,6 +49,8 @@ public class MyUI extends UI {
 
     @Override
     protected void init(VaadinRequest vaadinRequest) {
+       // BasicConfigurator.configure();
+        logger.debug("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
         VerticalLayout main = new VerticalLayout();
         main.setStyleName(MAIN_STYLE);
         main.setSpacing(true);
@@ -77,10 +80,10 @@ public class MyUI extends UI {
                     if (event.getNewView() instanceof ViewLogin
                         || event.getNewView() instanceof ViewRegister) {
                         return false;
-                    } 
-                    
+                    }
+
                 } else {
-                    if(event.getNewView() instanceof ViewProfile){
+                    if (event.getNewView() instanceof ViewProfile) {
                         return false;
                     }
                 }
@@ -95,6 +98,7 @@ public class MyUI extends UI {
 
     }
 
+ 
     /**
      * Method returns header
      *

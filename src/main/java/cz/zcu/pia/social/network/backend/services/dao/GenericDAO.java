@@ -98,19 +98,20 @@ public abstract class GenericDAO<T extends Serializable> implements
 
     /**
      * Save entity
+     * @return id of the saved object
      */
     @Override
-    public void persist(T entity) {
+    public Long persist(T entity) {
         Preconditions.checkNotNull(entity);
         Session session = getCurrentSessionWithTransaction();
         try {
-            session.save(entity);
+            return (Long) session.save(entity);
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
         } finally {
             closeSessionWithTransaction(session);
         }
-
+        return null;
     }
 
     @Override

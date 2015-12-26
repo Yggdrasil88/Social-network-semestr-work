@@ -20,8 +20,8 @@ public abstract class AbstractService<T extends Serializable> implements Generic
      * Saves entity
      */
     @Override
-    public void persist(T entity) {
-        getDao().persist(entity);
+    public Long persist(T entity) {
+       return getDao().persist(entity);
     }
 
     /**

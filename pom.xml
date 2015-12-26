@@ -159,16 +159,16 @@
         </dependency>
 
         <!-- Logging -->
-        <dependency>
+        <dependency> 
             <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-            <version>${slf4j.version}</version>
+            <artifactId>slf4j-log4j12</artifactId>
+            <version>1.7.13</version>
         </dependency>
-        <dependency>
+       <!-- <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
             <version>1.1.2</version>
-        </dependency>
+        </dependency>-->
                 
         <!-- For database -->
         <dependency>

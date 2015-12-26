@@ -7,8 +7,11 @@ package cz.zcu.pia.social.network.backend.entities;
 
 import java.util.List;
 import java.util.Objects;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
@@ -25,9 +28,17 @@ public class PostTags extends BaseEntity {
     private List<Tag> tags;
 
     private Post post;
+    
+    public PostTags(){}
+    
+    public PostTags(List<Tag> tags, Post post ){
+        this.tags = tags;
+        this.post = post;
+    }
 
-    @OneToMany
+    @ManyToMany(fetch = FetchType.LAZY)
     @OrderBy("name ASC")
+    @Column(unique = false)
     public List<Tag> getTags() {
         return tags;
     }
