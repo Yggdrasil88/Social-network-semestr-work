@@ -362,10 +362,16 @@
         //min-width: 400px;
     }
 
-    .post-layout-name {
+    .post-button-name .v-button-caption {
         font-size: 18px; 
+        font-weight: normal;
     }
-
+    .post-button-name .v-button-wrap {
+        padding-left: 0px;
+    }
+    .padding-left-none .v-button-wrap {
+        padding-left: 0px;
+    }
     .post .v-textarea-focus {
         background-color: rgb(189, 226, 240) !important;
     }

@@ -47,7 +47,7 @@ public abstract class GenericDAO<T extends Serializable> implements
     /**
      * current transaction
      */
-    private Transaction currentTransaction;
+    protected Transaction currentTransaction;
 
     /**
      * Constructor
@@ -71,7 +71,7 @@ public abstract class GenericDAO<T extends Serializable> implements
      *
      * @return
      */
-    private Session getCurrentSessionWithTransaction() {
+    protected Session getCurrentSessionWithTransaction() {
         Session s = sessionFactory.openSession();
         this.currentTransaction = s.beginTransaction();
         return s;

@@ -7,6 +7,7 @@ package cz.zcu.pia.social.network.backend.services.services.impl;
 
 import cz.zcu.pia.social.network.backend.entities.FriendRequest;
 import cz.zcu.pia.social.network.backend.entities.Friends;
+import cz.zcu.pia.social.network.backend.entities.Users;
 import cz.zcu.pia.social.network.backend.services.dao.GenericDAOInterface;
 import cz.zcu.pia.social.network.backend.services.dao.impl.FriendRequestDAO;
 import cz.zcu.pia.social.network.backend.services.dao.impl.FriendsDAO;
@@ -33,5 +34,9 @@ public class FriendsService extends AbstractService<Friends> {
     @Override
     protected GenericDAOInterface<Friends> getDao() {
         return dao;
+    }
+
+    public Friends getFriend(Users logedInUser, Users user) {
+        return dao.getFriend(logedInUser,user);
     }
 }

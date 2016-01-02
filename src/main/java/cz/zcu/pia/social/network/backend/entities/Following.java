@@ -24,6 +24,13 @@ public class Following extends BaseEntity{
     
     private Users feeder;
     
+    public Following(){}
+    
+    public Following(Users follower, Users feeder){
+        this.follower = follower;
+        this.feeder = feeder;
+    }
+    
     @ManyToOne
     @Cascade({CascadeType.SAVE_UPDATE})
     @JoinColumn(name = "follower_id", nullable = false)

@@ -18,9 +18,11 @@ import com.vaadin.ui.Window;
 import cz.zcu.pia.social.network.backend.entities.Post;
 import cz.zcu.pia.social.network.backend.entities.RatedPosts;
 import cz.zcu.pia.social.network.backend.entities.Tag;
+import cz.zcu.pia.social.network.backend.entities.Users;
 import cz.zcu.pia.social.network.backend.services.services.impl.PostService;
 import cz.zcu.pia.social.network.backend.services.services.impl.PostTagsService;
 import cz.zcu.pia.social.network.backend.services.services.impl.RatedPostsService;
+import cz.zcu.pia.social.network.frontend.components.profile.profile.ComponentProfilePost;
 import cz.zcu.pia.social.network.helpers.MessagesLoader;
 import cz.zcu.pia.social.network.helpers.RateType;
 import cz.zcu.pia.social.network.helpers.SecurityHelper;
@@ -91,6 +93,7 @@ public class ComponentPost extends VerticalLayout {
         this.disagrees.setStyleName("button-label-simple");
         this.comments = new Button();
         this.comments.setStyleName("button-label-simple");
+        this.comments.addStyleName("padding-left-none");
         this.timestamp = new Label();
         this.postMessage = new Label();
         this.tags = new Button();
@@ -191,6 +194,7 @@ public class ComponentPost extends VerticalLayout {
 
     private com.vaadin.ui.Component getNameLayout() {
         name.setStyleName(LAYOUT_NAME);
+        name.addStyleName("button-label-simple");
         name.setWidthUndefined();
         name.setHeight(25, Unit.PIXELS);
         return name;
@@ -314,6 +318,25 @@ public class ComponentPost extends VerticalLayout {
 
                 ComponentPostComments componentPostComments = applicationContext.getBean(ComponentPostComments.class, postId);
                 subWindow.setContent(componentPostComments);
+                UI.getCurrent().addWindow(subWindow);
+            }
+        });
+        this.name.addClickListener(new Button.ClickListener() {
+
+            @Override
+            public void buttonClick(Button.ClickEvent event) {
+                Window subWindow = new Window(msgs.getMessage("header.profile") + "- " + name.getCaption());
+
+                subWindow.setModal(true);
+                subWindow.center();
+                subWindow.setWidth(400, Unit.PIXELS);
+                subWindow.setHeight(350, Unit.PIXELS);
+                subWindow.setResizable(true);
+                
+                Users user = postService.getPostById(postId).getUser();
+                ComponentProfilePost profilePost = applicationContext.getBean(ComponentProfilePost.class,user);
+                
+                subWindow.setContent(profilePost);
                 UI.getCurrent().addWindow(subWindow);
             }
         });

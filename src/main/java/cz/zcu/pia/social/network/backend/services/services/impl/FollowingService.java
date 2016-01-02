@@ -6,6 +6,7 @@
 package cz.zcu.pia.social.network.backend.services.services.impl;
 
 import cz.zcu.pia.social.network.backend.entities.Following;
+import cz.zcu.pia.social.network.backend.entities.Users;
 import cz.zcu.pia.social.network.backend.services.dao.GenericDAOInterface;
 import cz.zcu.pia.social.network.backend.services.dao.impl.FollowingDAO;
 import cz.zcu.pia.social.network.backend.services.services.AbstractService;
@@ -31,5 +32,14 @@ public class FollowingService extends AbstractService<Following> {
     @Override
     protected GenericDAOInterface<Following> getDao() {
         return dao;
+    }
+
+    public void removeFollow(Users logedInUser, Users user) {
+        dao.removeFollow(logedInUser, user);
+    }
+
+    public Following getFollower(Users logedInUser, Users user) {
+        return dao.getFollower(logedInUser, user);
+
     }
 }

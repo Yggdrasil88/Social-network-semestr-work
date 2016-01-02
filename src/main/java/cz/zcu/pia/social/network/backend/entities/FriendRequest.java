@@ -30,7 +30,14 @@ public class FriendRequest extends BaseEntity {
     private boolean denyed = false;
 
 
-    private Date dateSent;
+    private Date dateSent = new Date();
+
+    public FriendRequest(){}
+    
+    public FriendRequest(Users userSender, Users userReciever) {
+        this.userSender = userSender;
+        this.userReciever = userReciever;
+    }
     
     @ManyToOne
     @Cascade({CascadeType.SAVE_UPDATE})

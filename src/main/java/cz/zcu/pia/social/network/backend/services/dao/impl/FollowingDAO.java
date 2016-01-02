@@ -6,7 +6,12 @@
 package cz.zcu.pia.social.network.backend.services.dao.impl;
 
 import cz.zcu.pia.social.network.backend.entities.Following;
+import cz.zcu.pia.social.network.backend.entities.Users;
 import cz.zcu.pia.social.network.backend.services.dao.GenericDAO;
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 /**
@@ -15,5 +20,36 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class FollowingDAO extends GenericDAO<Following>{
+    private static final Logger logger = LoggerFactory.getLogger(FollowingDAO.class);
+
+    public void removeFollow(Users follower, Users feeder) {
+        Session session = getCurrentSessionWithTransaction();
+        try{
+            Query query = session.createQuery("delete from " + this.genericType.getName() + " f WHERE f.follower.id = :followerId AND f.feeder.id = :feederId");
+            query.setLong("followerId",follower.getId() ).setLong("feederId", feeder.getId());
+            query.executeUpdate();
+            this.currentTransaction.commit();
+        } catch(Exception e){
+            logger.error(e.getMessage(),e);
+            this.currentTransaction.rollback();
+        } finally {
+            closeSession(session);
+        }
+    
+    }
+
+    public Following getFollower(Users follower, Users feeder) {
+        Session session = getCurrentSession();
+        try{
+            Query query = session.createQuery("from " + this.genericType.getName() + " f WHERE f.follower.id = :followerId AND f.feeder.id = :feederId");
+            query.setLong("followerId",follower.getId() ).setLong("feederId", feeder.getId());
+            return (Following) query.uniqueResult();
+        } catch(Exception e){
+            logger.error(e.getMessage(),e);
+            return null;
+        } finally {
+            closeSession(session);
+        }
+    }
     
 }
