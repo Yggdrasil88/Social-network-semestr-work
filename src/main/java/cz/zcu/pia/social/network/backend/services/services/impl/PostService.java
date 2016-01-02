@@ -11,6 +11,7 @@ import cz.zcu.pia.social.network.backend.services.dao.GenericDAOInterface;
 import cz.zcu.pia.social.network.backend.services.dao.impl.FriendsDAO;
 import cz.zcu.pia.social.network.backend.services.dao.impl.PostDAO;
 import cz.zcu.pia.social.network.backend.services.services.AbstractService;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,5 +34,13 @@ public class PostService extends AbstractService<Post> {
     @Override
     protected GenericDAOInterface<Post> getDao() {
         return dao;
+    }
+
+    public List<Post> getPublicPosts(int page) {
+        return dao.getPublicPosts(page);
+    }
+
+    public Post getPostById(long postId) {
+        return dao.getPostById(postId);
     }
 }

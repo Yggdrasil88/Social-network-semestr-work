@@ -29,10 +29,18 @@ public class Comments extends BaseEntity {
 
     private String comment;
 
-    private Date dateSent;
+    private Date dateSent = new Date();
+    
+    public Comments(){}
+    
+    public Comments(Users user, Post post, String comment){
+        this.user = user;
+        this.post = post;
+        this.comment = comment;
+    }
 
     @ManyToOne
-    @Cascade({CascadeType.SAVE_UPDATE})
+    @Cascade({CascadeType.MERGE})
     @JoinColumn(name = "user_id", nullable = false)
     public Users getUser() {
         return user;
@@ -43,7 +51,7 @@ public class Comments extends BaseEntity {
     }
     
     @ManyToOne
-    @Cascade({CascadeType.SAVE_UPDATE})
+    @Cascade({CascadeType.MERGE})
     @JoinColumn(name = "post_id", nullable = false)
     public Post getPost() {
         return post;

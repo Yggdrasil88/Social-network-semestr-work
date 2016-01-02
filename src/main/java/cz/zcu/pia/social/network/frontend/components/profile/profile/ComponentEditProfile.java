@@ -5,26 +5,16 @@
  */
 package cz.zcu.pia.social.network.frontend.components.profile.profile;
 
-import com.vaadin.data.Validator;
-import com.vaadin.data.fieldgroup.FieldGroup;
 import com.vaadin.event.ShortcutAction;
 import com.vaadin.ui.Button;
-import com.vaadin.ui.Field;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.UI;
 import cz.zcu.pia.social.network.MyUI;
 import cz.zcu.pia.social.network.backend.entities.Users;
 import cz.zcu.pia.social.network.frontend.components.login.ComponentRegister;
-import static cz.zcu.pia.social.network.frontend.components.login.ComponentRegister.CONFIRM;
-import static cz.zcu.pia.social.network.frontend.components.login.ComponentRegister.ERROR_EMPTY;
-import static cz.zcu.pia.social.network.frontend.components.login.ComponentRegister.ERROR_RANGE;
-import static cz.zcu.pia.social.network.frontend.components.login.ComponentRegister.REQUIRED_ERROR;
-import static cz.zcu.pia.social.network.frontend.components.login.ComponentRegister.REQUIRED_ERROR_NOT_EMPTY;
 import cz.zcu.pia.social.network.helpers.SecurityHelper;
-import java.util.HashMap;
 import javax.annotation.PostConstruct;
-import org.jasypt.util.password.StrongPasswordEncryptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

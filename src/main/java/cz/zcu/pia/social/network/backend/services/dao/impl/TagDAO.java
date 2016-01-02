@@ -9,6 +9,7 @@ import cz.zcu.pia.social.network.backend.entities.Tag;
 import cz.zcu.pia.social.network.backend.entities.Users;
 import cz.zcu.pia.social.network.backend.services.dao.GenericDAO;
 import cz.zcu.pia.social.network.frontend.components.posts.ComponentPostAdd;
+import java.util.ArrayList;
 import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -28,7 +29,7 @@ public class TagDAO extends GenericDAO<Tag> {
     private final Logger logger = LoggerFactory.getLogger(TagDAO.class);
 
     public int saveTags(List<Tag> tagList) {
-        if (tagList == null || tagList.size() == 0) {
+        if (tagList == null || tagList.isEmpty()) {
             return 0;
         }
         Session session = this.getCurrentSession();
@@ -37,6 +38,7 @@ public class TagDAO extends GenericDAO<Tag> {
             for (Tag tag : tagList) {
                 session.save(tag);
             }
+            //session.load
             tx.commit();
             return 1;
         } catch (ConstraintViolationException e) {
@@ -49,34 +51,23 @@ public class TagDAO extends GenericDAO<Tag> {
 
     }
 
-    public List<Tag> getTagsByName(List<Tag> tagsWithoutId) {
-        if (tagsWithoutId == null || tagsWithoutId.isEmpty()) {
-            return null;
+
+    public List<Tag> getTagsByName(List<String> nameList) {
+        if (nameList == null || nameList.isEmpty()) {
+            return new ArrayList<Tag>();
         }
         Session session = this.getCurrentSession();
         try {
-            String[] namesList = new String[tagsWithoutId.size()];
-            int i = 0;
-            logger.debug("START");
-            for (Tag t : tagsWithoutId) {
-                namesList[i] = t.getTagName();
-                logger.debug("NAME:" + namesList[i]);
-
-            }
-            logger.debug("END");
+            
             String querry = "FROM " + this.genericType.getName()
                 + " AS tags WHERE tags.tagName in (:tagName)";
-            List<Tag> ta = (List<Tag>) session.createQuery(querry).setParameterList("tagName", namesList).list();
-            logger.debug("START");
-            for (Tag t : ta) {
-                logger.debug("NAME:" + t.getTagName());
-            }
-            logger.debug("END");
+            List<Tag> ta = (List<Tag>) session.createQuery(querry).setParameterList("tagName", nameList).list();
+           
             return ta;
 
         } catch (Exception e) {
-            e.printStackTrace();
-            return null;
+            logger.error(e.getMessage(), e);
+            return new ArrayList<Tag>();
         } finally {
             session.close();
         }

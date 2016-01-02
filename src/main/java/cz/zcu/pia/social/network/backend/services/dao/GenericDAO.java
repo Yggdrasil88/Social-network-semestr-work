@@ -83,8 +83,11 @@ public abstract class GenericDAO<T extends Serializable> implements
      * @param s session
      */
     private void closeSessionWithTransaction(Session s) {
+        s.flush();
         this.currentTransaction.commit();
+        s.clear();
         s.close();
+        
     }
 
     /**

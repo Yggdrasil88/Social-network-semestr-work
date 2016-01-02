@@ -40,8 +40,8 @@ public class TagService extends AbstractService<Tag> {
         return dao.saveTags(tagList);
     }
     
-    public List<Tag> getTagsByName(List<Tag> tagsWithoutId){
-        return dao.getTagsByName(tagsWithoutId);
+    public List<Tag> getTagsByName(List<String> nameList){
+        return dao.getTagsByName(nameList);
     }
 
 }

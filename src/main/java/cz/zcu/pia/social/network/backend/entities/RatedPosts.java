@@ -26,9 +26,17 @@ public class RatedPosts extends BaseEntity {
     private Post post;
     
     private int rateType = RateType.LIKE;
+    
+    public RatedPosts(){}
+    
+    public RatedPosts(Post post, Users user, int rateType){
+        this.post = post;
+        this.user = user;
+        this.rateType = rateType;
+    }
 
     @ManyToOne
-    @Cascade({CascadeType.SAVE_UPDATE})
+    @Cascade({CascadeType.MERGE})
     @JoinColumn(name = "user_id", nullable = false)
     public Users getUser() {
         return user;
@@ -38,7 +46,7 @@ public class RatedPosts extends BaseEntity {
         this.user = user;
     }
     @ManyToOne
-    @Cascade({CascadeType.SAVE_UPDATE})
+    @Cascade({CascadeType.MERGE})
     @JoinColumn(name = "post_id", nullable = false)
     public Post getPost() {
         return post;

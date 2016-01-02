@@ -10,13 +10,17 @@ import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Notification;
 import com.vaadin.ui.UI;
+import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 import cz.zcu.pia.social.network.MyUI;
+import cz.zcu.pia.social.network.backend.entities.Post;
+import cz.zcu.pia.social.network.backend.services.services.impl.PostService;
 import cz.zcu.pia.social.network.frontend.components.posts.ComponentPost;
 import cz.zcu.pia.social.network.frontend.components.posts.ComponentPostAdd;
 import cz.zcu.pia.social.network.helpers.SecurityHelper;
-import java.util.Date;
+import java.util.List;
 import javax.annotation.PostConstruct;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,14 +43,24 @@ public class ViewHome extends ViewBase {
     public static final String BUTTON_DESCRIPTION = "view.home.add-description";
 
     private static final Logger logger = LoggerFactory.getLogger(ViewHome.class);
-
+    private int currentPage = 0;
     @Autowired
     private ApplicationContext applicationContext;
     @Autowired
     private SecurityHelper securityHelper;
+    @Autowired
+    private PostService postService;
     private ComboBox filterBy;
     private ComboBox filter;
     private Button addPost;
+    private VerticalLayout postWrapper;
+
+    public ViewHome() {
+        super();
+        postWrapper = new VerticalLayout();
+        postWrapper.setSizeUndefined();
+        postWrapper.setSpacing(true);
+    }
 
     /**
      * PostConstruct
@@ -86,18 +100,14 @@ public class ViewHome extends ViewBase {
         addButtonWrapper.addComponent(filter);
         addButtonWrapper.addComponent(addPost);
         addButtonWrapper.setComponentAlignment(addPost, Alignment.TOP_RIGHT);
-        
+
         addButtonWrapper.setExpandRatio(filterBy, 5);
         addButtonWrapper.setExpandRatio(filter, 5);
         addButtonWrapper.setExpandRatio(addPost, 1);
         this.getContentWrapper().addComponent(addButtonWrapper);
-
-        //long postId, String name, int numberOflikes, int numberOfdisagrees, String postMessage, int numberOfComments) {
-        ComponentPost post = applicationContext.getBean(ComponentPost.class, 1, "Frantisek Kolenak", new Date(), 3, 1, "This is post message", 3);
-        ComponentPost post2 = applicationContext.getBean(ComponentPost.class, 1, "Frantisek Kolenak", new Date(), 3, 1, "This is very long post message.This is very long post message.This is very long post message.This is very long post message.This is very long post message.This is very long post message.This is very long post message.This is very long post message.This is very long post message.This is very long post message.This is very long post message.This is very long post message.This is very long post message.This is very long post message.This is very long post message.This is very long post message.This is very long post message.This is very long post message.This is very long post message.This is very long post message.This is very long post message.", 3);
-
-        this.getContentWrapper().addComponent(post);
-        this.getContentWrapper().addComponent(post2);
+        this.getContentWrapper().addComponent(postWrapper);
+        
+        addPublicPosts();
 
     }
 
@@ -108,6 +118,8 @@ public class ViewHome extends ViewBase {
         subWindow.setWidth(400, Unit.PIXELS);
         subWindow.setHeight(300, Unit.PIXELS);
         ComponentPostAdd postAdd = applicationContext.getBean(ComponentPostAdd.class);
+        postAdd.setComponentParent(this);
+        postAdd.setWindow(subWindow);
         postAdd.setMargin(true);
         subWindow.setContent(postAdd);
         UI.getCurrent().addWindow(subWindow);
@@ -116,5 +128,20 @@ public class ViewHome extends ViewBase {
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
         ((MyUI) UI.getCurrent()).getHeader().setSelectedMenuItem(1);
+    }
+
+    public void reload() {
+        Notification.show("VIEW HOME RELOAD", Notification.Type.ERROR_MESSAGE);
+    }
+
+    private void addPublicPosts() {
+        postWrapper.removeAllComponents();
+        List<Post> publicPosts = postService.getPublicPosts(currentPage);
+        for (Post p : publicPosts) {
+            
+            ComponentPost post = applicationContext.getBean(ComponentPost.class, p.getId(), p.getUser().getFullname(), p.getDateSent(), p.getLikeCount(), p.getHateCount(), p.getMessage(), p.getNumberOfComments());
+            postWrapper.addComponent(post);
+        }
+
     }
 }

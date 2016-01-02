@@ -14,13 +14,16 @@ import com.vaadin.ui.Panel;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.Window;
 import cz.zcu.pia.social.network.backend.entities.Post;
 import cz.zcu.pia.social.network.backend.entities.PostTags;
 import cz.zcu.pia.social.network.backend.entities.Tag;
 import cz.zcu.pia.social.network.backend.services.services.impl.PostService;
 import cz.zcu.pia.social.network.backend.services.services.impl.PostTagsService;
 import cz.zcu.pia.social.network.backend.services.services.impl.TagService;
+import cz.zcu.pia.social.network.backend.services.services.impl.UsersService;
 import cz.zcu.pia.social.network.frontend.handlers.OnEnterKeyHandler;
+import cz.zcu.pia.social.network.frontend.views.ViewHome;
 import cz.zcu.pia.social.network.helpers.MessagesLoader;
 import cz.zcu.pia.social.network.helpers.SecurityHelper;
 import cz.zcu.pia.social.network.helpers.Visibility;
@@ -43,28 +46,32 @@ public class ComponentPostAdd extends VerticalLayout {
 
     private final Logger logger = LoggerFactory.getLogger(ComponentPostAdd.class);
     @Autowired
-    private MessagesLoader msgs;
+    protected MessagesLoader msgs;
     @Autowired
     private Visibility visibility;
 
-    private CustomLayout layout = new CustomLayout("addPost");
+    protected CustomLayout layout = new CustomLayout("addPost");
 
-    private ComboBox visibilityComboBox;
-    private TextArea message = new TextArea();
-    private HorizontalLayout tags;
-    private TextField newTag;
+    protected ComboBox visibilityComboBox;
+    protected TextArea message = new TextArea();
+    protected HorizontalLayout tags;
+    protected TextField newTag;
     private Button confirmButton;
     private List<Button> taglist = new ArrayList();
     private Panel panel;
-
+    
+    private ViewHome parentReference;
     @Autowired
-    private PostService postService;
+    private UsersService usersService;
+    @Autowired
+    protected PostService postService;
     @Autowired
     private PostTagsService postTagsService;
     @Autowired
     private TagService tagService;
     @Autowired
-    private SecurityHelper securityHelper;
+    protected SecurityHelper securityHelper;
+    private Window subWindow;
 
     public ComponentPostAdd() {
 
@@ -74,7 +81,6 @@ public class ComponentPostAdd extends VerticalLayout {
         message.setHeight(100, Unit.PIXELS);
 
         tags = new HorizontalLayout();
-        tags.setStyleName("");
         tags.setSpacing(true);
         tags.setSizeUndefined();
 
@@ -115,36 +121,7 @@ public class ComponentPostAdd extends VerticalLayout {
 
             @Override
             public void buttonClick(Button.ClickEvent event) {
-                logger.debug("Clicked the button");
-                if (message.getValue().equals("") || message.getValue() == null) {
-                    Notification.show(msgs.getMessage("post.add.empty-msg"));
-                    return;
-                }
-                //Create all tags
-                List<Tag> createdTags = createTags();
-                //Save all new tags, ignore tags that are already in the database
-                int error = tagService.saveTags(createdTags);
-                // load tags with correct ids
-                createdTags = tagService.getTagsByName(createdTags);
-                
-                for (Tag t : createdTags) {
-                    logger.debug("ID: " + t.getId() + "TAGNAME: " + t.getTagName());
-                }
-                Post post;
-                if (visibilityComboBox.getValue().equals(visibility.getPublicValue())) {
-                    post = new Post(securityHelper.getLogedInUser(), message.getValue());
-                } else {
-                    post = new Post(securityHelper.getLogedInUser(), message.getValue(), Visibility.FRIENDS);
-                }
-                
-                //Save post
-                postService.persist(post);
-                // Save posts tags
-                if (createdTags == null || createdTags.size() > 0) {
-                    PostTags postTags = new PostTags(createdTags, post);
-                    postTagsService.persist(postTags);
-                }
-
+                postButtonFunction(event);
             }
 
         });
@@ -163,12 +140,82 @@ public class ComponentPostAdd extends VerticalLayout {
 
     }
 
-    private List<Tag> createTags() {
-        List<Tag> tags = new ArrayList();
-        for (Button tag : taglist) {
-            Tag t = new Tag(tag.getCaption());
+    protected void postButtonFunction(Button.ClickEvent event) {
+        if (message.getValue().equals("") || message.getValue() == null) {
+            Notification.show(msgs.getMessage("post.add.empty-msg"),Notification.Type.ERROR_MESSAGE);
+            return;
+        }
+        //Create all tags
+        List<String> createdTags = createTags();
+        // Load tags I do have in database
+        List<Tag> tags = tagService.getTagsByName(createdTags);
+        if (createdTags.size() != tags.size()) {
+            List<Tag> tagsToSave = createNotFoundTags(createdTags, tags);
+            tagService.saveTags(tagsToSave);
+            tags = mergeTags(tags, tagsToSave);
+        }
+
+        Post post;
+        if (visibilityComboBox.getValue().equals(visibility.getPublicValue())) {
+            post = new Post(securityHelper.getLogedInUser(), message.getValue());
+        } else {
+            post = new Post(securityHelper.getLogedInUser(), message.getValue(), Visibility.FRIENDS);
+        }
+        
+        //Save post
+        postService.persist(post);
+        securityHelper.getLogedInUser().setTotalPosts(securityHelper.getLogedInUser().getTotalPosts() + 1);
+        usersService.update(securityHelper.getLogedInUser());
+        // Save posts tags
+        if (tags != null && !createdTags.isEmpty()) {
+            PostTags postTags = new PostTags(tags, post);
+            postTagsService.persist(postTags);
+        }
+        Notification.show(msgs.getMessage("post.posted"), Notification.Type.HUMANIZED_MESSAGE);
+        parentReference.reload();
+        subWindow.close();
+    }
+
+    private List<Tag> mergeTags(List<Tag> tags, List<Tag> saveTags) {
+        for (Tag t : saveTags) {
             tags.add(t);
         }
         return tags;
+    }
+
+    private List<Tag> createNotFoundTags(List<String> allTags, List<Tag> foundTags) {
+
+        List<Tag> tagsToSave = new ArrayList();
+        for (String name : allTags) {
+            boolean found = false;
+            for (Tag t : foundTags) {
+                if (name.equals(t.getTagName())) {
+                    found = true;
+                    break;
+                }
+
+            }
+            if (!found) {
+                tagsToSave.add(new Tag(name));
+            }
+        }
+
+        return tagsToSave;
+    }
+
+    private List<String> createTags() {
+        List<String> tags = new ArrayList();
+        for (Button tag : taglist) {
+            tags.add(tag.getCaption());
+        }
+        return tags;
+    }
+
+    public void setComponentParent(ViewHome parentReference) {
+        this.parentReference = parentReference;
+    }
+
+    public void setWindow(Window subWindow) {
+        this.subWindow = subWindow;
     }
 }

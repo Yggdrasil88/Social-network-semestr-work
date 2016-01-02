@@ -50,7 +50,6 @@ public class MyUI extends UI {
     @Override
     protected void init(VaadinRequest vaadinRequest) {
        // BasicConfigurator.configure();
-        logger.debug("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
         VerticalLayout main = new VerticalLayout();
         main.setStyleName(MAIN_STYLE);
         main.setSpacing(true);

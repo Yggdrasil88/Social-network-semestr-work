@@ -28,9 +28,11 @@ public class Post extends BaseEntity {
     private String message;
     private int likeCount = 0;
     private int hateCount = 0;
-    //TODO add default value
     private int visibility = Visibility.PUBLIC;
     private Date dateSent = new Date();
+    private int numberOfComments = 0;
+
+    
 
     public Post(){}
     public Post(Users user, String message, int visibility){
@@ -96,6 +98,14 @@ public class Post extends BaseEntity {
     public int getVisibility() {
         return visibility;
     }
+    @Column(nullable = false)
+    public int getNumberOfComments() {
+        return numberOfComments;
+    }
+
+    public void setNumberOfComments(int numberOfComments) {
+        this.numberOfComments = numberOfComments;
+    }
 
     public void setVisibility(int visibility) {
         if (visibility == Visibility.FRIENDS || visibility == Visibility.PUBLIC) {
@@ -104,7 +114,8 @@ public class Post extends BaseEntity {
             this.visibility = Visibility.PUBLIC;
         }
     }
-
+    
+    
     @Override
     public int hashCode() {
         int hash = 3;

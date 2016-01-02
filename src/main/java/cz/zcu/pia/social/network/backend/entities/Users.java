@@ -9,6 +9,7 @@ import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 /**
  *
@@ -82,6 +83,11 @@ public class Users extends BaseEntity {
     public void setTotalFollowers(int totalFollowers) {
         this.totalFollowers = totalFollowers;
     }
+    @Transient
+    public String getFullname(){
+        return this.getName() + " " + this.getSurname();
+    }
+
 
     @Override
     public int hashCode() {

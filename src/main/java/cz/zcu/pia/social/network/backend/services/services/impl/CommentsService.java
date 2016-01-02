@@ -9,6 +9,7 @@ import cz.zcu.pia.social.network.backend.entities.Comments;
 import cz.zcu.pia.social.network.backend.services.dao.GenericDAOInterface;
 import cz.zcu.pia.social.network.backend.services.dao.impl.CommentsDAO;
 import cz.zcu.pia.social.network.backend.services.services.AbstractService;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,5 +32,11 @@ public class CommentsService extends AbstractService<Comments> {
     @Override
     protected GenericDAOInterface<Comments> getDao() {
         return dao;
+    }
+
+
+
+    public List<Comments> getCommentsForPost(Long postId) {
+        return dao.getCommentsForPost(postId);
     }
 }

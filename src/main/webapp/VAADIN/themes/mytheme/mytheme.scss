@@ -266,7 +266,7 @@
         background-image: none;
         outline: none;
         /*float: left;*/
-        margin: 0 5px 0 0;
+        margin: 0 1px 0 0;
         border: 1px solid transparent;
 
         padding: 0px 0px 0px 0px;
@@ -394,7 +394,7 @@
     .margin-top-big {
         margin-top: 15px;
     }
-    
+
     /*** POST END  ***/
 
     /*** ADD POST ***/
@@ -428,6 +428,7 @@
         background: none !important;
         color: black !important;
         box-shadow: none !important;
+        margin-right: 0px;
     }
 
     .button-label span{
@@ -435,6 +436,25 @@
         text-decoration: underline;
         cursor: pointer;
     }
+
+    .button-label-simple ,.button-label-simple .v-button-wrap, .button-label-simple.v-pressed, 
+    .button-label-simple:active, .button-label-simple:focus, 
+        .button-label-simple.v-pressed .v-button-wrap{
+        border: none !important;
+        background: none !important;
+        color: black !important;
+        box-shadow: none !important; 
+        margin-right: 0px;
+    }
+    .button-label-simple span {
+        color: black ;
+        cursor: pointer;
+    }
+
+    .small-margin-top{
+        margin-top: 4px;
+    }
+
 
     /*** PROFILE ***/
 
@@ -579,11 +599,11 @@
     .v-tabsheet-tabsheetpanel {
         background-color: whitesmoke;
     }
-    
+
     /*** GENERAL RULES  ***/
-    
+
     .text-align-center {
         text-align: center;
     }
-    
+
 }
