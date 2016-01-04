@@ -12,6 +12,7 @@ import cz.zcu.pia.social.network.backend.services.dao.GenericDAOInterface;
 import cz.zcu.pia.social.network.backend.services.dao.impl.CommentsDAO;
 import cz.zcu.pia.social.network.backend.services.dao.impl.FriendRequestDAO;
 import cz.zcu.pia.social.network.backend.services.services.AbstractService;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -38,5 +39,10 @@ public class FriendRequestService extends AbstractService<FriendRequest> {
 
     public FriendRequest getFriendRequest(Users logedInUser, Users user) {
         return dao.getFriendRequest(logedInUser, user);
+    }
+
+    public List<FriendRequest> getFriendRequests(Long userId) {
+        return dao.getFriendRequests(userId);
+
     }
 }

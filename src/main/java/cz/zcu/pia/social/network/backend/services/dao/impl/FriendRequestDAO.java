@@ -8,6 +8,8 @@ package cz.zcu.pia.social.network.backend.services.dao.impl;
 import cz.zcu.pia.social.network.backend.entities.FriendRequest;
 import cz.zcu.pia.social.network.backend.entities.Users;
 import cz.zcu.pia.social.network.backend.services.dao.GenericDAO;
+import java.util.ArrayList;
+import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.slf4j.Logger;
@@ -32,6 +34,20 @@ public class FriendRequestDAO extends GenericDAO<FriendRequest> {
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
             return null;
+        } finally {
+            closeSession(session);
+        }
+    }
+
+    public List<FriendRequest> getFriendRequests(Long userId) {
+        Session session = getCurrentSession();
+        try {
+            Query query = session.createQuery("from " + this.genericType.getName() + " request WHERE request.userReciever.id = :userId ORDER BY request.dateSent DESC");
+            query.setLong("userId", userId);
+            return (List<FriendRequest>) query.list();
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+            return new ArrayList();
         } finally {
             closeSession(session);
         }

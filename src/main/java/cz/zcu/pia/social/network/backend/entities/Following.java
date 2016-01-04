@@ -5,11 +5,13 @@
  */
 package cz.zcu.pia.social.network.backend.entities;
 
+import java.util.Date;
 import java.util.Objects;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
@@ -23,6 +25,8 @@ public class Following extends BaseEntity{
     private Users follower;
     
     private Users feeder;
+    
+    private Date followingSince = new Date();
     
     public Following(){}
     
@@ -50,6 +54,16 @@ public class Following extends BaseEntity{
     public void setFeeder(Users feeder) {
         this.feeder = feeder;
     }
+    
+    @Temporal(TemporalType.TIMESTAMP)
+    public Date getFollowingSince() {
+        return followingSince;
+    }
+
+    public void setFollowingSince(Date followingSince) {
+        this.followingSince = followingSince;
+    }
+    
 
     @Override
     public int hashCode() {

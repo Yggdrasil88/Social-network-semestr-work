@@ -10,6 +10,7 @@ import cz.zcu.pia.social.network.backend.entities.Users;
 import cz.zcu.pia.social.network.backend.services.dao.GenericDAOInterface;
 import cz.zcu.pia.social.network.backend.services.dao.impl.FollowingDAO;
 import cz.zcu.pia.social.network.backend.services.services.AbstractService;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -40,6 +41,11 @@ public class FollowingService extends AbstractService<Following> {
 
     public Following getFollower(Users logedInUser, Users user) {
         return dao.getFollower(logedInUser, user);
+
+    }
+
+    public List<Following> getUserFeeders(Users logedInUser) {
+        return dao.getUserFeeders(logedInUser);
 
     }
 }

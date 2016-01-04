@@ -12,7 +12,7 @@ import com.vaadin.ui.TabSheet;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import cz.zcu.pia.social.network.MyUI;
-import cz.zcu.pia.social.network.frontend.components.profile.ComponentFriends;
+import cz.zcu.pia.social.network.frontend.components.profile.friends.ComponentFriends;
 import cz.zcu.pia.social.network.frontend.components.profile.profile.ComponentProfile;
 import cz.zcu.pia.social.network.helpers.SecurityHelper;
 import javax.annotation.PostConstruct;

@@ -158,8 +158,8 @@ public class ComponentProfilePost extends VerticalLayout {
             public void buttonClick(Button.ClickEvent event) {
                 if (event.getButton().getCaption().equals(msgs.getMessage("profile.add.friend"))) {
                     FriendRequest request = friendRequestService.getFriendRequest(securityHelper.getLogedInUser(), user);
-                    if(request != null && !request.isDenyed()){
-                        Notification.show(msgs.getMessage("request.sent"),Notification.Type.HUMANIZED_MESSAGE);
+                    if (request != null && !request.isDenyed()) {
+                        Notification.show(msgs.getMessage("request.sent"), Notification.Type.HUMANIZED_MESSAGE);
                         return;
                     }
                     FriendRequest fr = new FriendRequest(securityHelper.getLogedInUser(), user);
@@ -190,9 +190,15 @@ public class ComponentProfilePost extends VerticalLayout {
                 if (event.getButton().getCaption().equals(msgs.getMessage("profile.add.follower"))) {
                     Following f = new Following(securityHelper.getLogedInUser(), user);
                     followingService.persist(f);
+                    
+                    user.setTotalFollowers(user.getTotalFollowers() + 1);
+                    usersService.update(user);
                     event.getButton().setCaption(msgs.getMessage("unfollow"));
                 } else {
                     followingService.removeFollow(securityHelper.getLogedInUser(), user);
+                   
+                    user.setTotalFollowers(user.getTotalFollowers() - 1);
+                    usersService.update(user);
                     event.getButton().setCaption(msgs.getMessage("profile.add.follower"));
                 }
             }

@@ -5,11 +5,14 @@
  */
 package cz.zcu.pia.social.network.backend.entities;
 
+import java.util.Date;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
@@ -23,7 +26,17 @@ public class Friends extends BaseEntity {
     private Users user;
 
     private Users friend;
+    
+    private Date friendsSince = new Date();
 
+    public Friends(){}
+    
+    public Friends(Users user1, Users user2){
+        this.user = user1;
+        this.friend = user2;
+    }
+    
+    
     @ManyToOne
     @Cascade({CascadeType.SAVE_UPDATE})
     @JoinColumn(name = "user_id", nullable = false)
@@ -53,6 +66,14 @@ public class Friends extends BaseEntity {
         hash = 29 * hash + Objects.hashCode(this.friend);
         return hash;
     }
+    @Temporal(TemporalType.TIMESTAMP)
+    public Date getFriendsSince() {
+        return friendsSince;
+    }
+
+    public void setFriendsSince(Date friendsSince) {
+        this.friendsSince = friendsSince;
+    }
 
     @Override
     public boolean equals(Object obj) {
@@ -76,5 +97,9 @@ public class Friends extends BaseEntity {
     public String toString() {
         return "Friends{" + "user=" + user + ", friend=" + friend + '}';
     }
+
+    
+    
+    
 
 }

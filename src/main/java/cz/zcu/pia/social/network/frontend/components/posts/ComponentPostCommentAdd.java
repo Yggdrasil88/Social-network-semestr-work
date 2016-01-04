@@ -6,13 +6,10 @@
 package cz.zcu.pia.social.network.frontend.components.posts;
 
 import com.vaadin.ui.Button;
-import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.CustomLayout;
-import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.TextArea;
-import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 import cz.zcu.pia.social.network.backend.entities.Comments;
@@ -21,8 +18,6 @@ import cz.zcu.pia.social.network.backend.services.services.impl.CommentsService;
 import cz.zcu.pia.social.network.backend.services.services.impl.PostService;
 import cz.zcu.pia.social.network.backend.services.services.impl.PostTagsService;
 import cz.zcu.pia.social.network.backend.services.services.impl.TagService;
-import cz.zcu.pia.social.network.frontend.handlers.OnEnterKeyHandler;
-import cz.zcu.pia.social.network.frontend.views.ViewHome;
 import cz.zcu.pia.social.network.helpers.MessagesLoader;
 import cz.zcu.pia.social.network.helpers.SecurityHelper;
 import cz.zcu.pia.social.network.helpers.Visibility;
