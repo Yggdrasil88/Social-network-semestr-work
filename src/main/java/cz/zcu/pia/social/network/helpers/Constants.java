@@ -11,4 +11,5 @@ package cz.zcu.pia.social.network.helpers;
  */
 public class Constants {
     public static final int PAGE_LENGTH = 10;
+    public static final int MAX_RESULTS = 50;
 }

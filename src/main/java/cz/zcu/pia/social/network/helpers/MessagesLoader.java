@@ -34,4 +34,8 @@ public class MessagesLoader {
     public String getMessage(String id) {
         return messageSource.getMessage(id, null, defaultValue + " " + id, null);
     }
+
+    public Object getMessage(FilterValues filterValues) {
+        return getMessage(filterValues.getValue());
+    }
 }

@@ -19,6 +19,9 @@ import cz.zcu.pia.social.network.backend.entities.Post;
 import cz.zcu.pia.social.network.backend.services.services.impl.PostService;
 import cz.zcu.pia.social.network.frontend.components.posts.ComponentPost;
 import cz.zcu.pia.social.network.frontend.components.posts.ComponentPostAdd;
+import cz.zcu.pia.social.network.frontend.components.posts.ComponentPostPaginator;
+import cz.zcu.pia.social.network.frontend.components.posts.ComponentPostsFilter;
+import cz.zcu.pia.social.network.helpers.FilterValues;
 import cz.zcu.pia.social.network.helpers.SecurityHelper;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -43,17 +46,15 @@ public class ViewHome extends ViewBase {
     public static final String BUTTON_DESCRIPTION = "view.home.add-description";
 
     private static final Logger logger = LoggerFactory.getLogger(ViewHome.class);
-    private int currentPage = 0;
     @Autowired
     private ApplicationContext applicationContext;
     @Autowired
     private SecurityHelper securityHelper;
-    @Autowired
-    private PostService postService;
-    private ComboBox filterBy;
-    private ComboBox filter;
+    private ComponentPostsFilter postsFilter;
+    private ComponentPostPaginator postPaginator;
+
     private Button addPost;
-    private VerticalLayout postWrapper;
+    private final VerticalLayout postWrapper;
 
     public ViewHome() {
         super();
@@ -69,14 +70,11 @@ public class ViewHome extends ViewBase {
     @Override
     public void postConstruct() {
         super.postConstruct();
+        postPaginator = applicationContext.getBean(ComponentPostPaginator.class);
 
-        filterBy = new ComboBox();
-        filter = new ComboBox();
-        filterBy.addItem("Filtrovat podle (tag,jmeno...)");
-        filter.addItem("hodnota filtru");
-
-        filterBy.setValue("Filtrovat podle (tag,jmeno...)");
-        filter.setValue("hodnota filtru");
+        postsFilter = applicationContext.getBean(ComponentPostsFilter.class, postWrapper, postPaginator);
+        //postsFilter.setPostPaginator(postPaginator);
+        postPaginator.setFilter(postsFilter);
 
         addPost = new Button("+");
         if (!securityHelper.isAuthenticated()) {
@@ -96,19 +94,15 @@ public class ViewHome extends ViewBase {
 
         addButtonWrapper.setWidth(ComponentPost.POST_WIDTH, Unit.PIXELS);
 
-        addButtonWrapper.addComponent(filterBy);
-        addButtonWrapper.addComponent(filter);
+        addButtonWrapper.addComponent(postsFilter);
         addButtonWrapper.addComponent(addPost);
         addButtonWrapper.setComponentAlignment(addPost, Alignment.TOP_RIGHT);
 
-        addButtonWrapper.setExpandRatio(filterBy, 5);
-        addButtonWrapper.setExpandRatio(filter, 5);
+        addButtonWrapper.setExpandRatio(postsFilter, 10);
         addButtonWrapper.setExpandRatio(addPost, 1);
         this.getContentWrapper().addComponent(addButtonWrapper);
         this.getContentWrapper().addComponent(postWrapper);
-        
-        addPublicPosts();
-
+        this.getContentWrapper().addComponent(postPaginator);
     }
 
     private void addButtonFunction(Button.ClickEvent event) {
@@ -131,17 +125,7 @@ public class ViewHome extends ViewBase {
     }
 
     public void reload() {
-        Notification.show("VIEW HOME RELOAD", Notification.Type.ERROR_MESSAGE);
+        postsFilter.reload();
     }
 
-    private void addPublicPosts() {
-        postWrapper.removeAllComponents();
-        List<Post> publicPosts = postService.getPublicPosts(currentPage);
-        for (Post p : publicPosts) {
-            
-            ComponentPost post = applicationContext.getBean(ComponentPost.class, p.getId(), p.getUser().getFullname(), p.getDateSent(), p.getLikeCount(), p.getHateCount(), p.getMessage(), p.getNumberOfComments());
-            postWrapper.addComponent(post);
-        }
-
-    }
 }

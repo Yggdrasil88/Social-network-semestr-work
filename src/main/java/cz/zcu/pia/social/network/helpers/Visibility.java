@@ -46,4 +46,11 @@ public class Visibility {
         }
         return msgs.getMessage("visibility.friends");
     }
+    
+    public String getFollowingValue() {
+        if(msgs == null){
+            return "";
+        }
+        return msgs.getMessage("visibility.following");
+    }
 }

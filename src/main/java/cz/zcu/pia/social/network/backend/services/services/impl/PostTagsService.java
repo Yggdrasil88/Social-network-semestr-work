@@ -40,4 +40,7 @@ public class PostTagsService extends AbstractService<PostTags> {
     public List<Tag> getPostTags(long postId) {
         return dao.getPostTags(postId);
     }
+     public List<Post> getPostsByTag(String tagName) {
+        return dao.getPostsByTag(tagName);
+    }
 }

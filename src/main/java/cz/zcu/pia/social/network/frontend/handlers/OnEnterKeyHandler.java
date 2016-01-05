@@ -5,17 +5,17 @@
  */
 package cz.zcu.pia.social.network.frontend.handlers;
 
-/**
- *
- * @author Ramón Talavera
- * @author http://ramontalaverasuarez.blogspot.cz/2014/06/vaadin-7-detect-enter-key-in-textfield.html
- */
+
 import com.vaadin.event.FieldEvents;
 import com.vaadin.event.ShortcutAction;
 import com.vaadin.event.ShortcutListener;
 import com.vaadin.ui.TextField;
 
-
+/**
+ *
+ * @author Ramón Talavera
+ * @author http://ramontalaverasuarez.blogspot.cz/2014/06/vaadin-7-detect-enter-key-in-textfield.html
+ */
 public abstract class OnEnterKeyHandler {
 
      final ShortcutListener enterShortCut = new ShortcutListener(

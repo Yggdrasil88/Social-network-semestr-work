@@ -35,7 +35,7 @@ import org.springframework.core.GenericTypeResolver;
 public abstract class GenericDAO<T extends Serializable> implements
     GenericDAOInterface<T> {
 
-    protected final Class<T> genericType;
+    public final Class<T> genericType;
 
     private final Logger logger = LoggerFactory.getLogger(GenericDAO.class);
 

@@ -36,11 +36,26 @@ public class PostService extends AbstractService<Post> {
         return dao;
     }
 
-    public List<Post> getPublicPosts(int page) {
-        return dao.getPublicPosts(page);
+    public List<Post> getPublicPosts() {
+        return dao.getPublicPosts();
     }
 
     public Post getPostById(long postId) {
         return dao.getPostById(postId);
     }
+
+    public List<Post> getFriendsPosts(Long userId) {
+        return dao.getFriendsPosts(userId);
+    }
+
+    public List<Post> getFollowingPosts(Long userId) {
+        return dao.getFollowingPosts(userId);
+    }
+
+    public List<Post> getPostsByUsername(String username) {
+        return dao.getPostsByUsername(username);
+
+    }
+
+   
 }
