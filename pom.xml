@@ -88,13 +88,7 @@
             <version>1.9.2</version>
         </dependency>
 
-        <!--
-        <dependency>
-                <groupId>commons-collections</groupId>
-                <artifactId>commons-collections</artifactId>
-                <version>3.2.1</version>
-        </dependency>
-        -->
+        
         <!-- Spring Vaadin Integration -->
         <dependency>
             <groupId>ru.xpoft.vaadin</groupId>
@@ -107,6 +101,20 @@
             <artifactId>guava</artifactId>
             <version>18.0</version>
         </dependency>
+        
+        <!-- Jave image scaling library -->
+        <dependency>
+            <groupId>org.imgscalr</groupId>
+            <artifactId>imgscalr-lib</artifactId>
+            <version>4.2</version>
+        </dependency>
+        <!-- IO helpers -->
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>2.4</version>
+        </dependency>
+
         <!-- Hibernate library dependecy start -->
 		
                 
@@ -164,11 +172,7 @@
             <artifactId>slf4j-log4j12</artifactId>
             <version>1.7.13</version>
         </dependency>
-       <!-- <dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-classic</artifactId>
-            <version>1.1.2</version>
-        </dependency>-->
+
                 
         <!-- For database -->
         <dependency>

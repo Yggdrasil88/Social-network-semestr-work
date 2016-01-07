@@ -24,6 +24,8 @@ public class Users extends BaseEntity {
     private String username;
 
     private String password;
+    
+    private String userImageName;
 
     private int totalPosts = 0;
 
@@ -82,6 +84,16 @@ public class Users extends BaseEntity {
     public void setTotalFollowers(int totalFollowers) {
         this.totalFollowers = totalFollowers;
     }
+    
+    public String getUserImageName() {
+        return userImageName;
+    }
+
+    public void setUserImageName(String userImageName) {
+        this.userImageName = userImageName;
+    }
+    
+    
     @Transient
     public String getFullname(){
         return this.getName() + " " + this.getSurname();

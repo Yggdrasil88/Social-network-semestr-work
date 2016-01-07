@@ -5,9 +5,11 @@
  */
 package cz.zcu.pia.social.network.frontend.components.profile.profile;
 
+import com.vaadin.server.FileResource;
 import com.vaadin.server.Sizeable;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.CustomLayout;
+import com.vaadin.ui.Embedded;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
@@ -25,8 +27,10 @@ import cz.zcu.pia.social.network.backend.services.services.impl.UsersService;
 import cz.zcu.pia.social.network.frontend.components.posts.ComponentPost;
 import cz.zcu.pia.social.network.frontend.views.ViewHome;
 import cz.zcu.pia.social.network.frontend.views.ViewProfile;
+import cz.zcu.pia.social.network.helpers.Constants;
 import cz.zcu.pia.social.network.helpers.MessagesLoader;
 import cz.zcu.pia.social.network.helpers.SecurityHelper;
+import java.io.File;
 import javax.annotation.PostConstruct;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -46,7 +50,7 @@ public class ComponentProfilePost extends VerticalLayout {
     private static Logger logger = LoggerFactory.getLogger(ComponentProfilePost.class);
 
     private final static int LABEL_WIDTH = 150;
-
+    private final Embedded image = new Embedded();
     @Autowired
     private MessagesLoader msgs;
     private final CustomLayout layout = new CustomLayout("profile");
@@ -75,7 +79,7 @@ public class ComponentProfilePost extends VerticalLayout {
         this.setStyleName("text-align-center");
         this.setMargin(true);
         this.addComponent(layout);
-
+        image.setVisible(false);
         layout.setSizeUndefined();
         this.user = user;
     }
@@ -84,12 +88,11 @@ public class ComponentProfilePost extends VerticalLayout {
     public void postConstruct() {
 
         setLabels(user);
-
-        Label picture = new Label("IF  picture is required, picture here");
-        picture.setWidth(100, Sizeable.Unit.PIXELS);
-        picture.setHeight(100, Sizeable.Unit.PIXELS);
-        layout.addComponent(picture, "picture");
-
+        if (user.getUserImageName() != null) {
+            image.setVisible(true);
+            image.setSource(new FileResource(new File(Constants.BASE_PATH_RESIZED + user.getUserImageName())));
+            layout.addComponent(image, "picture");
+        }
         fullname = new Label(user.getFullname());
         layout.addComponent(fullname, "name");
 
@@ -190,13 +193,13 @@ public class ComponentProfilePost extends VerticalLayout {
                 if (event.getButton().getCaption().equals(msgs.getMessage("profile.add.follower"))) {
                     Following f = new Following(securityHelper.getLogedInUser(), user);
                     followingService.persist(f);
-                    
+
                     user.setTotalFollowers(user.getTotalFollowers() + 1);
                     usersService.update(user);
                     event.getButton().setCaption(msgs.getMessage("unfollow"));
                 } else {
                     followingService.removeFollow(securityHelper.getLogedInUser(), user);
-                   
+
                     user.setTotalFollowers(user.getTotalFollowers() - 1);
                     usersService.update(user);
                     event.getButton().setCaption(msgs.getMessage("profile.add.follower"));

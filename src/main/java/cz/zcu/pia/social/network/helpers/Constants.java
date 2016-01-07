@@ -5,11 +5,17 @@
  */
 package cz.zcu.pia.social.network.helpers;
 
+import java.io.File;
+
 /**
  *
  * @author Frantisek Kolenak
  */
 public class Constants {
+
     public static final int PAGE_LENGTH = 10;
     public static final int MAX_RESULTS = 50;
+    public static final String BASE_PATH = System.getProperty("user.home") + File.separatorChar + "pia" + File.separatorChar;
+    public static final String BASE_PATH_RESIZED = System.getProperty("user.home") + File.separatorChar + "pia" + File.separatorChar + "resized" + File.separatorChar ;
+
 }

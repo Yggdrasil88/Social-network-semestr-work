@@ -17,65 +17,104 @@ import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
 /**
- *
+ * Entity for comments
  * @author Frantisek Kolenak
  */
 @Entity
 public class Comments extends BaseEntity {
-
+    /**
+     * User that posted comment
+     */
     private Users user;
-
+    /**
+     * Commented post
+     */
     private Post post;
-
+    /**
+     * Comment message
+     */
     private String comment;
-
+    /**
+     * When the comment was sent
+     */
     private Date dateSent = new Date();
-    
+    /**
+     * Constructor for hibernate
+     */
     public Comments(){}
-    
+    /**
+     * Constructor
+     * @param user User that posted comment
+     * @param post Commented post
+     * @param comment Comment message
+     */
     public Comments(Users user, Post post, String comment){
         this.user = user;
         this.post = post;
         this.comment = comment;
     }
-
+    /**
+     * Gets User that posted comment
+     * @return User that posted comment
+     */
     @ManyToOne
     @Cascade({CascadeType.MERGE})
     @JoinColumn(name = "user_id", nullable = false)
     public Users getUser() {
         return user;
     }
-
+    /**
+     * Sets User that posted comment
+     * @param user User that posted comment 
+     */
     public void setUser(Users user) {
         this.user = user;
     }
-    
+    /**
+     * Gets Commented post
+     * @return Commented post
+     */
     @ManyToOne
     @Cascade({CascadeType.MERGE})
     @JoinColumn(name = "post_id", nullable = false)
     public Post getPost() {
         return post;
     }
-
+    /**
+     * Sets Commented post
+     * @param post Commented post
+     */
     public void setPost(Post post) {
         this.post = post;
     }
-    
+    /**
+     * Get Comment message
+     * @return Comment message
+     */
     @Column(name = "comment", nullable = false)
     public String getComment() {
         return comment;
     }
-
+    /**
+     * Set Comment message
+     * @param comment Comment message
+     */
     public void setComment(String comment) {
         this.comment = comment;
     }
-    
+    /**
+     * Get When the comment was sent
+     * @return When the comment was sent 
+     */
     @Column(name = "dateSent", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     public Date getDateSent() {
         return dateSent;
     }
-
+    /**
+     * Sets When the comment was sent
+     * @param dateSent When the comment was sent
+     */
     public void setDateSent(Date dateSent) {
         this.dateSent = dateSent;
     }

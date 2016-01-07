@@ -12,7 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
 /**
- *
+ * Base for entities
  * @author Frantisek Kolenak
  */
 @MappedSuperclass
@@ -20,12 +20,19 @@ public abstract class BaseEntity implements Serializable {
     
     private Long id;
     
+    /**
+     * Entity ID
+     * @return entity ID
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     public Long getId() {
         return id;
     }
-
+    /**
+     * Set entity ID
+     * @param id  if to set
+     */
     public void setId(Long id) {
         this.id = id;
     }

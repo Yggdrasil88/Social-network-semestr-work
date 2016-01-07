@@ -73,10 +73,11 @@ public class ComponentRegister extends FormLayout {
     protected PasswordField passwordRepeat;
     protected TextField validation;
     protected Button confirm;
-
+    protected  CustomLayout layout;
     public ComponentRegister() {
         this.setSpacing(true);
         this.setSizeUndefined();
+        layout = new CustomLayout("register");
     }
 
     @PostConstruct
@@ -87,7 +88,7 @@ public class ComponentRegister extends FormLayout {
         basicFieldSettings();
         addValidators();
 
-        CustomLayout layout = new CustomLayout("register");
+        
 
         layout.addComponent(name, "name");
         layout.addComponent(surname, "surname");

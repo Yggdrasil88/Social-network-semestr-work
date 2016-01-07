@@ -10,12 +10,13 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.UI;
+import com.vaadin.ui.Upload;
 import cz.zcu.pia.social.network.MyUI;
 import cz.zcu.pia.social.network.backend.entities.Users;
 import cz.zcu.pia.social.network.frontend.components.login.ComponentRegister;
-import cz.zcu.pia.social.network.helpers.SecurityHelper;
 import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
 /**
@@ -28,9 +29,9 @@ public class ComponentEditProfile extends ComponentRegister {
     private static final String INFO_UPDATED = "component.profile-edit.changes-saved";
     private ComponentProfile parentReference;
     private Users user;
-
     @Autowired
-    private SecurityHelper securityHelper;
+    private ApplicationContext appContext;
+    private ImageUploader receiver;
 
     public void setUser(Users user) {
         this.user = user;
@@ -40,7 +41,21 @@ public class ComponentEditProfile extends ComponentRegister {
     @Override
     @PostConstruct
     public void postConstruct() {
+        receiver = appContext.getBean(ImageUploader.class);
+        Upload upload = new Upload(msgs.getMessage("upload.image"), receiver);
+        upload.setButtonCaption(msgs.getMessage("upload"));
+        upload.addSucceededListener(receiver);
+
+        upload.addFailedListener(new Upload.FailedListener() {
+
+            @Override
+            public void uploadFailed(Upload.FailedEvent event) {
+                Notification.show(msgs.getMessage("upload.not.ok"));
+            }
+        });
+        this.layout.addComponent(upload,"upload");
         super.postConstruct();
+
         this.password.setVisible(false);
         this.passwordRepeat.setVisible(false);
         this.validation.setVisible(false);
@@ -92,9 +107,9 @@ public class ComponentEditProfile extends ComponentRegister {
         user.setName(bean.getName());
         user.setSurname(bean.getSurname());
         user.setUsername(bean.getUsername());
-        
-        ( (MyUI)UI.getCurrent()).getHeader().setUsersFullName(user);
-        
+
+        ((MyUI) UI.getCurrent()).getHeader().setUsersFullName(user);
+
         usersService.update(user);
         Notification.show(msgs.getMessage(INFO_UPDATED), Notification.Type.ERROR_MESSAGE);
         resetValues();
@@ -104,6 +119,8 @@ public class ComponentEditProfile extends ComponentRegister {
 
     public void setParentReference(ComponentProfile parentReference) {
         this.parentReference = parentReference;
+        receiver.setParentReference(parentReference);
+
     }
 
     @Override
