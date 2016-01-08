@@ -6,7 +6,7 @@
 package cz.zcu.pia.social.network.helpers;
 
 /**
- *
+ * Values for filter
  * @author Frantisek Kolenak
  */
 public enum FilterValues {

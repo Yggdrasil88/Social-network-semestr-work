@@ -8,7 +8,7 @@ package cz.zcu.pia.social.network.helpers;
 import java.io.File;
 
 /**
- *
+ * Constants 
  * @author Frantisek Kolenak
  */
 public class Constants {

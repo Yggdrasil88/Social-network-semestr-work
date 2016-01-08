@@ -31,7 +31,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 /**
- *
+ * Filter for posts
  * @author Frantisek Kolenak
  */
 @Component
@@ -39,33 +39,71 @@ import org.springframework.stereotype.Component;
 public class ComponentPostsFilter extends HorizontalLayout {
 
     private static final Logger logger = LoggerFactory.getLogger(ComponentPostsFilter.class);
-
+    /**
+     * Security Helper
+     */
     @Autowired
     private SecurityHelper securityHelper;
+    /**
+     * Tag Service
+     */
     @Autowired
     private TagService tagsService;
+    /**
+     * Users Service
+     */
     @Autowired
     private UsersService usersService;
+    /**
+     * Post Service
+     */
     @Autowired
     private PostService postService;
+    /**
+     * Post Tags Service
+     */
     @Autowired
     private PostTagsService postTagsService;
+    /**
+     * Application Context
+     */
     @Autowired
     private ApplicationContext applicationContext;
+    /**
+     * Visibility helper
+     */
     @Autowired
     private Visibility visibilityHelper;
+    /**
+     * currentPage
+     */
     private int currentPage = 0;
+    /**
+     * Component Post Paginator reference
+     */
     private ComponentPostPaginator postPaginator;
     /**
      * Messages helper
      */
     @Autowired
     protected MessagesLoader msgs;
-
+    /**
+     * Combobox for filter by
+     */
     private final ComboBox filterBy;
+    /**
+     * Combobox filter
+     */
     private final ComboBox filter;
+    /**
+     * Posts wrapper, this is where it stores posts
+     */
     private final VerticalLayout postsWrapper;
-
+    /**
+     * Constructor
+     * @param postsWrapper postsWrapper reference
+     * @param postPaginator  postPaginator reference
+     */
     public ComponentPostsFilter(VerticalLayout postsWrapper, ComponentPostPaginator postPaginator) {
         this.postsWrapper = postsWrapper;
 
@@ -80,7 +118,9 @@ public class ComponentPostsFilter extends HorizontalLayout {
         this.setSpacing(true);
         this.postPaginator = postPaginator;
     }
-
+    /**
+     * Post construct
+     */
     @PostConstruct
     public void postConstruct() {
         filterBy.setDescription(msgs.getMessage("filter.by.description"));
@@ -108,7 +148,10 @@ public class ComponentPostsFilter extends HorizontalLayout {
         filterBy.setValue(msgs.getMessage(FilterValues.FILTER_FROM));
 
     }
-
+    /**
+     * Filter by method for combobox
+     * @param filterValue  filter Value
+     */
     private void filterBytMethod(Object filterValue) {
         String value = (String) filterValue;
         if (value.equals(msgs.getMessage(FilterValues.FILTER_FROM))) {
@@ -134,7 +177,10 @@ public class ComponentPostsFilter extends HorizontalLayout {
             }
         }
     }
-
+    /**
+     * Filter method for filter combobox
+     * @param filterValue filter Value
+     */
     private void filterMethod(Object filterValue) {
         if (filterValue == null) {
             return;
@@ -160,7 +206,9 @@ public class ComponentPostsFilter extends HorizontalLayout {
             addPostsByName(userInfo);
         }
     }
-
+    /**
+     * Adds public posts to the wrapper
+     */
     private void addPublicPosts() {
         postsWrapper.removeAllComponents();
         List<Post> posts = postService.getPublicPosts();
@@ -177,13 +225,18 @@ public class ComponentPostsFilter extends HorizontalLayout {
             i++;
         }
     }
-
+    /**
+     * Adds buttons to paginator
+     * @param paginatorSize paginator Size
+     */
     private void postPaginatorAddButtons(int paginatorSize) {
         if (postPaginator != null) {
             postPaginator.addButtons(paginatorSize);
         }
     }
-
+    /**
+     * Adds friends posts
+     */
     private void addFriendsPosts() {
         postsWrapper.removeAllComponents();
         Long userId = securityHelper.getLogedInUser().getId();
@@ -202,7 +255,9 @@ public class ComponentPostsFilter extends HorizontalLayout {
             i++;
         }
     }
-
+    /**
+     * Adds following posts
+     */
     private void addFollowingPosts() {
         postsWrapper.removeAllComponents();
         Long userId = securityHelper.getLogedInUser().getId();
@@ -221,7 +276,10 @@ public class ComponentPostsFilter extends HorizontalLayout {
             i++;
         }
     }
-
+    /**
+     * Adds posts by tag
+     * @param tagName tag Name
+     */
     private void addPostsByTag(String tagName) {
 
         postsWrapper.removeAllComponents();
@@ -240,7 +298,10 @@ public class ComponentPostsFilter extends HorizontalLayout {
             i++;
         }
     }
-
+    /**
+     * Adds posts by selected user name
+     * @param user 
+     */
     private void addPostsByName(UserInfo user) {
         postsWrapper.removeAllComponents();
         List<Post> posts = postService.getPostsByUsername(user.getUsername());
@@ -258,45 +319,68 @@ public class ComponentPostsFilter extends HorizontalLayout {
             i++;
         }
     }
-
-    public void setPostPaginator(ComponentPostPaginator postPaginator) {
-        this.postPaginator = postPaginator;
-    }
-
+    /**
+     * Reload filter
+     */
     public void reload() {
         this.filterMethod(filter.getValue());
     }
-
+    /**
+     * Sets page and load new posts
+     * @param page 
+     */
     public void setPageAndReload(int page) {
         logger.debug("Page given: {}", page);
 
         this.currentPage = page;
         reload();
-    }
-
+    }   
+    /**
+     * Class for simple info about user
+     */
     private class UserInfo {
-
+        /**
+         * Fullname
+         */
         private String fullname;
-
+        /**
+         * Username
+         */
         private String username;
-
+        /**
+         * Constructor
+         * @param fullname fullname
+         * @param username  username
+         */
         public UserInfo(String fullname, String username) {
             this.fullname = fullname;
             this.username = username;
         }
-
+        /**
+         * Gets fullname
+         * @return fullname
+         */
         public String getFullname() {
             return fullname;
         }
-
+        /**
+         * Sets fullname
+         * @param fullname fullname
+         */
         public void setFullname(String fullname) {
             this.fullname = fullname;
         }
-
+        /**
+         * Gets username
+         * @return username
+         */
         public String getUsername() {
             return username;
         }
-
+        /**
+         * Sets username
+         * @param username username 
+         */
         public void setUsername(String username) {
             this.username = username;
         }

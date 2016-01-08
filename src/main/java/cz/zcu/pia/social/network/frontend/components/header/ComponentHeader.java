@@ -378,7 +378,7 @@ public class ComponentHeader extends HorizontalLayout {
     }
     /**
      * Sets users name to the header
-     * @param fullName users name
+     * @param user user
      */
     public void setUsersFullName(Users user) {
         userInfo.setValue(user.getName() + " " + user.getSurname());

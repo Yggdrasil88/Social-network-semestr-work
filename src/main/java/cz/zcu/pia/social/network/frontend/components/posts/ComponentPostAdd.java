@@ -37,7 +37,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 /**
- *
+ * Component for adding posts
  * @author Frantisek Kolenak
  */
 @Component
@@ -45,34 +45,84 @@ import org.springframework.stereotype.Component;
 public class ComponentPostAdd extends VerticalLayout {
 
     private final Logger logger = LoggerFactory.getLogger(ComponentPostAdd.class);
+    /**
+     * Messages helper
+     */
     @Autowired
     protected MessagesLoader msgs;
+    /**
+     * Visibility helper
+     */
     @Autowired
     private Visibility visibility;
-
+    /**
+     * Component layout
+     */
     protected CustomLayout layout = new CustomLayout("addPost");
-
+    /**
+     * Visibility combobox
+     */
     protected ComboBox visibilityComboBox;
+    /**
+     * Message text area
+     */
     protected TextArea message = new TextArea();
+    /**
+     * Room for created tags
+     */
     protected HorizontalLayout tags;
+    /**
+     * New tag
+     */
     protected TextField newTag;
+    /**
+     * Confirm button
+     */
     private Button confirmButton;
+    /**
+     * Tag list
+     */
     private List<Button> taglist = new ArrayList();
+    /**
+     * Panel for tags (wrapper to activate scrolling if content too big)
+     */
     private Panel panel;
-    
+    /**
+     * Parent reference
+     */
     private ViewHome parentReference;
+    /**
+     * Users service
+     */
     @Autowired
     private UsersService usersService;
+    /**
+     * Post Service
+     */
     @Autowired
     protected PostService postService;
+    /**
+     * Post Tags Service
+     */
     @Autowired
     private PostTagsService postTagsService;
+    /**
+     * Tag Service
+     */
     @Autowired
     private TagService tagService;
+    /**
+     * Security Helper
+     */
     @Autowired
     protected SecurityHelper securityHelper;
+    /**
+     * Sub window this is in
+     */
     private Window subWindow;
-
+    /**
+     * Constructor
+     */
     public ComponentPostAdd() {
 
         this.setSpacing(true);
@@ -111,7 +161,9 @@ public class ComponentPostAdd extends VerticalLayout {
         onEnterHandler.installOn(newTag);
 
     }
-
+    /**
+     * Post construct
+     */
     @PostConstruct
     public void postConstruct() {
         visibilityComboBox = visibility.getVisibilityComboBox();
@@ -139,7 +191,10 @@ public class ComponentPostAdd extends VerticalLayout {
         layout.addComponent(confirmButton, "okButton");
 
     }
-
+    /**
+     * Post button function
+     * @param event click event
+     */
     protected void postButtonFunction(Button.ClickEvent event) {
         if (message.getValue().equals("") || message.getValue() == null) {
             Notification.show(msgs.getMessage("post.add.empty-msg"),Notification.Type.ERROR_MESSAGE);
@@ -175,14 +230,24 @@ public class ComponentPostAdd extends VerticalLayout {
         parentReference.reload();
         subWindow.close();
     }
-
+    /**
+     * Merge all tags
+     * @param tags found tags
+     * @param saveTags newly saved tags
+     * @return merged tag list
+     */
     private List<Tag> mergeTags(List<Tag> tags, List<Tag> saveTags) {
         for (Tag t : saveTags) {
             tags.add(t);
         }
         return tags;
     }
-
+    /**
+     * Create not found tag list
+     * @param allTags all Tags list
+     * @param foundTags found Tags
+     * @return  not found tag list
+     */
     private List<Tag> createNotFoundTags(List<String> allTags, List<Tag> foundTags) {
 
         List<Tag> tagsToSave = new ArrayList();
@@ -202,7 +267,10 @@ public class ComponentPostAdd extends VerticalLayout {
 
         return tagsToSave;
     }
-
+    /**
+     * Create tag list
+     * @return tag list
+     */
     private List<String> createTags() {
         List<String> tags = new ArrayList();
         for (Button tag : taglist) {
@@ -210,11 +278,17 @@ public class ComponentPostAdd extends VerticalLayout {
         }
         return tags;
     }
-
+    /**
+     * Sets component parent
+     * @param parentReference  parent Reference
+     */
     public void setComponentParent(ViewHome parentReference) {
         this.parentReference = parentReference;
     }
-
+    /**
+     * Sets window its in
+     * @param subWindow window its in
+     */
     public void setWindow(Window subWindow) {
         this.subWindow = subWindow;
     }

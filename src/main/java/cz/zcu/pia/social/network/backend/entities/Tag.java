@@ -10,26 +10,39 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 
 /**
- *
+ * Tag
  * @author Frantisek Kolenak
  */
 @Entity
 public class Tag extends BaseEntity{
-    
+    /**
+     * Tag name
+     */
     private String tagName;
-    
+    /**
+     * Constructor
+     */
     public Tag(){
     }
-    
+    /**
+     * Constructor
+     * @param tagName Tag name 
+     */
     public Tag(String tagName){
         this.tagName = tagName;
     }
-    
+    /**
+     * Gets Tag name
+     * @return Tag name
+     */
     @Column(name = "name", nullable = false, unique = true)
     public String getTagName() {
         return tagName;
     }
-
+    /**
+     * Sets Tag name
+     * @param tagName Tag name
+     */
     public void setTagName(String tagName) {
         this.tagName = tagName;
     }

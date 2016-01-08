@@ -8,22 +8,16 @@ package cz.zcu.pia.social.network.frontend.views;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
-import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.Notification;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 import cz.zcu.pia.social.network.MyUI;
-import cz.zcu.pia.social.network.backend.entities.Post;
-import cz.zcu.pia.social.network.backend.services.services.impl.PostService;
 import cz.zcu.pia.social.network.frontend.components.posts.ComponentPost;
 import cz.zcu.pia.social.network.frontend.components.posts.ComponentPostAdd;
 import cz.zcu.pia.social.network.frontend.components.posts.ComponentPostPaginator;
 import cz.zcu.pia.social.network.frontend.components.posts.ComponentPostsFilter;
-import cz.zcu.pia.social.network.helpers.FilterValues;
 import cz.zcu.pia.social.network.helpers.SecurityHelper;
-import java.util.List;
 import javax.annotation.PostConstruct;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,7 +28,7 @@ import org.springframework.stereotype.Component;
 import ru.xpoft.vaadin.VaadinView;
 
 /**
- *
+ * View Home
  * @author Frantisek Kolenak
  */
 @Component
@@ -46,16 +40,36 @@ public class ViewHome extends ViewBase {
     public static final String BUTTON_DESCRIPTION = "view.home.add-description";
 
     private static final Logger logger = LoggerFactory.getLogger(ViewHome.class);
+    /**
+     * ApplicationContext
+     */
     @Autowired
     private ApplicationContext applicationContext;
+    /**
+     * Security Helper
+     */
     @Autowired
     private SecurityHelper securityHelper;
+    /**
+     * Component Posts Filter
+     */
     private ComponentPostsFilter postsFilter;
+    /**
+     * Component Post Paginator
+     */
     private ComponentPostPaginator postPaginator;
 
+    /**
+     * Add post button
+     */
     private Button addPost;
+    /**
+     * post Wrapper
+     */
     private final VerticalLayout postWrapper;
-
+    /**
+     * Constructor
+     */
     public ViewHome() {
         super();
         postWrapper = new VerticalLayout();
@@ -104,7 +118,10 @@ public class ViewHome extends ViewBase {
         this.getContentWrapper().addComponent(postWrapper);
         this.getContentWrapper().addComponent(postPaginator);
     }
-
+    /**
+     * Add button function
+     * @param event  click event
+     */
     private void addButtonFunction(Button.ClickEvent event) {
         Window subWindow = new Window(msgs.getMessage("post.add.new"));
         subWindow.setModal(true);
@@ -123,7 +140,9 @@ public class ViewHome extends ViewBase {
     public void enter(ViewChangeListener.ViewChangeEvent event) {
         ((MyUI) UI.getCurrent()).getHeader().setSelectedMenuItem(1);
     }
-
+    /**
+     * Reload what is needed
+     */
     public void reload() {
         postsFilter.reload();
     }

@@ -19,7 +19,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 /**
- *
+ *Component post comment
  * @author Frantisek Kolenak
  */
 @Component
@@ -27,21 +27,37 @@ import org.springframework.stereotype.Component;
 public class ComponentPostComments extends VerticalLayout {
 
     private static Logger logger = LoggerFactory.getLogger(ComponentPostComments.class);
-
+    /**
+     * Comments service
+     */
     @Autowired
     private CommentsService commentsService;
+    /**
+     *  Security Helper
+     */
     @Autowired
     private SecurityHelper securityHelper;
 
-
+    /**
+     * New comments
+     */
     private VerticalLayout newComment;
+    /**
+     * Comments
+     */
     private VerticalLayout comments;
-
+    /**
+     * Post id
+     */
     private Long postId;
-
+    /**
+     * Application Context
+     */
     @Autowired
     private ApplicationContext appContext;
-
+    /**
+     * Constructor
+     */
     public ComponentPostComments() {
         newComment = new VerticalLayout();
         comments = new VerticalLayout();
@@ -52,13 +68,18 @@ public class ComponentPostComments extends VerticalLayout {
         this.setSpacing(true);
 
     }
-
+    /**
+     * Constructor that sets post id
+     * @param postId post id
+     */
     public ComponentPostComments(Long postId) {
         this();
 
         this.postId = postId;
     }
-
+    /**
+     * Post construct
+     */
     @PostConstruct
     public void postConstruct() {
 
@@ -71,7 +92,9 @@ public class ComponentPostComments extends VerticalLayout {
         }
         reload();
     }
-
+    /**
+     * Reload comments
+     */
     public void reload() {
         comments.removeAllComponents();
         List<Comments> commentsList = commentsService.getCommentsForPost(this.postId);

@@ -1,8 +1,6 @@
 package cz.zcu.pia.social.network.frontend.views;
 
 import com.vaadin.navigator.ViewChangeListener;
-import com.vaadin.ui.Button;
-import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.UI;
 import cz.zcu.pia.social.network.MyUI;
 import cz.zcu.pia.social.network.frontend.components.login.ComponentLogin;
@@ -16,7 +14,7 @@ import org.springframework.stereotype.Component;
 import ru.xpoft.vaadin.VaadinView;
 
 /**
- *
+ * View login
  * @author Frantisek Kolenak
  */
 @Component
@@ -32,7 +30,9 @@ public class ViewLogin extends ViewBase {
      */
     @Autowired
     private SecurityHelper securityHelper;
-    
+    /**
+     * Login component
+     */
     @Autowired
     private ComponentLogin login;
     

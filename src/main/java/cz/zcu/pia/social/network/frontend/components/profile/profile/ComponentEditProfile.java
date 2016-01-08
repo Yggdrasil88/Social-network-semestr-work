@@ -20,24 +20,39 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
 /**
- *
+ * Component for editing profile
  * @author Frantisek Kolenak
  */
 @Component
 public class ComponentEditProfile extends ComponentRegister {
 
     private static final String INFO_UPDATED = "component.profile-edit.changes-saved";
+    /**
+     * Parent reference
+     */
     private ComponentProfile parentReference;
+    /**
+     * User
+     */
     private Users user;
+    /**
+     * Application context
+     */
     @Autowired
     private ApplicationContext appContext;
+    /**
+     * Image uploader
+     */
     private ImageUploader receiver;
-
+    /**
+     * Sets user
+     * @param user user
+     */
     public void setUser(Users user) {
         this.user = user;
         this.setValues();
     }
-
+    
     @Override
     @PostConstruct
     public void postConstruct() {
@@ -60,7 +75,7 @@ public class ComponentEditProfile extends ComponentRegister {
         this.passwordRepeat.setVisible(false);
         this.validation.setVisible(false);
 
-    }
+    }   
 
     @Override
     protected HorizontalLayout getRegisterButton() {
@@ -92,7 +107,9 @@ public class ComponentEditProfile extends ComponentRegister {
         wrapper.setSpacing(true);
         return wrapper;
     }
-
+    /**
+     * Sets values to the fields
+     */
     private void setValues() {
         bean.setName(user.getName());
         bean.setSurname(this.user.getSurname());
@@ -116,7 +133,10 @@ public class ComponentEditProfile extends ComponentRegister {
         parentReference.swapComponents();
         parentReference.reload(user);
     }
-
+    /**
+     * Sets parent reference
+     * @param parentReference parent reference 
+     */
     public void setParentReference(ComponentProfile parentReference) {
         this.parentReference = parentReference;
         receiver.setParentReference(parentReference);

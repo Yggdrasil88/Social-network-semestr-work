@@ -29,7 +29,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 /**
- *
+ * Component for login
  * @author Frantisek Kolenak
  */
 @Component
@@ -43,18 +43,32 @@ public class ComponentLogin extends VerticalLayout {
     private static final String INFO_PASSWORD = "password";
     private static final String INFO_LOG_IN_BUTTON = "login.login";
     private static final String ERROR_NOT_CORRECT_LOGIN = "login.not-correct-login";
-
+    /**
+     * Messages helper
+     */
     @Autowired
     private MessagesLoader msgs;
+    /**
+     * Users service
+     */
     @Autowired
     private UsersService usersService;
-
+    /**
+     * Security helper
+     */
     @Autowired
     private SecurityHelper securityHelper;
-
-    private TextField nickname = new TextField();
-    private PasswordField password = new PasswordField();
-
+    /**
+     * Nickname field
+     */
+    private final TextField nickname = new TextField();
+    /**
+     * Password field
+     */
+    private final PasswordField password = new PasswordField();
+    /**
+     * Constructor
+     */
     public ComponentLogin() {
         this.setSizeUndefined();
         nickname.setRequired(true);
@@ -86,7 +100,10 @@ public class ComponentLogin extends VerticalLayout {
         content.addComponent(login, "okbutton");
 
     }
-
+    /**
+     * Creates register button
+     * @return register button
+     */
     private Button createRegisterButton() {
         Button register = new Button(msgs.getMessage(INFO_REGISTER));
         register.setStyleName(STYLE_BUTTON_LABEL);
@@ -102,7 +119,10 @@ public class ComponentLogin extends VerticalLayout {
 
         return register;
     }
-
+    /**
+     * Creates login button
+     * @return login button
+     */
     private Button createLoginButton() {
         Button login = new Button(msgs.getMessage(INFO_LOG_IN_BUTTON));
         login.setClickShortcut(ShortcutAction.KeyCode.ENTER);

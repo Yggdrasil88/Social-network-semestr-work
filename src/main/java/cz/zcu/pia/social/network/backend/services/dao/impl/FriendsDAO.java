@@ -17,14 +17,19 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 /**
- *
+ * Friends DAO
  * @author Frantisek Kolenak
  */
 @Component
 public class FriendsDAO extends GenericDAO<Friends> {
 
     private static final Logger logger = LoggerFactory.getLogger(FriendsDAO.class);
-
+    /**
+     * Gets friend
+     * @param logedInUser logedInUser
+     * @param user user
+     * @return friends
+     */
     public Friends getFriend(Users logedInUser, Users user) {
         Session session = getCurrentSession();
         try {
@@ -38,7 +43,11 @@ public class FriendsDAO extends GenericDAO<Friends> {
             closeSession(session);
         }
     }
-
+    /**
+     * Gets friends of user
+     * @param logedInUser user
+     * @return friends of user
+     */
     public List<Friends> getFriend(Users logedInUser) {
         Session session = getCurrentSession();
         try {

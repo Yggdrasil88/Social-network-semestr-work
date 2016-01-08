@@ -14,7 +14,7 @@ import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
- *
+ * View base
  * @author Frantisek Kolenak
  */
 public class ViewBase extends Panel implements View {

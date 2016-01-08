@@ -37,7 +37,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 /**
- *
+ * Component post
  * @author Frantisek Kolenak
  */
 @Component
@@ -49,36 +49,91 @@ public class ComponentPost extends VerticalLayout {
     public static final int POST_WIDTH = 450;
     private static final String POST_STYLE_NAME = "post";
     private static final String LAYOUT_NAME = "post-button-name";
+    /**
+     * Messages
+     */
     @Autowired
     private MessagesLoader msgs;
+    /**
+     * Rated Posts Service
+     */
     @Autowired
     private RatedPostsService ratedPostsService;
+    /**
+     * Post Service
+     */
     @Autowired
     private PostService postService;
+    /**
+     * Security Helper
+     */
     @Autowired
     protected SecurityHelper securityHelper;
+    /**
+     * Post Tags Service
+     */
     @Autowired
     private PostTagsService postTagsService;
+    /**
+     * Application Context
+     */
     @Autowired
     private ApplicationContext applicationContext;
-
+    /**
+     * Wrapper
+     */
     private VerticalLayout wrapper;
+    /**
+     * Button name
+     */
     protected Button name;
+    /**
+     * Button likes
+     */
     protected Button likes;
+    /**
+     * Disagrees
+     */
     protected Button disagrees;
+    /**
+     * Tags
+     */
     private Button tags;
+    /**
+     * Comments
+     */
     private Button comments;
-
+    /**
+     * Timestamp
+     */
     protected Label timestamp;
-
+    /**
+     * Post message
+     */
     private Label postMessage;
+    /**
+     * post id
+     */
     private long postId;
+    /**
+     * number of likes
+     */
     private int numberOfLikes;
+    /**
+     * number of disagrees
+     */
     private int numberOfDisagrees;
+    /**
+     * number of comments
+     */
     private int numberOfComments;
-
+    /**
+     * Component layout
+     */
     protected CustomLayout layout = new CustomLayout("post");
-
+    /**
+     * Constructor
+     */
     public ComponentPost() {
         wrapper = new VerticalLayout();
         wrapper.setMargin(true);
@@ -99,7 +154,16 @@ public class ComponentPost extends VerticalLayout {
         this.tags = new Button();
         this.tags.setStyleName("button-label-simple");
     }
-
+    /**
+     * Constructor that sets values
+     * @param postId postId
+     * @param name name
+     * @param date date
+     * @param numberOflikes numberOflikes
+     * @param numberOfdisagrees numberOfdisagrees
+     * @param postMessage postMessage
+     * @param numberOfComments  numberOfComments
+     */
     public ComponentPost(long postId, String name, Date date, int numberOflikes, int numberOfdisagrees, String postMessage, int numberOfComments) {
         this();
         this.numberOfLikes = numberOflikes;
@@ -115,7 +179,9 @@ public class ComponentPost extends VerticalLayout {
 
         this.postId = postId;
     }
-
+    /**
+     * Post construct
+     */
     @PostConstruct
     public void postConstruct() {
         addClickListeners();
@@ -129,14 +195,18 @@ public class ComponentPost extends VerticalLayout {
         enableRates();
 
     }
-
+    /**
+     * Enable ratings
+     */
     protected void enableRates() {
         if (!this.securityHelper.isAuthenticated()) {
             likes.setEnabled(false);
             disagrees.setEnabled(false);
         }
     }
-
+    /**
+     * Adds post informations
+     */
     private void addPostInfo() {
 
         Label likeIMG = new Label();
@@ -157,25 +227,38 @@ public class ComponentPost extends VerticalLayout {
         layout.addComponent(timestamp, "timestamp");
 
     }
-
+    /**
+     * Gets like caption
+     * @return  like caption
+     */
     private String getLikesCaption() {
         return msgs.getMessage("post.likes") + " (" + this.numberOfLikes + ")";
     }
-
+    /**
+     * Gets disagree caption
+     * @return disagree caption
+     */
     private String getDisagreeCaption() {
         return msgs.getMessage("post.disagrees") + " (" + this.numberOfDisagrees + ")";
     }
-
+    /**
+     * Adds post message label to the layout
+     */
     private void addPostMessage() {
         VerticalLayout base = new VerticalLayout();
         base.addComponent(postMessage);
         layout.addComponent(base, "message");
     }
-
+    /**
+     * Gets comments caption
+     * @return comments caption
+     */
     private String getCommentsCaption() {
         return msgs.getMessage("post.comments") + " (" + this.numberOfComments + ")";
     }
-
+    /**
+     * Adds bottom to the layout (comments and tags)
+     */
     private void addBottom() {
 
         comments.setCaption(getCommentsCaption());
@@ -185,13 +268,19 @@ public class ComponentPost extends VerticalLayout {
         layout.addComponent(tags, "tags");
 
     }
-
+    /**
+     * Sets message
+     * @param postMessage message
+     */
     protected final void setMessage(String postMessage) {
         this.postMessage.setReadOnly(false);
         this.postMessage.setValue(postMessage);
         this.postMessage.setReadOnly(true);
     }
-
+    /**
+     * Gets name layout
+     * @return name 
+     */
     private com.vaadin.ui.Component getNameLayout() {
         name.setStyleName(LAYOUT_NAME);
         name.addStyleName("button-label-simple");
@@ -210,7 +299,9 @@ public class ComponentPost extends VerticalLayout {
         SimpleDateFormat sdfDate = new SimpleDateFormat("HH:mm dd.MM.yyyy");//dd/MM/yyyy
         return sdfDate.format(date);
     }
-
+    /**
+     * Adds click listeners to the buttons
+     */
     private void addClickListeners() {
         this.likes.addClickListener(new Button.ClickListener() {
 
@@ -341,7 +432,9 @@ public class ComponentPost extends VerticalLayout {
             }
         });
     }
-
+    /**
+     * Updates hate like captions
+     */
     private void updateHateLike() {
         likes.setCaption(getLikesCaption());
         disagrees.setCaption(getDisagreeCaption());

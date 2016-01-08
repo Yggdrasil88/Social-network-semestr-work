@@ -13,7 +13,7 @@ import com.vaadin.ui.VerticalLayout;
 
 
 /**
- *
+ * Error view
  * @author Frantisek Kolenak
  */
 
@@ -23,6 +23,9 @@ public class ViewError extends Panel implements View {
      * Content wrapper
      */
     protected VerticalLayout contentWrapper;
+    /**
+     * Constructor
+     */
     public ViewError(){
         setSizeFull();
 

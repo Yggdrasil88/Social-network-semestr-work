@@ -26,21 +26,36 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
- *
+ * Image uploader, handles events when uploading
  * @author Frantisek Kolenak
  */
 @Component
 public class ImageUploader implements Upload.Receiver, Upload.SucceededListener {
 
     private static Logger logger = LoggerFactory.getLogger(ComponentProfile.class);
+    /**
+     * Security Helper
+     */
     @Autowired
     private SecurityHelper securityHelper;
+    /**
+     * Messages Loader
+     */
     @Autowired
     private MessagesLoader msgs;
+    /**
+     * Users Service
+     */
     @Autowired
     private UsersService usersService;
+    /**
+     * file that is saved
+     */
     public File file;
 
+    /**
+     * ComponentProfile parent
+     */
     private ComponentProfile parent;
 
     @Override
@@ -114,7 +129,10 @@ public class ImageUploader implements Upload.Receiver, Upload.SucceededListener 
         }
 
     }
-
+    /**
+     * Sets parent reference
+     * @param parent 
+     */
     void setParentReference(ComponentProfile parent) {
         this.parent = parent;
     }

@@ -12,7 +12,7 @@ import com.vaadin.event.ShortcutListener;
 import com.vaadin.ui.TextField;
 
 /**
- *
+ * Handles enter key pressed, its added to text field 
  * @author Ramón Talavera
  * @author http://ramontalaverasuarez.blogspot.cz/2014/06/vaadin-7-detect-enter-key-in-textfield.html
  */

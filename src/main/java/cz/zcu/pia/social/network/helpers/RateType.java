@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 
 
 /**
- *
+ * Rate type
  * @author Frantisek Kolenak
  */
 @Component

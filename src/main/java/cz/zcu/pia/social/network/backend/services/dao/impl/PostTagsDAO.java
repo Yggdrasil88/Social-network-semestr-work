@@ -20,14 +20,18 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 /**
- *
+ * Posts tags
  * @author Frantisek Kolenak
  */
 @Component
 public class PostTagsDAO extends GenericDAO<PostTags> {
 
     private Logger logger = LoggerFactory.getLogger(PostTagsDAO.class);
-
+    /**
+     * Gets posts tags
+     * @param postId post id
+     * @return posts tags
+     */
     public List<Tag> getPostTags(long postId) {
         Session session = getCurrentSession();
         try {
@@ -40,7 +44,11 @@ public class PostTagsDAO extends GenericDAO<PostTags> {
             return new ArrayList();
         }
     }
-
+    /**
+     * Gets posts by tag
+     * @param tagName
+     * @return 
+     */
     public List<Post> getPostsByTag(String tagName) {
         Session session = this.getCurrentSession();
         try {

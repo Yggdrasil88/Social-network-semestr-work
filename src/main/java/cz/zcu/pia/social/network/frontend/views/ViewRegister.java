@@ -9,7 +9,6 @@ import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.ui.UI;
 import cz.zcu.pia.social.network.MyUI;
 import cz.zcu.pia.social.network.frontend.components.login.ComponentRegister;
-import cz.zcu.pia.social.network.frontend.components.profile.profile.ComponentEditProfile;
 import cz.zcu.pia.social.network.helpers.SecurityHelper;
 import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +17,7 @@ import org.springframework.stereotype.Component;
 import ru.xpoft.vaadin.VaadinView;
 
 /**
- *
+ * View Register
  * @author Frantisek Kolenak
  */
 @Component
@@ -32,7 +31,9 @@ public class ViewRegister extends ViewBase {
      */
     @Autowired
     private SecurityHelper securityHelper;
-    
+    /**
+     * Component for registering users
+     */
     @Autowired
     private ComponentRegister componentRegister;
     /**

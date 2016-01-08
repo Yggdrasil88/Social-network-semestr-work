@@ -6,12 +6,9 @@
 package cz.zcu.pia.social.network.backend.services.dao.impl;
 
 import cz.zcu.pia.social.network.backend.entities.Tag;
-import cz.zcu.pia.social.network.backend.entities.Users;
 import cz.zcu.pia.social.network.backend.services.dao.GenericDAO;
-import cz.zcu.pia.social.network.frontend.components.posts.ComponentPostAdd;
 import java.util.ArrayList;
 import java.util.List;
-import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.exception.ConstraintViolationException;
@@ -20,14 +17,18 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 /**
- *
+ * Tags DAO
  * @author Frantisek Kolenak
  */
 @Component
 public class TagDAO extends GenericDAO<Tag> {
 
     private final Logger logger = LoggerFactory.getLogger(TagDAO.class);
-
+    /**
+     * Save tags in list
+     * @param tagList tag list
+     * @return result (<=0 is bad)
+     */
     public int saveTags(List<Tag> tagList) {
         if (tagList == null || tagList.isEmpty()) {
             return 0;
@@ -51,7 +52,11 @@ public class TagDAO extends GenericDAO<Tag> {
 
     }
 
-
+    /**
+     * Gets all tags in database in the list
+     * @param nameList tags name List
+     * @return  all tags in database in the list
+     */
     public List<Tag> getTagsByName(List<String> nameList) {
         if (nameList == null || nameList.isEmpty()) {
             return new ArrayList<Tag>();
@@ -72,6 +77,5 @@ public class TagDAO extends GenericDAO<Tag> {
             session.close();
         }
 
-        // return null;
     }
 }

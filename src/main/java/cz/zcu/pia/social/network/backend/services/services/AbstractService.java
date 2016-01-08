@@ -11,13 +11,17 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- *
+ * 
+ * Abstract Service
  * @author Frantisek Kolenak
+ * @param <T> represents entity
  */
 public abstract class AbstractService<T extends Serializable> implements GenericDAOInterface<T> {
 
     /**
      * Saves entity
+     * @param entity entity to save
+     * @return entity id
      */
     @Override
     public Long persist(T entity) {

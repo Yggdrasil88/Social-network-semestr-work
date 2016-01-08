@@ -6,11 +6,8 @@
 package cz.zcu.pia.social.network.frontend.views;
 
 import com.vaadin.navigator.ViewChangeListener;
-import com.vaadin.ui.Button;
-import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.TabSheet;
 import com.vaadin.ui.UI;
-import com.vaadin.ui.VerticalLayout;
 import cz.zcu.pia.social.network.MyUI;
 import cz.zcu.pia.social.network.frontend.components.profile.friends.ComponentFriends;
 import cz.zcu.pia.social.network.frontend.components.profile.profile.ComponentProfile;
@@ -24,7 +21,7 @@ import org.springframework.stereotype.Component;
 import ru.xpoft.vaadin.VaadinView;
 
 /**
- *
+ * View profile
  * @author Frantisek Kolenak
  */
 @Component
@@ -36,11 +33,19 @@ public class ViewProfile extends ViewBase {
     public final static int COMPONENT_WIDTH = 450;
     private static final Logger logger
         = LoggerFactory.getLogger(ViewProfile.class);
+    /**
+     * Users profile
+     */
     @Autowired
     private ComponentProfile profile;
+    /**
+     * Users friends
+     */
     @Autowired
     private ComponentFriends friends;
-    
+    /**
+     * Security Helper
+     */
     @Autowired
     private SecurityHelper securityHelper;
     /**

@@ -15,7 +15,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 /**
- *
+ * post pagination
  * @author Frantisek Kolenak
  */
 @Component
@@ -23,17 +23,28 @@ import org.springframework.stereotype.Component;
 public class ComponentPostPaginator extends HorizontalLayout {
 
     private static final Logger logger = LoggerFactory.getLogger(ComponentPostPaginator.class);
-
+    /**
+     * Current page
+     */
     private int curentPage = 0;
-    
+    /**
+     * Button list, each button is one page
+     */
     private final List<Button> buttonList = new ArrayList();
-
+    /**
+     * Filter reference
+     */
     private ComponentPostsFilter filterReference;
-    
+    /**
+     * Constructor
+     */
     public ComponentPostPaginator(){
         this.setSpacing(true);
     }
-
+    /**
+     * Add buttons, based on number of pages
+     * @param numberOfPages  number Of Pages
+     */
     public void addButtons(int numberOfPages) {
         this.removeAllComponents();
         buttonList.clear();
@@ -64,11 +75,16 @@ public class ComponentPostPaginator extends HorizontalLayout {
         }
 
     }
-    
+    /**
+     * Sets filter reference
+     * @param filterReference filter reference
+     */
     public void setFilter(ComponentPostsFilter filterReference){
         this.filterReference = filterReference;
     }
-
+    /**
+     * Remove active style
+     */
     private void removeActiveStyle() {
         Button b = buttonList.get(curentPage);
         b.removeStyleName("paginator-active");

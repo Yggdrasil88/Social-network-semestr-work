@@ -18,41 +18,63 @@ import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
 /**
- *
+ * Posts tags
  * @author Frantisek Kolenak
  */
 @Entity
 public class PostTags extends BaseEntity {
-
+    /**
+     * Posts tags
+     */
     private List<Tag> tags;
-
+    /**
+     * Post 
+     */
     private Post post;
-    
+    /**
+     * Constructor
+     */
     public PostTags(){}
-    
+    /**
+     * Constructor
+     * @param tags post tags
+     * @param post post
+     */
     public PostTags(List<Tag> tags, Post post ){
         this.tags = tags;
         this.post = post;
     }
-
+    /**
+     * Gets post tags
+     * @return post tags
+     */
     @ManyToMany(fetch = FetchType.LAZY)
     @OrderBy("name ASC")
     @Column(unique = false)
     public List<Tag> getTags() {
         return tags;
     }
-
+    /**
+     * Sets post tags
+     * @param tags post tags
+     */
     public void setTags(List<Tag> tags) {
         this.tags = tags;
     }
-
-    @ManyToOne
+    /**
+     * Gets post tags
+     * @return post tags
+     */
+    @ManyToOne(fetch = FetchType.LAZY)
     @Cascade({CascadeType.SAVE_UPDATE})
     @JoinColumn(name = "post_id", nullable = false)
     public Post getPost() {
         return post;
     }
-
+    /**
+     * Sets post tags
+     * @param post post tags
+     */
     public void setPost(Post post) {
         this.post = post;
     }

@@ -17,13 +17,17 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 /**
- *
+ * Following DAO
  * @author Frantisek Kolenak
  */
 @Component
 public class FollowingDAO extends GenericDAO<Following>{
     private static final Logger logger = LoggerFactory.getLogger(FollowingDAO.class);
-
+    /**
+     * Removes follow
+     * @param follower follower
+     * @param feeder  feeder
+     */
     public void removeFollow(Users follower, Users feeder) {
         Session session = getCurrentSessionWithTransaction();
         try{
@@ -39,7 +43,12 @@ public class FollowingDAO extends GenericDAO<Following>{
         }
     
     }
-
+    /**
+     * Gets follower row
+     * @param follower follower
+     * @param feeder feeder
+     * @return  follower row
+     */
     public Following getFollower(Users follower, Users feeder) {
         Session session = getCurrentSession();
         try{
@@ -53,7 +62,11 @@ public class FollowingDAO extends GenericDAO<Following>{
             closeSession(session);
         }
     }
-
+    /**
+     * Gets users all feeders
+     * @param logedInUser logged in User
+     * @return users all feeders
+     */
     public List<Following> getUserFeeders(Users logedInUser) {
         Session session = getCurrentSession();
         try{

@@ -13,7 +13,6 @@ import cz.zcu.pia.social.network.frontend.views.ViewLogin;
 import cz.zcu.pia.social.network.frontend.views.ViewProfile;
 import cz.zcu.pia.social.network.frontend.views.ViewRegister;
 import cz.zcu.pia.social.network.helpers.SecurityHelper;
-import org.apache.log4j.BasicConfigurator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +37,9 @@ public class MyUI extends UI {
      *
      */
     private static final long serialVersionUID = 2177360609828565097L;
+    /**
+     * Header of the application
+     */
     @Autowired
     private ComponentHeader header;
 

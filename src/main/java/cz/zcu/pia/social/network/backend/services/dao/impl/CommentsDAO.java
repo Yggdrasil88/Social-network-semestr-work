@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 /**
- *
+ * Comments DAO
  * @author Frantisek Kolenak
  */
 @Component
@@ -24,7 +24,11 @@ public class CommentsDAO extends GenericDAO<Comments> {
 
     private static final Logger logger = LoggerFactory.getLogger(CommentsDAO.class);
 
- 
+    /**
+     * Gets list of comments of post by ID
+     * @param postId post id
+     * @return posts comments
+     */
     public List<Comments> getCommentsForPost(Long postId) {
         Session session = getCurrentSession();
         try {

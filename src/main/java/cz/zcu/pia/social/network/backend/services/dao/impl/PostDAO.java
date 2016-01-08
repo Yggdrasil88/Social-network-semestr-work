@@ -18,14 +18,17 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 /**
- *
+ * Post DAO
  * @author Frantisek Kolenak
  */
 @Component
 public class PostDAO extends GenericDAO<Post> {
 
     private final Logger logger = LoggerFactory.getLogger(PostDAO.class);
-
+    /**
+     * Gets public posts
+     * @return public posts
+     */
     public List<Post> getPublicPosts() {
         Session session = this.getCurrentSession();
         try {
@@ -46,27 +49,11 @@ public class PostDAO extends GenericDAO<Post> {
         }
 
     }
-
-    public int getPublicPostsPages() {
-        Session session = this.getCurrentSession();
-        try {
-            int pageSize = Constants.PAGE_LENGTH;
-
-            String countQ = "Select count (post.id) from " + this.genericType.getName() + " post WHERE post.visibility = :visibility";
-
-            Query countQuery = session.createQuery(countQ).setInteger("visibility", Visibility.PUBLIC);
-
-            Long countResults = (Long) countQuery.uniqueResult();
-
-            return (int) ((countResults / pageSize) + 1);
-        } catch (Exception e) {
-            logger.error(e.getMessage(), e);
-        } finally {
-            session.close();
-        }
-        return -1;
-    }
-
+    /**
+     * Gets post by id
+     * @param postId postId
+     * @return post
+     */
     public Post getPostById(long postId) {
         Session session = this.getCurrentSession();
         try {
@@ -79,7 +66,11 @@ public class PostDAO extends GenericDAO<Post> {
             session.close();
         }
     }
-
+    /**
+     * Gets friends posts
+     * @param userId user
+     * @return friends posts
+     */
     public List<Post> getFriendsPosts(Long userId) {
         Session session = this.getCurrentSession();
         try {
@@ -99,7 +90,11 @@ public class PostDAO extends GenericDAO<Post> {
             session.close();
         }
     }
-
+    /**
+     * Gets posts of people user follows
+     * @param userId user id
+     * @return posts of people user follows
+     */
     public List<Post> getFollowingPosts(Long userId) {
         Session session = this.getCurrentSession();
         try {
@@ -119,7 +114,11 @@ public class PostDAO extends GenericDAO<Post> {
             session.close();
         }
     }
-
+    /**
+     * Gets posts by username
+     * @param username username
+     * @return posts by username
+     */
     public List<Post> getPostsByUsername(String username) {
         Session session = this.getCurrentSession();
         try {

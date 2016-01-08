@@ -32,7 +32,7 @@ import org.springframework.stereotype.Component;
 
 import org.jasypt.util.password.StrongPasswordEncryptor;
 /**
- *
+ * Component for registering
  * @author Frantisek Kolenak
  */
 @Component
@@ -57,29 +57,67 @@ public class ComponentRegister extends FormLayout {
     public static final String REQUIRED_ERROR_NOT_EMPTY = "component.register.error-empty-cannot";
     
     public static final String INFO_REGISTERED = "component.register.info-registered";
-
+    /**
+     * Field group for validating
+     */
     protected FieldGroup group;
+    /**
+     * Bean for storing values
+     */
     protected RegisterBean bean = new RegisterBean();
+    /**
+     * Messages helper
+     */
     @Autowired
     protected MessagesLoader msgs;
-
+    /**
+     * Users service
+     */
     @Autowired
     protected UsersService usersService;
-
+    /**
+     * Name field
+     */
     protected TextField name;
+    /**
+     * Surname field
+     */
     protected TextField surname;
+    /**
+     * Username field
+     */
     protected TextField username;
+    /**
+     * Password field
+     */
     protected PasswordField password;
+    /**
+     * Repeat password field
+     */
     protected PasswordField passwordRepeat;
+    /**
+     * Validation field
+     */
     protected TextField validation;
+    /**
+     * Confirm button
+     */
     protected Button confirm;
+    /**
+     * Layout of the component
+     */
     protected  CustomLayout layout;
+    /**
+     * Constructor
+     */
     public ComponentRegister() {
         this.setSpacing(true);
         this.setSizeUndefined();
         layout = new CustomLayout("register");
     }
-
+    /**
+     * Post construct
+     */
     @PostConstruct
     public void postConstruct() {
 
@@ -105,7 +143,10 @@ public class ComponentRegister extends FormLayout {
         this.addComponent(layout);
         name.focus();
     }
-    
+    /**
+     * Gets register button
+     * @return register button
+     */
     protected HorizontalLayout getRegisterButton(){
         HorizontalLayout wrapper = new HorizontalLayout();
         confirm = new Button(msgs.getMessage(CONFIRM));
@@ -121,7 +162,10 @@ public class ComponentRegister extends FormLayout {
         wrapper.addComponent(confirm);
         return wrapper;
     }
-
+    /**
+     * Confirm button function
+     * @param event click event
+     */
     protected void confirmButtonFunction(Button.ClickEvent event) {
         try {
             if (!group.isModified()) {
@@ -151,7 +195,10 @@ public class ComponentRegister extends FormLayout {
 
         }
     }
-
+    /**
+     * Tells if the form is valid
+     * @return is valid
+     */
     protected boolean isValid() {
         if (!bean.getValidation().equals(TURRING_TEST)) {
             Notification.show(msgs.getMessage(ERROR_VALIDATION), Notification.Type.ERROR_MESSAGE);
@@ -159,6 +206,8 @@ public class ComponentRegister extends FormLayout {
         }
         if (!bean.getPassword().equals(bean.getPasswordRepeat())) {
             Notification.show(msgs.getMessage(ERROR_PASSWORDS_DOESNT_MATCH), Notification.Type.ERROR_MESSAGE);
+            password.setValue("");
+            passwordRepeat.setValue("");
             return false;
         }
         if (usersService.getUserByUsername(bean.getUsername()) != null) {
@@ -167,7 +216,9 @@ public class ComponentRegister extends FormLayout {
         }
         return true;
     }
-
+    /**
+     * Takes values from fields and stores it
+     */
     protected void proccesValues() {
         Users user = new Users();
         user.setName(bean.getName());
@@ -182,7 +233,9 @@ public class ComponentRegister extends FormLayout {
         resetValues();
         UI.getCurrent().getNavigator().navigateTo(ViewLogin.NAME);
     }
-    
+    /**
+     * Resets values in fields
+     */
     protected void resetValues(){
         bean.setName("");
         bean.setPassword("");
@@ -192,7 +245,9 @@ public class ComponentRegister extends FormLayout {
         bean.setValidation("");
         
     }
-
+    /**
+     * Creates field group
+     */
     private void createFieldGroup() {
         BeanItem<RegisterBean> item = new BeanItem<>(bean);
 
@@ -206,7 +261,9 @@ public class ComponentRegister extends FormLayout {
         passwordRepeat = group.buildAndBind(msgs.getMessage(PASSWORD_REPEAT), "passwordRepeat", PasswordField.class);
         validation = group.buildAndBind(msgs.getMessage(VALIDATION), "validation", TextField.class);
     }
-
+    /**
+     * Sets fields
+     */
     private void basicFieldSettings() {
         name.setNullRepresentation("");
         surname.setNullRepresentation("");
@@ -236,7 +293,9 @@ public class ComponentRegister extends FormLayout {
         passwordRepeat.setRequiredError(msgs.getMessage(REQUIRED_ERROR));
         validation.setRequiredError(msgs.getMessage(REQUIRED_ERROR));
     }
-
+    /**
+     * Adds validators
+     */
     private void addValidators() {
         name.addValidator(new BeanValidator(RegisterBean.class, "name"));
         surname.addValidator(new BeanValidator(RegisterBean.class, "surname"));

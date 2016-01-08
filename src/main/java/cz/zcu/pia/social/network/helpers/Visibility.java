@@ -11,17 +11,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
- *
+ * Visibility constants and heper
  * @author Frantisek Kolenak
  */
 @Component
 public class Visibility {
 
     public static final int PUBLIC = 0, FRIENDS = 1;
-
+    /**
+     * Messages helper
+     */
     @Autowired
     private MessagesLoader msgs;
-
+    /**
+     * Gets visibility combobox
+     * @return visibility combobox
+     */
     public ComboBox getVisibilityComboBox() {
         ComboBox cb = new ComboBox();
         cb.addItem(this.getPublicValue());
@@ -32,21 +37,30 @@ public class Visibility {
         cb.setDescription(this.getPublicValue());
         return cb;
     }
-
+    /**
+     * gets public value
+     * @return public value
+     */
     public String getPublicValue() {
         if(msgs == null){
             return "";
         }
         return msgs.getMessage("visibility.public");
     }
-
+    /**
+     * Gets friends value
+     * @return friends value
+     */
     public String getFriendsValue() {
         if(msgs == null){
             return "";
         }
         return msgs.getMessage("visibility.friends");
     }
-    
+    /**
+     * Gets following value
+     * @return following value
+     */
     public String getFollowingValue() {
         if(msgs == null){
             return "";

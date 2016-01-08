@@ -33,7 +33,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 /**
- *
+ * Friends 
  * @author Frantisek Kolenak
  */
 @Component
@@ -41,26 +41,55 @@ import org.springframework.stereotype.Component;
 public class ComponentFriends extends VerticalLayout {
 
     private static final Logger logger = LoggerFactory.getLogger(ComponentFriends.class);
-
+    /**
+     * Messages helper
+     */
     @Autowired
     private MessagesLoader msgs;
+    /**
+     * Application context
+     */
     @Autowired
     private ApplicationContext applicationContext;
-
-    private CustomLayout layout = new CustomLayout("friends");
-    private ComboBox filter;
-    private Table table;
+    /**
+     * Component layout
+     */
+    private final CustomLayout layout = new CustomLayout("friends");
+    /**
+     * Filter
+     */
+    private final ComboBox filter;
+    /**
+     * Table of friends
+     */
+    private final Table table;
+    /**
+     * Button for managing friend request
+     */
     private Button manageFriendRequestsButton;
-
+    /**
+     * Friends Service
+     */
     @Autowired
     private FriendsService friendsService;
+    /**
+     * Security Helper
+     */
     @Autowired
     private SecurityHelper securityHelper;
+    /**
+     * Following service
+     */
     @Autowired
     private FollowingService followingService;
+    /**
+     * Users Service
+     */
     @Autowired
     private UsersService usersService;
-
+    /**
+     * Constructor
+     */
     public ComponentFriends() {
         filter = new ComboBox();
         filter.setNullSelectionAllowed(false);
@@ -68,7 +97,9 @@ public class ComponentFriends extends VerticalLayout {
         table.setWidth(400, Unit.PIXELS);
         table.setPageLength(10);
     }
-
+    /**
+     * Post construct
+     */
     @PostConstruct
     public void postConstruct() {
         this.addComponent(layout);
@@ -89,7 +120,9 @@ public class ComponentFriends extends VerticalLayout {
             reload();
         }
     }
-
+    /**
+     * Function for manage friends requests button
+     */
     private void manageFriendsRequestsButtonFunction() {
         Window subWindow = new Window(msgs.getMessage("post.comments"));
         ComponentManageFriendRequest manageFriendRequest = applicationContext.getBean(ComponentManageFriendRequest.class);
@@ -104,7 +137,9 @@ public class ComponentFriends extends VerticalLayout {
         UI.getCurrent().addWindow(subWindow);
 
     }
-
+    /**
+     * Sets filter combobox
+     */
     private void setFilterComboBox() {
         filter.addItem(msgs.getMessage("view.profile.tab.friends"));
         filter.addItem(msgs.getMessage("component.friends.following"));
@@ -118,14 +153,18 @@ public class ComponentFriends extends VerticalLayout {
             }
         });
     }
-
+    /**
+     * Sets table to default 
+     */
     private void setTable() {
         table.addContainerProperty(msgs.getMessage("name"), String.class, "");
         table.addContainerProperty(msgs.getMessage("surname"), String.class, "");
         table.addContainerProperty(msgs.getMessage("since"), String.class, "");
         table.addContainerProperty("", Button.class, "");
     }
-
+    /**
+     * Reloads table
+     */
     public void reload() {
         table.removeAllItems();
         if (filter.getValue().equals(msgs.getMessage("view.profile.tab.friends"))) {
@@ -136,7 +175,10 @@ public class ComponentFriends extends VerticalLayout {
             addFollowingToTable(followingList);
         }
     }
-
+    /**
+     * Adds friends to table
+     * @param friendsList  friends List
+     */
     private void addFriendsToTable(List<Friends> friendsList) {
         for (Friends f : friendsList) {
             Button removeFriend = new Button(msgs.getMessage("profile.remove.friend"));
@@ -158,7 +200,10 @@ public class ComponentFriends extends VerticalLayout {
         }
     }
 
-
+    /**
+     * Adds following to table
+     * @param followingList  following List
+     */
     private void addFollowingToTable(List<Following> followingList) {
         for (Following f : followingList) {
             Button removeFollow = new Button(msgs.getMessage("component.friends.remove.following"));

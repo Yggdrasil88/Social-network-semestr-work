@@ -5,43 +5,25 @@
  */
 package cz.zcu.pia.social.network.frontend.components.profile.profile;
 
-import com.google.common.io.Files;
 import com.vaadin.server.FileResource;
-import com.vaadin.server.ThemeResource;
-import com.vaadin.server.VaadinService;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.CustomLayout;
 import com.vaadin.ui.Embedded;
-import com.vaadin.ui.Image;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.Upload;
-import com.vaadin.ui.Upload.Receiver;
-import com.vaadin.ui.Upload.SucceededEvent;
-import com.vaadin.ui.Upload.SucceededListener;
 import com.vaadin.ui.VerticalLayout;
 import cz.zcu.pia.social.network.MyUI;
 import cz.zcu.pia.social.network.backend.entities.Users;
 import cz.zcu.pia.social.network.backend.services.services.impl.UsersService;
-import cz.zcu.pia.social.network.frontend.components.posts.ComponentPost;
 import cz.zcu.pia.social.network.frontend.views.ViewHome;
 import cz.zcu.pia.social.network.frontend.views.ViewProfile;
 import cz.zcu.pia.social.network.helpers.Constants;
 import cz.zcu.pia.social.network.helpers.MessagesLoader;
 import cz.zcu.pia.social.network.helpers.SecurityHelper;
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.util.logging.Level;
 import javax.annotation.PostConstruct;
-import javax.imageio.ImageIO;
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.FilenameUtils;
-import org.imgscalr.Scalr;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,7 +32,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 /**
- *
+ * Component profile
  * @author Frantisek Kolenak
  */
 @Component
@@ -61,27 +43,64 @@ public class ComponentProfile extends VerticalLayout {
 
     private final static int LABEL_WIDTH = 150;
     private final static int COMPONENT_WIDTH = ViewProfile.COMPONENT_WIDTH;
-
+    /**
+     * Messages helper
+     */
     @Autowired
     private MessagesLoader msgs;
+    /**
+     * Component layout
+     */
     private final CustomLayout layout = new CustomLayout("profile");
-
+    /**
+     * Fullname layout
+     */
     private Label fullname;
+    /**
+     * Username  layout
+     */
     private Label username;
+    /**
+     * number of posts  layout
+     */
     private Label numberOfposts;
+    /**
+     * number of followers  layout
+     */
     private Label numberOfFollowers;
+    /**
+     * edit button
+     */
     private Button editButton;
+    /**
+     * User profile picture
+     */
     private final Embedded image = new Embedded();
+    /**
+     * Users Service
+     */
     @Autowired
     private UsersService usersService;
+    /**
+     * Security Helper
+     */
     @Autowired
     private SecurityHelper securityHelper;
+    /**
+     * parent reference
+     */
     @Autowired
     private ComponentEditProfile editProfile;
 
+    /**
+     * Application Context
+     */
     @Autowired
     private ApplicationContext appContext;
 
+    /**
+     * Constructor
+     */
     public ComponentProfile() {
         this.setSizeUndefined();
         this.setWidth(COMPONENT_WIDTH, Unit.PIXELS);
@@ -94,7 +113,9 @@ public class ComponentProfile extends VerticalLayout {
         image.setWidth(150, Unit.PIXELS);
         image.setHeight(150, Unit.PIXELS);
     }
-
+    /**
+     * Post Construct
+     */
     @PostConstruct
     public void postConstruct() {
         if (!securityHelper.isAuthenticated()) {
@@ -163,11 +184,16 @@ public class ComponentProfile extends VerticalLayout {
         layout.addComponent(numberOfFollowers, "numberFollowers");
         layout.addComponent(editButton, "button");
     }
-
+    /**
+     * Edit button function
+     * @param event  click event
+     */
     private void buttonEditFunction(Button.ClickEvent event) {
         swapComponents();
     }
-
+    /**
+     * Swaps component profile and component edit profile
+     */
     public void swapComponents() {
         if (layout.isVisible()) {
             layout.setVisible(false);
@@ -177,7 +203,10 @@ public class ComponentProfile extends VerticalLayout {
             layout.setVisible(true);
         }
     }
-
+    /**
+     * Sets labels
+     * @param user user 
+     */
     private void setLabels(Users user) {
 
         username = new Label(user.getUsername());
@@ -185,14 +214,19 @@ public class ComponentProfile extends VerticalLayout {
         numberOfFollowers = new Label("" + user.getTotalFollowers());
 
     }
-
+    /**
+     * Reloads users informations
+     * @param user user
+     */
     public void reload(Users user) {
         fullname.setValue(user.getName() + " " + user.getSurname());
         username.setValue(user.getUsername());
 
     }
-
-    void reloadImage() {
+    /**
+     * Reload user profile image
+     */
+    public void reloadImage() {
         image.setVisible(true);
         image.setSource(new FileResource(new File(Constants.BASE_PATH_RESIZED + securityHelper.getLogedInUser().getUserImageName())));
         layout.addComponent(image, "picture");

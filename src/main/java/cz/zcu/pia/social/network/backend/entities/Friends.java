@@ -16,44 +16,68 @@ import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
 /**
- *
+ * Entity telling which users are friends
  * @author Frantisek Kolenak
  */
 @Entity
 public class Friends extends BaseEntity {
-
+    /**
+     * One of the users that is friend with the other one
+     */
     private Users user;
-
+    /**
+     * The other friend
+     */
     private Users friend;
-    
+    /**
+     * Friends since
+     */
     private Date friendsSince = new Date();
-
+    /**
+     * Constructor
+     */
     public Friends(){}
-    
+    /**
+     * Constructor
+     * @param user1 user1 in the relationship
+     * @param user2 user2  in the relationship
+     */
     public Friends(Users user1, Users user2){
         this.user = user1;
         this.friend = user2;
     }
     
-    
+    /**
+     * Gets user1 in the relationship
+     * @return  user1 in the relationship
+     */
     @ManyToOne
     @Cascade({CascadeType.SAVE_UPDATE})
     @JoinColumn(name = "user_id", nullable = false)
     public Users getUser() {
         return user;
     }
-
+    /**
+     * Sets user1 in the relationship
+     * @param user user1 in the relationship
+     */
     public void setUser(Users user) {
         this.user = user;
     }
-    
+    /**
+     * Gets user2 in the relationship
+     * @return user2 in the relationship
+     */
     @ManyToOne
     @Cascade({CascadeType.SAVE_UPDATE})
     @JoinColumn(name = "friend_id", nullable = false)
     public Users getFriend() {
         return friend;
     }
-
+    /**
+     * Sets user2 in the relationship
+     * @param friend user2 in the relationship
+     */
     public void setFriend(Users friend) {
         this.friend = friend;
     }

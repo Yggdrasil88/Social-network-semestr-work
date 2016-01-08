@@ -31,6 +31,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 /**
+ * Component for adding post comments
  *
  * @author Frantisek Kolenak
  */
@@ -39,37 +40,54 @@ import org.springframework.stereotype.Component;
 public class ComponentPostCommentAdd extends VerticalLayout {
 
     private static Logger logger = LoggerFactory.getLogger(ComponentPostCommentAdd.class);
-    
+    /**
+     * Messages helper
+     */
     @Autowired
     protected MessagesLoader msgs;
-    @Autowired
-    private Visibility visibility;
-
+    /**
+     * Component layout
+     */
     protected CustomLayout layout = new CustomLayout("addPost");
-
+    /**
+     * Message text area
+     */
     protected TextArea message = new TextArea();
+    /**
+     * Confirm button
+     */
     private Button confirmButton;
+    /**
+     * Tag list
+     */
     private List<Button> taglist = new ArrayList();
-    private Panel panel;
-    
+    /**
+     * Parent reference
+     */
     private ComponentPostComments parentReference;
-
+    /**
+     * Post service
+     */
     @Autowired
     protected PostService postService;
-    @Autowired
-    private PostTagsService postTagsService;
-    @Autowired
-    private TagService tagService;
+    /**
+     * Security helper
+     */
     @Autowired
     protected SecurityHelper securityHelper;
-    private Window subWindow;
-    
-    
+
+    /**
+     * Comments service
+     */
     @Autowired
     private CommentsService commentsService;
+    /**
+     * Post id
+     */
     private Long postId;
-    
-
+    /**
+     * Constructor
+     */
     public ComponentPostCommentAdd() {
         this.setSpacing(true);
 
@@ -77,14 +95,10 @@ public class ComponentPostCommentAdd extends VerticalLayout {
         message.setHeight(100, Unit.PIXELS);
         message.setMaxLength(255);
 
-       
-        
     }
-
-    
-    
-    
-
+    /**
+     * Post Construct
+     */
     @PostConstruct
     public void postConstruct() {
 
@@ -101,7 +115,10 @@ public class ComponentPostCommentAdd extends VerticalLayout {
         layout.addComponent(message, "message");
         layout.addComponent(confirmButton, "okButton");
     }
-
+    /**
+     * Button function
+     * @param event click event
+     */
     protected void postButtonFunction(Button.ClickEvent event) {
         if (message.isEmpty()) {
             Notification.show(msgs.getMessage("post.add.empty-msg"), Notification.Type.ERROR_MESSAGE);
@@ -115,16 +132,19 @@ public class ComponentPostCommentAdd extends VerticalLayout {
         postService.update(post);
         parentReference.reload();
     }
-
-
-
+    /**
+     * Sets post id
+     * @param postId post id 
+     */
     public void setPostId(Long postId) {
         this.postId = postId;
     }
-
+    /**
+     * Sets parent reference
+     * @param parentReference  parent reference
+     */
     void setParentReference(ComponentPostComments parentReference) {
         this.parentReference = parentReference;
     }
-    
-    
+
 }
