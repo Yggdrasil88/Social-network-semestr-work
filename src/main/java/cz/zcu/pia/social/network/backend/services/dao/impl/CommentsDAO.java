@@ -7,6 +7,7 @@ package cz.zcu.pia.social.network.backend.services.dao.impl;
 
 import cz.zcu.pia.social.network.backend.entities.Comments;
 import cz.zcu.pia.social.network.backend.services.dao.GenericDAO;
+import cz.zcu.pia.social.network.backend.services.interfaces.CommentsInterface;
 import java.util.ArrayList;
 import java.util.List;
 import org.hibernate.Query;
@@ -20,15 +21,11 @@ import org.springframework.stereotype.Component;
  * @author Frantisek Kolenak
  */
 @Component
-public class CommentsDAO extends GenericDAO<Comments> {
+public class CommentsDAO extends GenericDAO<Comments> implements CommentsInterface {
 
     private static final Logger logger = LoggerFactory.getLogger(CommentsDAO.class);
 
-    /**
-     * Gets list of comments of post by ID
-     * @param postId post id
-     * @return posts comments
-     */
+    @Override
     public List<Comments> getCommentsForPost(Long postId) {
         Session session = getCurrentSession();
         try {

@@ -7,6 +7,7 @@ package cz.zcu.pia.social.network.backend.services.dao.impl;
 
 import cz.zcu.pia.social.network.backend.entities.Post;
 import cz.zcu.pia.social.network.backend.services.dao.GenericDAO;
+import cz.zcu.pia.social.network.backend.services.interfaces.PostInterface;
 import cz.zcu.pia.social.network.helpers.Constants;
 import cz.zcu.pia.social.network.helpers.Visibility;
 import java.util.ArrayList;
@@ -19,16 +20,15 @@ import org.springframework.stereotype.Component;
 
 /**
  * Post DAO
+ *
  * @author Frantisek Kolenak
  */
 @Component
-public class PostDAO extends GenericDAO<Post> {
+public class PostDAO extends GenericDAO<Post> implements PostInterface {
 
-    private final Logger logger = LoggerFactory.getLogger(PostDAO.class);
-    /**
-     * Gets public posts
-     * @return public posts
-     */
+    private static final Logger logger = LoggerFactory.getLogger(PostDAO.class);
+
+    @Override
     public List<Post> getPublicPosts() {
         Session session = this.getCurrentSession();
         try {
@@ -49,11 +49,8 @@ public class PostDAO extends GenericDAO<Post> {
         }
 
     }
-    /**
-     * Gets post by id
-     * @param postId postId
-     * @return post
-     */
+
+    @Override
     public Post getPostById(long postId) {
         Session session = this.getCurrentSession();
         try {
@@ -66,11 +63,8 @@ public class PostDAO extends GenericDAO<Post> {
             session.close();
         }
     }
-    /**
-     * Gets friends posts
-     * @param userId user
-     * @return friends posts
-     */
+
+    @Override
     public List<Post> getFriendsPosts(Long userId) {
         Session session = this.getCurrentSession();
         try {
@@ -90,11 +84,8 @@ public class PostDAO extends GenericDAO<Post> {
             session.close();
         }
     }
-    /**
-     * Gets posts of people user follows
-     * @param userId user id
-     * @return posts of people user follows
-     */
+
+    @Override
     public List<Post> getFollowingPosts(Long userId) {
         Session session = this.getCurrentSession();
         try {
@@ -114,11 +105,8 @@ public class PostDAO extends GenericDAO<Post> {
             session.close();
         }
     }
-    /**
-     * Gets posts by username
-     * @param username username
-     * @return posts by username
-     */
+
+    @Override
     public List<Post> getPostsByUsername(String username) {
         Session session = this.getCurrentSession();
         try {

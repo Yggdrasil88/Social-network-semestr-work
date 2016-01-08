@@ -5,11 +5,10 @@
  */
 package cz.zcu.pia.social.network.backend.services.services.impl;
 
-import cz.zcu.pia.social.network.backend.entities.Tag;
 import cz.zcu.pia.social.network.backend.entities.Users;
 import cz.zcu.pia.social.network.backend.services.dao.GenericDAOInterface;
-import cz.zcu.pia.social.network.backend.services.dao.impl.TagDAO;
 import cz.zcu.pia.social.network.backend.services.dao.impl.UsersDAO;
+import cz.zcu.pia.social.network.backend.services.interfaces.UsersInterface;
 import cz.zcu.pia.social.network.backend.services.services.AbstractService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,7 +18,7 @@ import org.springframework.stereotype.Service;
  * @author Frantisek Kolenak
  */
 @Service
-public class UsersService extends AbstractService<Users> {
+public class UsersService extends AbstractService<Users> implements UsersInterface{
 
     /**
      * DAO
@@ -35,7 +34,7 @@ public class UsersService extends AbstractService<Users> {
     protected GenericDAOInterface<Users> getDao() {
         return dao;
     }
-
+    @Override
     public Users getUserByUsername(String username) {
         return dao.getUserByUsername(username);
     }

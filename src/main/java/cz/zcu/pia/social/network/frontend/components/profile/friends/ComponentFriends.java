@@ -168,7 +168,7 @@ public class ComponentFriends extends VerticalLayout {
     public void reload() {
         table.removeAllItems();
         if (filter.getValue().equals(msgs.getMessage("view.profile.tab.friends"))) {
-            List<Friends> friendsList = friendsService.getUserFriend(securityHelper.getLogedInUser());
+            List<Friends> friendsList = friendsService.getFriend(securityHelper.getLogedInUser());
             addFriendsToTable(friendsList);
         } else {
             List<Following> followingList = followingService.getUserFeeders(securityHelper.getLogedInUser());

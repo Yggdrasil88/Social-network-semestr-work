@@ -9,10 +9,9 @@ import cz.zcu.pia.social.network.backend.entities.Post;
 import cz.zcu.pia.social.network.backend.entities.RatedPosts;
 import cz.zcu.pia.social.network.backend.entities.Users;
 import cz.zcu.pia.social.network.backend.services.dao.GenericDAOInterface;
-import cz.zcu.pia.social.network.backend.services.dao.impl.PostDAO;
 import cz.zcu.pia.social.network.backend.services.dao.impl.RatedPostsDAO;
+import cz.zcu.pia.social.network.backend.services.interfaces.RatedPostsInterface;
 import cz.zcu.pia.social.network.backend.services.services.AbstractService;
-import cz.zcu.pia.social.network.helpers.RateType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,7 +20,7 @@ import org.springframework.stereotype.Service;
  * @author Frantisek Kolenak
  */
 @Service
-public class RatedPostsService extends AbstractService<RatedPosts> {
+public class RatedPostsService extends AbstractService<RatedPosts> implements RatedPostsInterface{
 
     /**
      * DAO
@@ -36,11 +35,11 @@ public class RatedPostsService extends AbstractService<RatedPosts> {
     protected GenericDAOInterface<RatedPosts> getDao() {
         return dao;
     }
-
+    @Override
     public RatedPosts getRateType(Long postId, String username) {
         return dao.getRateType(postId, username);
     }
-
+    @Override
     public RatedPosts getRateType(Post post, Users user) {
         return dao.getRateType(post, user);
     }

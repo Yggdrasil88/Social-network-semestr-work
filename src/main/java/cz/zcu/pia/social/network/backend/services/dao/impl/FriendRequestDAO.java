@@ -8,6 +8,7 @@ package cz.zcu.pia.social.network.backend.services.dao.impl;
 import cz.zcu.pia.social.network.backend.entities.FriendRequest;
 import cz.zcu.pia.social.network.backend.entities.Users;
 import cz.zcu.pia.social.network.backend.services.dao.GenericDAO;
+import cz.zcu.pia.social.network.backend.services.interfaces.FriendRequestInterface;
 import java.util.ArrayList;
 import java.util.List;
 import org.hibernate.Query;
@@ -18,18 +19,15 @@ import org.springframework.stereotype.Component;
 
 /**
  * Friend Request DAO
+ *
  * @author Frantisek Kolenak
  */
 @Component
-public class FriendRequestDAO extends GenericDAO<FriendRequest> {
+public class FriendRequestDAO extends GenericDAO<FriendRequest> implements FriendRequestInterface {
 
     private static final Logger logger = LoggerFactory.getLogger(FriendRequestDAO.class);
-    /**
-     * Gets friend request 
-     * @param logedInUser user that requests
-     * @param user user
-     * @return friend request
-     */
+
+    @Override
     public FriendRequest getFriendRequest(Users logedInUser, Users user) {
         Session session = getCurrentSession();
         try {
@@ -43,11 +41,8 @@ public class FriendRequestDAO extends GenericDAO<FriendRequest> {
             closeSession(session);
         }
     }
-    /**
-     * Gets all friend requests of user
-     * @param userId userId
-     * @return all friend requests of user
-     */
+
+    @Override
     public List<FriendRequest> getFriendRequests(Long userId) {
         Session session = getCurrentSession();
         try {

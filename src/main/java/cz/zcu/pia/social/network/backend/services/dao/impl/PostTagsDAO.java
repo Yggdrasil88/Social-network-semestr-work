@@ -9,6 +9,7 @@ import cz.zcu.pia.social.network.backend.entities.Post;
 import cz.zcu.pia.social.network.backend.entities.PostTags;
 import cz.zcu.pia.social.network.backend.entities.Tag;
 import cz.zcu.pia.social.network.backend.services.dao.GenericDAO;
+import cz.zcu.pia.social.network.backend.services.interfaces.PostTagsInterface;
 import cz.zcu.pia.social.network.helpers.Constants;
 import cz.zcu.pia.social.network.helpers.Visibility;
 import java.util.ArrayList;
@@ -21,17 +22,15 @@ import org.springframework.stereotype.Component;
 
 /**
  * Posts tags
+ *
  * @author Frantisek Kolenak
  */
 @Component
-public class PostTagsDAO extends GenericDAO<PostTags> {
+public class PostTagsDAO extends GenericDAO<PostTags> implements PostTagsInterface {
 
-    private Logger logger = LoggerFactory.getLogger(PostTagsDAO.class);
-    /**
-     * Gets posts tags
-     * @param postId post id
-     * @return posts tags
-     */
+    private static final Logger logger = LoggerFactory.getLogger(PostTagsDAO.class);
+
+    @Override
     public List<Tag> getPostTags(long postId) {
         Session session = getCurrentSession();
         try {
@@ -44,11 +43,8 @@ public class PostTagsDAO extends GenericDAO<PostTags> {
             return new ArrayList();
         }
     }
-    /**
-     * Gets posts by tag
-     * @param tagName
-     * @return 
-     */
+
+    @Override
     public List<Post> getPostsByTag(String tagName) {
         Session session = this.getCurrentSession();
         try {

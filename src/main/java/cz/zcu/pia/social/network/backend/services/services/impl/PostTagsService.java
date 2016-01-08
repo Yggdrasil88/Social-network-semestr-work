@@ -9,8 +9,8 @@ import cz.zcu.pia.social.network.backend.entities.Post;
 import cz.zcu.pia.social.network.backend.entities.PostTags;
 import cz.zcu.pia.social.network.backend.entities.Tag;
 import cz.zcu.pia.social.network.backend.services.dao.GenericDAOInterface;
-import cz.zcu.pia.social.network.backend.services.dao.impl.PostDAO;
 import cz.zcu.pia.social.network.backend.services.dao.impl.PostTagsDAO;
+import cz.zcu.pia.social.network.backend.services.interfaces.PostTagsInterface;
 import cz.zcu.pia.social.network.backend.services.services.AbstractService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +21,7 @@ import org.springframework.stereotype.Service;
  * @author Frantisek Kolenak
  */
 @Service
-public class PostTagsService extends AbstractService<PostTags> {
+public class PostTagsService extends AbstractService<PostTags> implements PostTagsInterface {
 
     /**
      * DAO
@@ -37,10 +37,13 @@ public class PostTagsService extends AbstractService<PostTags> {
         return dao;
     }
 
+    @Override
     public List<Tag> getPostTags(long postId) {
         return dao.getPostTags(postId);
     }
-     public List<Post> getPostsByTag(String tagName) {
+
+    @Override
+    public List<Post> getPostsByTag(String tagName) {
         return dao.getPostsByTag(tagName);
     }
 }

@@ -5,12 +5,11 @@
  */
 package cz.zcu.pia.social.network.backend.services.services.impl;
 
-import cz.zcu.pia.social.network.backend.entities.FriendRequest;
 import cz.zcu.pia.social.network.backend.entities.Friends;
 import cz.zcu.pia.social.network.backend.entities.Users;
 import cz.zcu.pia.social.network.backend.services.dao.GenericDAOInterface;
-import cz.zcu.pia.social.network.backend.services.dao.impl.FriendRequestDAO;
 import cz.zcu.pia.social.network.backend.services.dao.impl.FriendsDAO;
+import cz.zcu.pia.social.network.backend.services.interfaces.FriendsInterface;
 import cz.zcu.pia.social.network.backend.services.services.AbstractService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +20,7 @@ import org.springframework.stereotype.Service;
  * @author Frantisek Kolenak
  */
 @Service
-public class FriendsService extends AbstractService<Friends> {
+public class FriendsService extends AbstractService<Friends> implements FriendsInterface {
 
     /**
      * DAO
@@ -37,11 +36,13 @@ public class FriendsService extends AbstractService<Friends> {
         return dao;
     }
 
+    @Override
     public Friends getFriend(Users logedInUser, Users user) {
-        return dao.getFriend(logedInUser,user);
+        return dao.getFriend(logedInUser, user);
     }
 
-    public List<Friends> getUserFriend(Users logedInUser) {
+    @Override
+    public List<Friends> getFriend(Users logedInUser) {
         return dao.getFriend(logedInUser);
 
     }

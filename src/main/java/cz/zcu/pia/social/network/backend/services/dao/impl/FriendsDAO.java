@@ -8,6 +8,7 @@ package cz.zcu.pia.social.network.backend.services.dao.impl;
 import cz.zcu.pia.social.network.backend.entities.Friends;
 import cz.zcu.pia.social.network.backend.entities.Users;
 import cz.zcu.pia.social.network.backend.services.dao.GenericDAO;
+import cz.zcu.pia.social.network.backend.services.interfaces.FriendsInterface;
 import java.util.ArrayList;
 import java.util.List;
 import org.hibernate.Query;
@@ -18,18 +19,15 @@ import org.springframework.stereotype.Component;
 
 /**
  * Friends DAO
+ *
  * @author Frantisek Kolenak
  */
 @Component
-public class FriendsDAO extends GenericDAO<Friends> {
+public class FriendsDAO extends GenericDAO<Friends> implements FriendsInterface {
 
     private static final Logger logger = LoggerFactory.getLogger(FriendsDAO.class);
-    /**
-     * Gets friend
-     * @param logedInUser logedInUser
-     * @param user user
-     * @return friends
-     */
+
+    @Override
     public Friends getFriend(Users logedInUser, Users user) {
         Session session = getCurrentSession();
         try {
@@ -43,11 +41,8 @@ public class FriendsDAO extends GenericDAO<Friends> {
             closeSession(session);
         }
     }
-    /**
-     * Gets friends of user
-     * @param logedInUser user
-     * @return friends of user
-     */
+
+    @Override
     public List<Friends> getFriend(Users logedInUser) {
         Session session = getCurrentSession();
         try {
@@ -56,7 +51,7 @@ public class FriendsDAO extends GenericDAO<Friends> {
             return (List<Friends>) query.list();
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
-            return  new ArrayList();
+            return new ArrayList();
         } finally {
             closeSession(session);
         }

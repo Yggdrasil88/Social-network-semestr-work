@@ -9,6 +9,7 @@ import cz.zcu.pia.social.network.backend.entities.Following;
 import cz.zcu.pia.social.network.backend.entities.Users;
 import cz.zcu.pia.social.network.backend.services.dao.GenericDAOInterface;
 import cz.zcu.pia.social.network.backend.services.dao.impl.FollowingDAO;
+import cz.zcu.pia.social.network.backend.services.interfaces.FollowingInterface;
 import cz.zcu.pia.social.network.backend.services.services.AbstractService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,7 @@ import org.springframework.stereotype.Service;
  * @author Frantisek Kolenak
  */
 @Service
-public class FollowingService extends AbstractService<Following> {
+public class FollowingService extends AbstractService<Following> implements FollowingInterface {
 
     /**
      * DAO
@@ -35,15 +36,18 @@ public class FollowingService extends AbstractService<Following> {
         return dao;
     }
 
+    @Override
     public void removeFollow(Users logedInUser, Users user) {
         dao.removeFollow(logedInUser, user);
     }
 
+    @Override
     public Following getFollower(Users logedInUser, Users user) {
         return dao.getFollower(logedInUser, user);
 
     }
 
+    @Override
     public List<Following> getUserFeeders(Users logedInUser) {
         return dao.getUserFeeders(logedInUser);
 

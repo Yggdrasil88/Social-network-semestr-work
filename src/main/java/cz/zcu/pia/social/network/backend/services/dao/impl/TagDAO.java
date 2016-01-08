@@ -7,6 +7,7 @@ package cz.zcu.pia.social.network.backend.services.dao.impl;
 
 import cz.zcu.pia.social.network.backend.entities.Tag;
 import cz.zcu.pia.social.network.backend.services.dao.GenericDAO;
+import cz.zcu.pia.social.network.backend.services.interfaces.TagInterface;
 import java.util.ArrayList;
 import java.util.List;
 import org.hibernate.Session;
@@ -18,17 +19,15 @@ import org.springframework.stereotype.Component;
 
 /**
  * Tags DAO
+ *
  * @author Frantisek Kolenak
  */
 @Component
-public class TagDAO extends GenericDAO<Tag> {
+public class TagDAO extends GenericDAO<Tag> implements TagInterface {
 
-    private final Logger logger = LoggerFactory.getLogger(TagDAO.class);
-    /**
-     * Save tags in list
-     * @param tagList tag list
-     * @return result (<=0 is bad)
-     */
+    private static final Logger logger = LoggerFactory.getLogger(TagDAO.class);
+
+    @Override
     public int saveTags(List<Tag> tagList) {
         if (tagList == null || tagList.isEmpty()) {
             return 0;
@@ -52,22 +51,18 @@ public class TagDAO extends GenericDAO<Tag> {
 
     }
 
-    /**
-     * Gets all tags in database in the list
-     * @param nameList tags name List
-     * @return  all tags in database in the list
-     */
+    @Override
     public List<Tag> getTagsByName(List<String> nameList) {
         if (nameList == null || nameList.isEmpty()) {
             return new ArrayList<Tag>();
         }
         Session session = this.getCurrentSession();
         try {
-            
+
             String querry = "FROM " + this.genericType.getName()
                 + " AS tags WHERE tags.tagName in (:tagName)";
             List<Tag> ta = (List<Tag>) session.createQuery(querry).setParameterList("tagName", nameList).list();
-           
+
             return ta;
 
         } catch (Exception e) {

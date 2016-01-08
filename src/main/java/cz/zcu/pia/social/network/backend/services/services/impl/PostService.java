@@ -5,11 +5,10 @@
  */
 package cz.zcu.pia.social.network.backend.services.services.impl;
 
-import cz.zcu.pia.social.network.backend.entities.Friends;
 import cz.zcu.pia.social.network.backend.entities.Post;
 import cz.zcu.pia.social.network.backend.services.dao.GenericDAOInterface;
-import cz.zcu.pia.social.network.backend.services.dao.impl.FriendsDAO;
 import cz.zcu.pia.social.network.backend.services.dao.impl.PostDAO;
+import cz.zcu.pia.social.network.backend.services.interfaces.PostInterface;
 import cz.zcu.pia.social.network.backend.services.services.AbstractService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +19,7 @@ import org.springframework.stereotype.Service;
  * @author Frantisek Kolenak
  */
 @Service
-public class PostService extends AbstractService<Post> {
+public class PostService extends AbstractService<Post> implements PostInterface {
 
     /**
      * DAO
@@ -36,26 +35,29 @@ public class PostService extends AbstractService<Post> {
         return dao;
     }
 
+    @Override
     public List<Post> getPublicPosts() {
         return dao.getPublicPosts();
     }
 
+    @Override
     public Post getPostById(long postId) {
         return dao.getPostById(postId);
     }
 
+    @Override
     public List<Post> getFriendsPosts(Long userId) {
         return dao.getFriendsPosts(userId);
     }
 
+    @Override
     public List<Post> getFollowingPosts(Long userId) {
         return dao.getFollowingPosts(userId);
     }
 
+    @Override
     public List<Post> getPostsByUsername(String username) {
         return dao.getPostsByUsername(username);
-
     }
 
-   
 }
