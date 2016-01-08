@@ -1,5 +1,6 @@
 package cz.zcu.pia.social.network.frontend.components.header;
 
+import com.vaadin.server.ThemeResource;
 import javax.annotation.PostConstruct;
 
 import org.slf4j.Logger;
@@ -117,13 +118,23 @@ public class ComponentHeader extends HorizontalLayout {
         VerticalLayout imageLayout = new VerticalLayout();
         imageLayout.setStyleName(CLASS_NAME + "-image");
 
-        Label l = new Label();
-        // l.setIcon(new ThemeResource("./images/logo/logo.png"));
-        l.setSizeUndefined();
+        Button l = new Button();
+        l.setStyleName("button-label-simple");
+        l.setHeight(60, Unit.PIXELS);
+        l.setWidth(150, Unit.PIXELS);
+        l.setIcon(new ThemeResource("./images/logo.png"));
+        l.addClickListener(new Button.ClickListener() {
+
+            @Override
+            public void buttonClick(Button.ClickEvent event) {
+                ((MyUI) UI.getCurrent().getUI()).getNavigator()
+                        .navigateTo(ViewHome.NAME);
+            }
+        });
         imageLayout.addComponent(l);
         imageLayout.setComponentAlignment(l, Alignment.BOTTOM_LEFT);
-        imageLayout.setHeight(HEADER_HEIGHT, Unit.PIXELS);
-        imageLayout.setWidth(HEADER_WIDTH / 2, Unit.PIXELS);
+        imageLayout.setHeight(60, Unit.PIXELS);
+        imageLayout.setWidth(150, Unit.PIXELS);
         return imageLayout;
     }
 

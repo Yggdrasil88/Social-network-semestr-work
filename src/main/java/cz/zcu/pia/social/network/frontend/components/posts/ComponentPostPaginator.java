@@ -16,6 +16,7 @@ import org.springframework.stereotype.Component;
 
 /**
  * post pagination
+ *
  * @author Frantisek Kolenak
  */
 @Component
@@ -35,15 +36,18 @@ public class ComponentPostPaginator extends HorizontalLayout {
      * Filter reference
      */
     private ComponentPostsFilter filterReference;
+
     /**
      * Constructor
      */
-    public ComponentPostPaginator(){
+    public ComponentPostPaginator() {
         this.setSpacing(true);
     }
+
     /**
      * Add buttons, based on number of pages
-     * @param numberOfPages  number Of Pages
+     *
+     * @param numberOfPages number Of Pages
      */
     public void addButtons(int numberOfPages) {
         this.removeAllComponents();
@@ -51,7 +55,7 @@ public class ComponentPostPaginator extends HorizontalLayout {
         for (int i = 0; i <= numberOfPages; i++) {
             Button b = new Button("" + i);
             b.setData(i);
-            b.setStyleName("button-paginator");
+            b.setStyleName("button-paginator button-label-simple");
             b.addClickListener(new Button.ClickListener() {
 
                 @Override
@@ -60,9 +64,8 @@ public class ComponentPostPaginator extends HorizontalLayout {
                     if (curentPage != page) {
                         filterReference.setPageAndReload(page);
                         removeActiveStyle();
-                        Button b = event.getButton();
-                        b.addStyleName("paginator-active");
                         curentPage = page;
+                        buttonList.get(curentPage).addStyleName("paginator-active");
                     }
                 }
 
@@ -75,18 +78,22 @@ public class ComponentPostPaginator extends HorizontalLayout {
         }
 
     }
+
     /**
      * Sets filter reference
+     *
      * @param filterReference filter reference
      */
-    public void setFilter(ComponentPostsFilter filterReference){
+    public void setFilter(ComponentPostsFilter filterReference) {
         this.filterReference = filterReference;
     }
+
     /**
      * Remove active style
      */
     private void removeActiveStyle() {
         Button b = buttonList.get(curentPage);
         b.removeStyleName("paginator-active");
+
     }
 }
