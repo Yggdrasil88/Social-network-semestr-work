@@ -93,7 +93,7 @@ public class ComponentPostCommentAdd extends VerticalLayout {
 
         message.setWidth(100, Unit.PERCENTAGE);
         message.setHeight(100, Unit.PIXELS);
-        message.setMaxLength(255);
+        message.setMaxLength(1000);
 
     }
     /**
@@ -131,6 +131,7 @@ public class ComponentPostCommentAdd extends VerticalLayout {
         commentsService.persist(comment);
         postService.update(post);
         parentReference.reload();
+        message.setValue("");
     }
     /**
      * Sets post id

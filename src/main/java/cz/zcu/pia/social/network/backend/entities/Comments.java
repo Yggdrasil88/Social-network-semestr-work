@@ -11,6 +11,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import org.hibernate.annotations.Cascade;
@@ -21,6 +22,7 @@ import org.hibernate.annotations.CascadeType;
  * @author Frantisek Kolenak
  */
 @Entity
+@Table(name = "fkolenak_comments")
 public class Comments extends BaseEntity {
     /**
      * User that posted comment
@@ -91,7 +93,7 @@ public class Comments extends BaseEntity {
      * Get Comment message
      * @return Comment message
      */
-    @Column(name = "comment", nullable = false)
+    @Column(name = "comment", nullable = false, length = 1000)
     public String getComment() {
         return comment;
     }

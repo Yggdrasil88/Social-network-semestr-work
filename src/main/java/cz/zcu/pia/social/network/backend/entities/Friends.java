@@ -10,6 +10,7 @@ import java.util.Objects;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import org.hibernate.annotations.Cascade;
@@ -20,6 +21,7 @@ import org.hibernate.annotations.CascadeType;
  * @author Frantisek Kolenak
  */
 @Entity
+@Table(name = "fkolenak_friends")
 public class Friends extends BaseEntity {
     /**
      * One of the users that is friend with the other one

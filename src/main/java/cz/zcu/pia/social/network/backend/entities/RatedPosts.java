@@ -12,6 +12,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
@@ -20,6 +21,7 @@ import org.hibernate.annotations.CascadeType;
  * @author Frantisek Kolenak
  */
 @Entity
+@Table(name = "fkolenak_rated_posts")
 public class RatedPosts extends BaseEntity {
     /**
      * User who rated

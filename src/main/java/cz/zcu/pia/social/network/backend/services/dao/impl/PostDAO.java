@@ -17,7 +17,6 @@ import org.hibernate.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
-
 /**
  * Post DAO
  *
@@ -113,6 +112,26 @@ public class PostDAO extends GenericDAO<Post> implements PostInterface {
             String qery = "from " + this.genericType.getName() + " post WHERE post.user.username = :username AND post.visibility = :visibility ORDER BY post.dateSent DESC";
             Query selectQuery = session.createQuery(qery);
             selectQuery.setString("username", username).setInteger("visibility", Visibility.PUBLIC);
+
+            selectQuery.setMaxResults(Constants.MAX_RESULTS);
+            List<Post> results = selectQuery.list();
+
+            return results;
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+            return new ArrayList();
+
+        } finally {
+            session.close();
+        }
+    }
+    @Override
+    public List<Post> getUserPosts(Long userId) {
+        Session session = this.getCurrentSession();
+        try {
+            String qery = "from " + this.genericType.getName() + " post WHERE post.user.id = :userId ) ORDER BY post.dateSent DESC";
+            Query selectQuery = session.createQuery(qery);
+            selectQuery.setLong("userId", userId);
 
             selectQuery.setMaxResults(Constants.MAX_RESULTS);
             List<Post> results = selectQuery.list();

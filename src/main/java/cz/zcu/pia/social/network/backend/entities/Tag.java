@@ -8,12 +8,14 @@ package cz.zcu.pia.social.network.backend.entities;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Table;
 
 /**
  * Tag
  * @author Frantisek Kolenak
  */
 @Entity
+@Table(name = "fkolenak_tag")
 public class Tag extends BaseEntity{
     /**
      * Tag name

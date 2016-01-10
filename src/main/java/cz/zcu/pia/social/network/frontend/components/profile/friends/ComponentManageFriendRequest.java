@@ -67,7 +67,7 @@ public class ComponentManageFriendRequest extends VerticalLayout {
      */
     public ComponentManageFriendRequest() {
         table = new Table();
-        table.setWidth(375, Unit.PIXELS);
+        table.setSizeFull();
         this.setMargin(true);
         this.addComponent(table);
     }

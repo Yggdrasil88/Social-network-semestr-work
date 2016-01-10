@@ -8,6 +8,7 @@ package cz.zcu.pia.social.network.backend.entities;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Table;
 import javax.persistence.Transient;
 
 /**
@@ -15,6 +16,7 @@ import javax.persistence.Transient;
  * @author Frantisek Kolenak
  */
 @Entity
+@Table(name = "fkolenak_users")
 public class Users extends BaseEntity {
     /**
      * Users name

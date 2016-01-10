@@ -67,4 +67,15 @@ public class Visibility {
         }
         return msgs.getMessage("visibility.following");
     }
+    
+    /**
+     * Gets following value
+     * @return following value
+     */
+    public String getMeValue() {
+        if(msgs == null){
+            return "";
+        }
+        return msgs.getMessage("visibility.me");
+    }
 }

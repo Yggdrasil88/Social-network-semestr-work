@@ -129,7 +129,8 @@ public class ComponentPostAdd extends VerticalLayout {
 
         message.setWidth(100, Unit.PERCENTAGE);
         message.setHeight(100, Unit.PIXELS);
-
+        message.setMaxLength(1000);
+        
         tags = new HorizontalLayout();
         tags.setSpacing(true);
         tags.setSizeUndefined();

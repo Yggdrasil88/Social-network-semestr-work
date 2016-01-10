@@ -130,7 +130,7 @@ public class ComponentFriends extends VerticalLayout {
         manageFriendRequest.setSizeFull();
         subWindow.setModal(true);
         subWindow.center();
-        subWindow.setWidth(400, Unit.PIXELS);
+        subWindow.setWidth(500, Unit.PIXELS);
         subWindow.setHeight(400, Unit.PIXELS);
         subWindow.setResizable(true);
         subWindow.setContent(manageFriendRequest);

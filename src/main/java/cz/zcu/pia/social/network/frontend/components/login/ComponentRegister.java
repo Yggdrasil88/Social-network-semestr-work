@@ -25,6 +25,8 @@ import cz.zcu.pia.social.network.backend.services.services.impl.UsersService;
 import cz.zcu.pia.social.network.frontend.views.ViewLogin;
 import cz.zcu.pia.social.network.helpers.MessagesLoader;
 import java.util.HashMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -212,6 +214,13 @@ public class ComponentRegister extends FormLayout {
         }
         if (usersService.getUserByUsername(bean.getUsername()) != null) {
             Notification.show(msgs.getMessage(ERROR_USERNAME_USED), Notification.Type.ERROR_MESSAGE);
+            return false;
+        }
+        Pattern p = Pattern.compile("[^a-z0-9]", Pattern.CASE_INSENSITIVE);
+        Matcher m = p.matcher(bean.getUsername());
+        boolean b = m.find();
+        if(b){
+            Notification.show(msgs.getMessage("username")+" " + msgs.getMessage("error.special-char")+"\n", msgs.getMessage("error.special-char.correct"), Notification.Type.ERROR_MESSAGE);
             return false;
         }
         return true;

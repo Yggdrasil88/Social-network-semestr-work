@@ -52,4 +52,10 @@ public interface PostInterface {
      * @return posts by username
      */
     public List<Post> getPostsByUsername(String username);
-}
+    /**
+     * Gets posts by user id
+     * @param userId user id
+     * @return  posts by user id
+     */
+    public List<Post> getUserPosts(Long userId);
+    }

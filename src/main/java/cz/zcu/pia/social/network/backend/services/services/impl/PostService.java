@@ -60,4 +60,10 @@ public class PostService extends AbstractService<Post> implements PostInterface 
         return dao.getPostsByUsername(username);
     }
 
+    @Override
+    public List<Post> getUserPosts(Long userId) {
+        return dao.getUserPosts(userId);
+
+    }
+
 }
