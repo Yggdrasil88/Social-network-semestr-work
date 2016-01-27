@@ -8,7 +8,7 @@ package cz.zcu.pia.social.network.backend.services.interfaces;
 import cz.zcu.pia.social.network.backend.entities.Users;
 
 /**
- *
+ * Users interface
  * @author Frantisek Kolenak
  */
 public interface UsersInterface {

@@ -16,10 +16,8 @@ import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 import cz.zcu.pia.social.network.backend.entities.Post;
-import cz.zcu.pia.social.network.backend.entities.PostTags;
 import cz.zcu.pia.social.network.backend.entities.Tag;
 import cz.zcu.pia.social.network.backend.services.services.impl.PostService;
-import cz.zcu.pia.social.network.backend.services.services.impl.PostTagsService;
 import cz.zcu.pia.social.network.backend.services.services.impl.TagService;
 import cz.zcu.pia.social.network.backend.services.services.impl.UsersService;
 import cz.zcu.pia.social.network.frontend.handlers.OnEnterKeyHandler;
@@ -101,11 +99,7 @@ public class ComponentPostAdd extends VerticalLayout {
      */
     @Autowired
     protected PostService postService;
-    /**
-     * Post Tags Service
-     */
-    @Autowired
-    private PostTagsService postTagsService;
+
     /**
      * Tag Service
      */
@@ -217,16 +211,15 @@ public class ComponentPostAdd extends VerticalLayout {
         } else {
             post = new Post(securityHelper.getLogedInUser(), message.getValue(), Visibility.FRIENDS);
         }
-        
+        // Save posts tags
+        if (tags != null && !createdTags.isEmpty()) {
+            post.setTags(tags);
+        }
         //Save post
         postService.persist(post);
         securityHelper.getLogedInUser().setTotalPosts(securityHelper.getLogedInUser().getTotalPosts() + 1);
         usersService.update(securityHelper.getLogedInUser());
-        // Save posts tags
-        if (tags != null && !createdTags.isEmpty()) {
-            PostTags postTags = new PostTags(tags, post);
-            postTagsService.persist(postTags);
-        }
+        
         Notification.show(msgs.getMessage("post.posted"), Notification.Type.HUMANIZED_MESSAGE);
         parentReference.reload();
         subWindow.close();

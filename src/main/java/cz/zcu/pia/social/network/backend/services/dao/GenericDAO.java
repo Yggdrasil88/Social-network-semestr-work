@@ -20,6 +20,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.google.common.base.Preconditions;
+import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.GenericTypeResolver;
@@ -31,6 +32,7 @@ import org.springframework.core.GenericTypeResolver;
  *
  * @param <T>
  */
+@Transactional
 public abstract class GenericDAO<T extends Serializable> implements
     GenericDAOInterface<T> {
 

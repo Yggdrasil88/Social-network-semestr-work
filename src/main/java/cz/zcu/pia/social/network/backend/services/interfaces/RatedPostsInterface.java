@@ -10,7 +10,7 @@ import cz.zcu.pia.social.network.backend.entities.RatedPosts;
 import cz.zcu.pia.social.network.backend.entities.Users;
 
 /**
- *
+ * Rated posts interface
  * @author Frantisek Kolenak
  */
 public interface RatedPostsInterface {

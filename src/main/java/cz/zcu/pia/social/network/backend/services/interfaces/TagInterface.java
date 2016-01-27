@@ -9,7 +9,7 @@ import cz.zcu.pia.social.network.backend.entities.Tag;
 import java.util.List;
 
 /**
- *
+ * Tag interface
  * @author Frantisek Kolenak
  */
 public interface TagInterface {
@@ -18,7 +18,7 @@ public interface TagInterface {
      * Save tags in list
      *
      * @param tagList tag list
-     * @return result (<=0 is bad)
+     * @return result (less or equal 0 is bad)
      */
     public int saveTags(List<Tag> tagList);
 

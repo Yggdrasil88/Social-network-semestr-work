@@ -6,9 +6,11 @@
 package cz.zcu.pia.social.network.backend.services.interfaces;
 
 import cz.zcu.pia.social.network.backend.entities.Post;
+import cz.zcu.pia.social.network.backend.entities.Tag;
 import java.util.List;
 
 /**
+ * Post interface
  *
  * @author Frantisek Kolenak
  */
@@ -52,10 +54,29 @@ public interface PostInterface {
      * @return posts by username
      */
     public List<Post> getPostsByUsername(String username);
+
     /**
      * Gets posts by user id
+     *
      * @param userId user id
-     * @return  posts by user id
+     * @return posts by user id
      */
     public List<Post> getUserPosts(Long userId);
-    }
+
+    /**
+     * Gets posts tags
+     *
+     * @param postId post id
+     * @return posts tags
+     */
+    public List<Tag> getPostTags(long postId);
+
+    /**
+     * Gets posts by tag
+     *
+     * @param tagName
+     * @return
+     */
+    public List<Post> getPostsByTag(String tagName);
+
+}

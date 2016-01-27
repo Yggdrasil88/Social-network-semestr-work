@@ -7,11 +7,15 @@ package cz.zcu.pia.social.network.backend.entities;
 
 import cz.zcu.pia.social.network.helpers.Visibility;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -20,13 +24,15 @@ import org.hibernate.annotations.CascadeType;
 
 /**
  * Entity for post
+ *
  * @author Frantisek Kolenak
  */
 @Entity
 @Table(name = "fkolenak_post")
 public class Post extends BaseEntity {
+
     /**
-     * User that posted 
+     * User that posted
      */
     private Users user;
     /**
@@ -53,35 +59,58 @@ public class Post extends BaseEntity {
      * Number of comments
      */
     private int numberOfComments = 0;
+    /**
+     * Posts tags
+     */
+    private List<Tag> tags;
 
-    
     /**
      * Constructor
      */
-    public Post(){}
+    public Post() {
+    }
     /**
      * Constructor
-     * @param user User that posted 
+     *
+     * @param user User that posted
+     * @param message Post message
+     * @param visibility Post visibility
+     * @param tags Post tags
+     */
+    public Post(Users user, String message, int visibility, List<Tag> tags) {
+        this.user = user;
+        this.message = message;
+        this.visibility = visibility;
+        this.tags = tags;
+    }
+    /**
+     * Constructor
+     *
+     * @param user User that posted
      * @param message Post message
      * @param visibility Post visibility
      */
-    public Post(Users user, String message, int visibility){
+    public Post(Users user, String message, int visibility) {
         this.user = user;
         this.message = message;
         this.visibility = visibility;
     }
+
     /**
      * Constructor with default visibility
-     * @param user User that posted 
+     *
+     * @param user User that posted
      * @param message Post message
      */
-    public Post(Users user, String message){
+    public Post(Users user, String message) {
         this.user = user;
         this.message = message;
     }
+
     /**
-     * Gest User that posted 
-     * @return  User that posted 
+     * Gest User that posted
+     *
+     * @return User that posted
      */
     @ManyToOne
     @Cascade({CascadeType.SAVE_UPDATE})
@@ -89,15 +118,19 @@ public class Post extends BaseEntity {
     public Users getUser() {
         return user;
     }
+
     /**
-     * Sets User that posted 
-     * @param user User that posted 
+     * Sets User that posted
+     *
+     * @param user User that posted
      */
     public void setUser(Users user) {
         this.user = user;
     }
+
     /**
      * Gets date sent
+     *
      * @return date sent
      */
     @Column(name = "dateSent", nullable = false)
@@ -105,84 +138,106 @@ public class Post extends BaseEntity {
     public Date getDateSent() {
         return dateSent;
     }
+
     /**
      * Sets date sent
-     * @param dateSent date sent 
+     *
+     * @param dateSent date sent
      */
     public void setDateSent(Date dateSent) {
         this.dateSent = dateSent;
     }
+
     /**
      * Gets message
+     *
      * @return post message
      */
     @Column(name = "message", nullable = false, length = 1000)
     public String getMessage() {
         return message;
     }
+
     /**
      * Sets message
-     * @param message message 
+     *
+     * @param message message
      */
     public void setMessage(String message) {
         this.message = message;
     }
+
     /**
      * Gets like count
+     *
      * @return like count
      */
     @Column(name = "like_count", nullable = false)
     public int getLikeCount() {
         return likeCount;
     }
+
     /**
      * Sets like count
-     * @param likeCount like countt 
+     *
+     * @param likeCount like countt
      */
     public void setLikeCount(int likeCount) {
         this.likeCount = likeCount;
     }
+
     /**
      * Gets hate count
-     * @return hate count 
+     *
+     * @return hate count
      */
     @Column(name = "hate_count", nullable = false)
     public int getHateCount() {
         return hateCount;
     }
+
     /**
      * Sets hate count
-     * @param hateCount hate count 
+     *
+     * @param hateCount hate count
      */
     public void setHateCount(int hateCount) {
         this.hateCount = hateCount;
     }
+
     /**
      * Gets visibility
+     *
      * @return visibility
      */
     @Column(name = "visibility", nullable = false)
     public int getVisibility() {
         return visibility;
     }
+
     /**
      * Gets number of comments
-     * @return   number of comments
+     *
+     * @return number of comments
      */
     @Column(nullable = false)
     public int getNumberOfComments() {
         return numberOfComments;
     }
+
     /**
      * Sets number of comments
-     * @param numberOfComments   number of comments
+     *
+     * @param numberOfComments number of comments
      */
     public void setNumberOfComments(int numberOfComments) {
         this.numberOfComments = numberOfComments;
     }
+
     /**
      * Sets visibility
-     * @param visibility  visibility
+     *
+     * @param visibility visibility
      */
     public void setVisibility(int visibility) {
         if (visibility == Visibility.FRIENDS || visibility == Visibility.PUBLIC) {
@@ -191,8 +246,28 @@ public class Post extends BaseEntity {
             this.visibility = Visibility.PUBLIC;
         }
     }
-    
-    
+
+    /**
+     * Gets post tags
+     *
+     * @return post tags
+     */
+    @ManyToMany(fetch = FetchType.LAZY)
+    @OrderBy("name ASC")
+    @Column(unique = false)
+    public List<Tag> getTags() {
+        return tags;
+    }
+
+    /**
+     * Sets post tags
+     *
+     * @param tags post tags
+     */
+    public void setTags(List<Tag> tags) {
+        this.tags = tags;
+    }
+
     @Override
     public int hashCode() {
         int hash = 3;

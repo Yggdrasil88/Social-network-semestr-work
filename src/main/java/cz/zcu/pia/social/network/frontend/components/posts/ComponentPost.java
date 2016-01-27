@@ -20,7 +20,6 @@ import cz.zcu.pia.social.network.backend.entities.RatedPosts;
 import cz.zcu.pia.social.network.backend.entities.Tag;
 import cz.zcu.pia.social.network.backend.entities.Users;
 import cz.zcu.pia.social.network.backend.services.services.impl.PostService;
-import cz.zcu.pia.social.network.backend.services.services.impl.PostTagsService;
 import cz.zcu.pia.social.network.backend.services.services.impl.RatedPostsService;
 import cz.zcu.pia.social.network.frontend.components.profile.profile.ComponentProfilePost;
 import cz.zcu.pia.social.network.helpers.MessagesLoader;
@@ -69,11 +68,6 @@ public class ComponentPost extends VerticalLayout {
      */
     @Autowired
     protected SecurityHelper securityHelper;
-    /**
-     * Post Tags Service
-     */
-    @Autowired
-    private PostTagsService postTagsService;
     /**
      * Application Context
      */
@@ -383,7 +377,7 @@ public class ComponentPost extends VerticalLayout {
                 tagsWrapper.setMargin(true);
                 tagsWrapper.setSizeUndefined();
 
-                for (Tag t : postTagsService.getPostTags(postId)) {
+                for (Tag t : postService.getPostTags(postId)) {
                     CustomLayout tag = new CustomLayout("tag");
                     Button tagLabel = new Button(t.getTagName());
                     tag.addComponent(tagLabel, "button");

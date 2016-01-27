@@ -6,6 +6,7 @@
 package cz.zcu.pia.social.network.backend.services.services.impl;
 
 import cz.zcu.pia.social.network.backend.entities.Post;
+import cz.zcu.pia.social.network.backend.entities.Tag;
 import cz.zcu.pia.social.network.backend.services.dao.GenericDAOInterface;
 import cz.zcu.pia.social.network.backend.services.dao.impl.PostDAO;
 import cz.zcu.pia.social.network.backend.services.interfaces.PostInterface;
@@ -15,7 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
- *
+ * Post Service
  * @author Frantisek Kolenak
  */
 @Service
@@ -66,4 +67,13 @@ public class PostService extends AbstractService<Post> implements PostInterface 
 
     }
 
+    @Override
+    public List<Tag> getPostTags(long postId) {
+        return dao.getPostTags(postId);
+    }
+
+    @Override
+    public List<Post> getPostsByTag(String tagName) {
+        return dao.getPostsByTag(tagName);
+    }
 }

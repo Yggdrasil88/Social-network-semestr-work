@@ -10,7 +10,7 @@ import cz.zcu.pia.social.network.backend.entities.Users;
 import java.util.List;
 
 /**
- *
+ * Friends Interface
  * @author Frantisek Kolenak
  */
 public interface FriendsInterface {

@@ -228,6 +228,7 @@ public class ComponentProfile extends VerticalLayout {
      */
     public void reloadImage() {
         image.setVisible(true);
+        
         image.setSource(new FileResource(new File(Constants.BASE_PATH_RESIZED + securityHelper.getLogedInUser().getUserImageName())));
         layout.addComponent(image, "picture");
     }

@@ -9,6 +9,7 @@ import com.google.common.base.Preconditions;
 import cz.zcu.pia.social.network.backend.services.dao.GenericDAOInterface;
 import java.io.Serializable;
 import java.util.List;
+import javax.transaction.Transactional;
 
 /**
  * 
@@ -16,6 +17,7 @@ import java.util.List;
  * @author Frantisek Kolenak
  * @param <T> represents entity
  */
+@Transactional
 public abstract class AbstractService<T extends Serializable> implements GenericDAOInterface<T> {
 
     /**

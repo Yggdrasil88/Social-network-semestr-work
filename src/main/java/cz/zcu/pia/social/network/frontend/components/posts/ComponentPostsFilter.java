@@ -6,6 +6,7 @@
 package cz.zcu.pia.social.network.frontend.components.posts;
 
 import com.vaadin.data.Property;
+import com.vaadin.shared.ui.combobox.FilteringMode;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.VerticalLayout;
@@ -13,7 +14,6 @@ import cz.zcu.pia.social.network.backend.entities.Post;
 import cz.zcu.pia.social.network.backend.entities.Tag;
 import cz.zcu.pia.social.network.backend.entities.Users;
 import cz.zcu.pia.social.network.backend.services.services.impl.PostService;
-import cz.zcu.pia.social.network.backend.services.services.impl.PostTagsService;
 import cz.zcu.pia.social.network.backend.services.services.impl.TagService;
 import cz.zcu.pia.social.network.backend.services.services.impl.UsersService;
 import cz.zcu.pia.social.network.helpers.Constants;
@@ -60,11 +60,6 @@ public class ComponentPostsFilter extends HorizontalLayout {
      */
     @Autowired
     private PostService postService;
-    /**
-     * Post Tags Service
-     */
-    @Autowired
-    private PostTagsService postTagsService;
     /**
      * Application Context
      */
@@ -114,6 +109,8 @@ public class ComponentPostsFilter extends HorizontalLayout {
         filterBy.setNullSelectionAllowed(false);
 
         filter = new ComboBox();
+        filter.setFilteringMode(FilteringMode.CONTAINS);
+
         filter.setNullSelectionAllowed(false);
         this.addComponent(filterBy);
         this.addComponent(filter);
@@ -307,7 +304,7 @@ public class ComponentPostsFilter extends HorizontalLayout {
     private void addPostsByTag(String tagName) {
 
         postsWrapper.removeAllComponents();
-        List<Post> posts = postTagsService.getPostsByTag(tagName);
+        List<Post> posts = postService.getPostsByTag(tagName);
         postPaginatorAddButtons((posts.size() - 1) / Constants.PAGE_LENGTH);
 
         int i = 0;

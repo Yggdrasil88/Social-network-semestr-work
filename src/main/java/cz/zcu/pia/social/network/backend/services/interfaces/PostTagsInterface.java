@@ -10,25 +10,10 @@ import cz.zcu.pia.social.network.backend.entities.Tag;
 import java.util.List;
 
 /**
- *
+ * Post tags interface
  * @author Frantisek Kolenak
  */
 public interface PostTagsInterface {
 
-    /**
-     * Gets posts tags
-     *
-     * @param postId post id
-     * @return posts tags
-     */
-    public List<Tag> getPostTags(long postId);
-
-    /**
-     * Gets posts by tag
-     *
-     * @param tagName
-     * @return
-     */
-    public List<Post> getPostsByTag(String tagName);
 
 }

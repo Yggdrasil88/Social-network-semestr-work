@@ -6,6 +6,7 @@
 package cz.zcu.pia.social.network.backend.services.dao.impl;
 
 import cz.zcu.pia.social.network.backend.entities.Post;
+import cz.zcu.pia.social.network.backend.entities.Tag;
 import cz.zcu.pia.social.network.backend.services.dao.GenericDAO;
 import cz.zcu.pia.social.network.backend.services.interfaces.PostInterface;
 import cz.zcu.pia.social.network.helpers.Constants;
@@ -17,6 +18,7 @@ import org.hibernate.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
+
 /**
  * Post DAO
  *
@@ -125,6 +127,7 @@ public class PostDAO extends GenericDAO<Post> implements PostInterface {
             session.close();
         }
     }
+
     @Override
     public List<Post> getUserPosts(Long userId) {
         Session session = this.getCurrentSession();
@@ -146,4 +149,38 @@ public class PostDAO extends GenericDAO<Post> implements PostInterface {
         }
     }
 
+    @Override
+    public List<Tag> getPostTags(long postId) {
+        Session session = getCurrentSession();
+        try {
+            Query query = session.createQuery("select tags from " + this.genericType.getName() + " post INNER JOIN post.tags tags where post.id = :postId");
+            query.setLong("postId", postId);
+            return query.list();
+
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+            return new ArrayList();
+        }
+    }
+
+    @Override
+    public List<Post> getPostsByTag(String tagName) {
+        Session session = this.getCurrentSession();
+        try {
+            String qery = "select post from " + this.genericType.getName() + " post INNER JOIN post.tags as tags WHERE tags.tagName= :tagName AND post.visibility=:visibility ORDER BY post.dateSent DESC";
+            Query selectQuery = session.createQuery(qery);
+            selectQuery.setString("tagName", tagName).setInteger("visibility", Visibility.PUBLIC);
+
+            selectQuery.setMaxResults(Constants.MAX_RESULTS);
+            List<Post> results = selectQuery.list();
+
+            return results;
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+            return new ArrayList();
+
+        } finally {
+            session.close();
+        }
+    }
 }

@@ -1,0 +1,15 @@
+cz.zcu.pia.social.network
+cz.zcu.pia.social.network.backend.entities
+cz.zcu.pia.social.network.backend.services.dao
+cz.zcu.pia.social.network.backend.services.dao.impl
+cz.zcu.pia.social.network.backend.services.interfaces
+cz.zcu.pia.social.network.backend.services.services
+cz.zcu.pia.social.network.backend.services.services.impl
+cz.zcu.pia.social.network.frontend.components.header
+cz.zcu.pia.social.network.frontend.components.login
+cz.zcu.pia.social.network.frontend.components.posts
+cz.zcu.pia.social.network.frontend.components.profile.friends
+cz.zcu.pia.social.network.frontend.components.profile.profile
+cz.zcu.pia.social.network.frontend.handlers
+cz.zcu.pia.social.network.frontend.views
+cz.zcu.pia.social.network.helpers
