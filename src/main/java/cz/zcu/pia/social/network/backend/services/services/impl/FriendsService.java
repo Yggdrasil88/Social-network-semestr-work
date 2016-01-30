@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 /**
  * Friends Service
+ *
  * @author Frantisek Kolenak
  */
 @Service
@@ -44,6 +45,6 @@ public class FriendsService extends AbstractService<Friends> implements FriendsI
     @Override
     public List<Friends> getFriend(Users logedInUser) {
         return dao.getFriend(logedInUser);
-
+    
     }
 }

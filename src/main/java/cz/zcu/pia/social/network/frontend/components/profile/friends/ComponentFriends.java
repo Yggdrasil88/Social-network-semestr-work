@@ -15,10 +15,8 @@ import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 import cz.zcu.pia.social.network.backend.entities.Following;
 import cz.zcu.pia.social.network.backend.entities.Friends;
-import cz.zcu.pia.social.network.backend.entities.Users;
 import cz.zcu.pia.social.network.backend.services.services.impl.FollowingService;
 import cz.zcu.pia.social.network.backend.services.services.impl.FriendsService;
-import cz.zcu.pia.social.network.backend.services.services.impl.UsersService;
 import cz.zcu.pia.social.network.helpers.MessagesLoader;
 import cz.zcu.pia.social.network.helpers.SecurityHelper;
 import java.text.SimpleDateFormat;
@@ -82,11 +80,7 @@ public class ComponentFriends extends VerticalLayout {
      */
     @Autowired
     private FollowingService followingService;
-    /**
-     * Users Service
-     */
-    @Autowired
-    private UsersService usersService;
+
     /**
      * Constructor
      */
@@ -214,10 +208,7 @@ public class ComponentFriends extends VerticalLayout {
                 public void buttonClick(Button.ClickEvent event) {
                     Following f = (Following) event.getButton().getData();
                     table.removeItem(f.getId());
-                    Users u = f.getFeeder();
-                    u.setTotalFollowers(u.getTotalFollowers()-1);
-                    usersService.update(u);
-                    followingService.delete(f);
+                    followingService.removeFollow(f);
                 }
             });
             table.addItem(new Object[]{f.getFeeder().getName(), f.getFeeder().getSurname(), getTimeStamp(f.getFollowingSince()), removeFollow}, f.getId());

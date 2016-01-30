@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 /**
  * Following Service
+ *
  * @author Frantisek Kolenak
  */
 @Service
@@ -27,7 +28,8 @@ public class FollowingService extends AbstractService<Following> implements Foll
      */
     @Autowired
     private FollowingDAO dao;
-
+    @Autowired
+    private UsersService usersService;
     /**
      * Gets dao
      */
@@ -52,4 +54,12 @@ public class FollowingService extends AbstractService<Following> implements Foll
         return dao.getUserFeeders(logedInUser);
 
     }
+
+    public void removeFollow(Following f) {
+        Users u = f.getFeeder();
+        u.setTotalFollowers(u.getTotalFollowers() - 1);
+        usersService.update(u);
+        dao.delete(f);
+    }
+
 }

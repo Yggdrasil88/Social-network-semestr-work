@@ -5,7 +5,6 @@
  */
 package cz.zcu.pia.social.network.frontend.components.profile.profile;
 
-import com.vaadin.server.FileResource;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.Upload;
 import cz.zcu.pia.social.network.backend.services.services.impl.UsersService;

@@ -5,12 +5,14 @@
  */
 package cz.zcu.pia.social.network.backend.services.interfaces;
 
+import cz.zcu.pia.social.network.backend.entities.FriendRequest;
 import cz.zcu.pia.social.network.backend.entities.Friends;
 import cz.zcu.pia.social.network.backend.entities.Users;
 import java.util.List;
 
 /**
  * Friends Interface
+ *
  * @author Frantisek Kolenak
  */
 public interface FriendsInterface {
@@ -31,4 +33,5 @@ public interface FriendsInterface {
      * @return friends of user
      */
     public List<Friends> getFriend(Users logedInUser);
+
 }

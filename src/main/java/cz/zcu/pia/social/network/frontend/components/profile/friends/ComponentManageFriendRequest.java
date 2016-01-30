@@ -45,11 +45,6 @@ public class ComponentManageFriendRequest extends VerticalLayout {
     @Autowired
     private SecurityHelper securityHelper;
     /**
-     * Friends Service
-     */
-    @Autowired
-    private FriendsService friendsService;
-    /**
      * Friend Request Service
      */
     @Autowired
@@ -104,9 +99,7 @@ public class ComponentManageFriendRequest extends VerticalLayout {
                 @Override
                 public void buttonClick(Button.ClickEvent event) {
                     FriendRequest fr = (FriendRequest) event.getButton().getData();
-                    Friends friends = new Friends(fr.getUserSender(),fr.getUserReciever());
-                    friendsService.persist(friends);
-                    friendRequestService.delete(fr);
+                    friendRequestService.confirmFriendRequest(fr);
                     table.removeItem(fr.getId());
                     parentReference.reload();
                 }
@@ -125,8 +118,7 @@ public class ComponentManageFriendRequest extends VerticalLayout {
                     @Override
                     public void buttonClick(Button.ClickEvent event) {
                         FriendRequest fr = (FriendRequest) event.getButton().getData();
-                        fr.setDenyed(true);
-                        friendRequestService.update(fr);
+                        friendRequestService.denyFriendRequest(fr);
                         event.getButton().setEnabled(false);
                     }
                 });

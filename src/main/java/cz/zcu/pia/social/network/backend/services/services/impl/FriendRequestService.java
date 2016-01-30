@@ -6,6 +6,7 @@
 package cz.zcu.pia.social.network.backend.services.services.impl;
 
 import cz.zcu.pia.social.network.backend.entities.FriendRequest;
+import cz.zcu.pia.social.network.backend.entities.Friends;
 import cz.zcu.pia.social.network.backend.entities.Users;
 import cz.zcu.pia.social.network.backend.services.dao.GenericDAOInterface;
 import cz.zcu.pia.social.network.backend.services.dao.impl.FriendRequestDAO;
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Service;
 
 /**
  * Friend Request Service
+ *
  * @author Frantisek Kolenak
  */
 @Service
@@ -27,6 +29,8 @@ public class FriendRequestService extends AbstractService<FriendRequest> impleme
      */
     @Autowired
     private FriendRequestDAO dao;
+    @Autowired
+    private FriendsService friendsService;
 
     /**
      * Gets dao
@@ -45,5 +49,17 @@ public class FriendRequestService extends AbstractService<FriendRequest> impleme
     public List<FriendRequest> getFriendRequests(Long userId) {
         return dao.getFriendRequests(userId);
 
+    }
+
+    public void denyFriendRequest(FriendRequest fr) {
+        fr.setDenyed(true);
+        dao.update(fr);
+    }
+
+    public Friends confirmFriendRequest(FriendRequest fr) {
+        Friends friends = new Friends(fr.getUserSender(), fr.getUserReciever());
+        friendsService.persist(friends);
+        dao.delete(fr);
+        return friends;
     }
 }

@@ -32,7 +32,6 @@ import org.springframework.core.GenericTypeResolver;
  *
  * @param <T>
  */
-@Transactional
 public abstract class GenericDAO<T extends Serializable> implements
     GenericDAOInterface<T> {
 

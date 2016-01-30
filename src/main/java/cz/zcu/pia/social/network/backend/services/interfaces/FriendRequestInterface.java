@@ -6,6 +6,7 @@
 package cz.zcu.pia.social.network.backend.services.interfaces;
 
 import cz.zcu.pia.social.network.backend.entities.FriendRequest;
+import cz.zcu.pia.social.network.backend.entities.Friends;
 import cz.zcu.pia.social.network.backend.entities.Users;
 import java.util.List;
 
@@ -32,5 +33,6 @@ public interface FriendRequestInterface {
      * @return all friend requests of user
      */
     public List<FriendRequest> getFriendRequests(Long userId);
+
 
 }
