@@ -30,6 +30,7 @@ public class FollowingService extends AbstractService<Following> implements Foll
     private FollowingDAO dao;
     @Autowired
     private UsersService usersService;
+
     /**
      * Gets dao
      */
@@ -41,6 +42,8 @@ public class FollowingService extends AbstractService<Following> implements Foll
     @Override
     public void removeFollow(Users logedInUser, Users user) {
         dao.removeFollow(logedInUser, user);
+        user.setTotalFollowers(user.getTotalFollowers() - 1);
+        usersService.update(user);
     }
 
     @Override
@@ -60,6 +63,14 @@ public class FollowingService extends AbstractService<Following> implements Foll
         u.setTotalFollowers(u.getTotalFollowers() - 1);
         usersService.update(u);
         dao.delete(f);
+    }
+
+    public void addFollow(Users logedInUser, Users user) {
+        Following f = new Following(logedInUser,user);
+        dao.persist(f);
+
+        user.setTotalFollowers(user.getTotalFollowers() + 1);
+        usersService.update(user);
     }
 
 }

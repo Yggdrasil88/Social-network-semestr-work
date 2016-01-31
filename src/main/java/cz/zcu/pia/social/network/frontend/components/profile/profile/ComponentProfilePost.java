@@ -14,14 +14,12 @@ import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.VerticalLayout;
-import cz.zcu.pia.social.network.backend.entities.Following;
 import cz.zcu.pia.social.network.backend.entities.FriendRequest;
 import cz.zcu.pia.social.network.backend.entities.Friends;
 import cz.zcu.pia.social.network.backend.entities.Users;
 import cz.zcu.pia.social.network.backend.services.services.impl.FollowingService;
 import cz.zcu.pia.social.network.backend.services.services.impl.FriendRequestService;
 import cz.zcu.pia.social.network.backend.services.services.impl.FriendsService;
-import cz.zcu.pia.social.network.backend.services.services.impl.UsersService;
 import cz.zcu.pia.social.network.helpers.Constants;
 import cz.zcu.pia.social.network.helpers.MessagesLoader;
 import cz.zcu.pia.social.network.helpers.SecurityHelper;
@@ -74,11 +72,6 @@ public class ComponentProfilePost extends VerticalLayout {
      */
     private Label numberOfFollowers;
 
-    /**
-     * Users Service
-     */
-    @Autowired
-    private UsersService usersService;
     /**
      * Security Helper
      */
@@ -243,17 +236,10 @@ public class ComponentProfilePost extends VerticalLayout {
             @Override
             public void buttonClick(Button.ClickEvent event) {
                 if (event.getButton().getCaption().equals(msgs.getMessage("profile.add.follower"))) {
-                    Following f = new Following(securityHelper.getLogedInUser(), user);
-                    followingService.persist(f);
-
-                    user.setTotalFollowers(user.getTotalFollowers() + 1);
-                    usersService.update(user);
+                    followingService.addFollow(securityHelper.getLogedInUser(), user);
                     event.getButton().setCaption(msgs.getMessage("unfollow"));
                 } else {
                     followingService.removeFollow(securityHelper.getLogedInUser(), user);
-
-                    user.setTotalFollowers(user.getTotalFollowers() - 1);
-                    usersService.update(user);
                     event.getButton().setCaption(msgs.getMessage("profile.add.follower"));
                 }
             }

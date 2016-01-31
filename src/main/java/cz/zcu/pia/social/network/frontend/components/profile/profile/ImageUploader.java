@@ -7,18 +7,15 @@ package cz.zcu.pia.social.network.frontend.components.profile.profile;
 
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.Upload;
-import cz.zcu.pia.social.network.backend.services.services.impl.UsersService;
+import cz.zcu.pia.social.network.backend.services.FileService;
 import cz.zcu.pia.social.network.helpers.Constants;
 import cz.zcu.pia.social.network.helpers.MessagesLoader;
 import cz.zcu.pia.social.network.helpers.SecurityHelper;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import javax.imageio.ImageIO;
 import org.apache.commons.io.FilenameUtils;
-import org.imgscalr.Scalr;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,15 +39,14 @@ public class ImageUploader implements Upload.Receiver, Upload.SucceededListener 
      */
     @Autowired
     private MessagesLoader msgs;
-    /**
-     * Users Service
-     */
-    @Autowired
-    private UsersService usersService;
+
     /**
      * file that is saved
      */
     public File file;
+    
+    @Autowired
+    private FileService fileService;
 
     /**
      * ComponentProfile parent
@@ -67,25 +63,9 @@ public class ImageUploader implements Upload.Receiver, Upload.SucceededListener 
         FileOutputStream fos; // Stream to write to
         try {
 
-            // Open the file for writing.
-            File theDir = new File(Constants.BASE_PATH);
-
-            // if the directory does not exist, create it
-            if (!theDir.exists()) {
-                logger.debug("creating directory: {}", Constants.BASE_PATH);
-                theDir.mkdir();
-            }
-            theDir = new File(Constants.BASE_PATH_RESIZED);
-
-            // if the directory does not exist, create it
-            if (!theDir.exists()) {
-                logger.debug("creating directory: {}", Constants.BASE_PATH);
-                theDir.mkdir();
-            }
-
-            file = new File(Constants.BASE_PATH + securityHelper.getLogedInUser().getId() + "-" + Math.abs((int) (Math.random() * 10000000)) + "." + FilenameUtils.getExtension(filename));
-            logger.debug("FileName {}", file.getName());
-            if (file.exists() && !file.isDirectory()) {
+            fileService.createBasicFolders();
+            file = fileService.createFile(Constants.BASE_PATH + securityHelper.getLogedInUser().getId() + "-" + Math.abs((int) (Math.random() * 10000000)) + "." + FilenameUtils.getExtension(filename));
+            if (file == null) {
                 Notification.show(msgs.getMessage("error.file.exists"), Notification.Type.ERROR_MESSAGE);
                 return null;
             }
@@ -106,21 +86,11 @@ public class ImageUploader implements Upload.Receiver, Upload.SucceededListener 
     public void uploadSucceeded(Upload.SucceededEvent event) {
         try {
 
-            //Scale the image
-            String ext = FilenameUtils.getExtension(file.getName());
-
-            BufferedImage resizedImage = Scalr.resize(ImageIO.read(file), 150);
-            //FileUtils.deleteQuietly(file);
-            ImageIO.write(resizedImage, ext, new File(Constants.BASE_PATH_RESIZED + file.getName()));
-            File resizedFile = new File(Constants.BASE_PATH_RESIZED + file.getName());
-            if (securityHelper.getLogedInUser().getUserImageName() != null) {
-                new File(Constants.BASE_PATH_RESIZED + securityHelper.getLogedInUser().getUserImageName()).delete();
-            }
-            securityHelper.getLogedInUser().setUserImageName(resizedFile.getName());
-            usersService.update(securityHelper.getLogedInUser());
-            file.delete();
+            fileService.resizeImage(file);
             // Show the uploaded file in the image viewer
-            parent.reloadImage();
+            if(parent != null){
+                parent.reloadImage();
+            }
             Notification.show(msgs.getMessage("upload.succes"));
         } catch (IOException | IllegalArgumentException e) {
             Notification.show(msgs.getMessage("error.upload.ioexception"), Notification.Type.ERROR_MESSAGE);

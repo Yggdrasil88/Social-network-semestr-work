@@ -21,6 +21,7 @@ import org.springframework.stereotype.Component;
 
 /**
  * Component for editing profile
+ *
  * @author Frantisek Kolenak
  */
 @Component
@@ -44,15 +45,17 @@ public class ComponentEditProfile extends ComponentRegister {
      * Image uploader
      */
     private ImageUploader receiver;
+
     /**
      * Sets user
+     *
      * @param user user
      */
     public void setUser(Users user) {
         this.user = user;
         this.setValues();
     }
-    
+
     @Override
     @PostConstruct
     public void postConstruct() {
@@ -68,14 +71,14 @@ public class ComponentEditProfile extends ComponentRegister {
                 Notification.show(msgs.getMessage("upload.not.ok"));
             }
         });
-        this.layout.addComponent(upload,"upload");
+        this.layout.addComponent(upload, "upload");
         super.postConstruct();
 
         this.password.setVisible(false);
         this.passwordRepeat.setVisible(false);
         this.validation.setVisible(false);
 
-    }   
+    }
 
     @Override
     protected HorizontalLayout getRegisterButton() {
@@ -107,6 +110,7 @@ public class ComponentEditProfile extends ComponentRegister {
         wrapper.setSpacing(true);
         return wrapper;
     }
+
     /**
      * Sets values to the fields
      */
@@ -124,18 +128,20 @@ public class ComponentEditProfile extends ComponentRegister {
         user.setName(bean.getName());
         user.setSurname(bean.getSurname());
         user.setUsername(bean.getUsername());
+        usersService.update(user);
 
         ((MyUI) UI.getCurrent()).getHeader().setUsersFullName(user);
 
-        usersService.update(user);
         Notification.show(msgs.getMessage(INFO_UPDATED), Notification.Type.ERROR_MESSAGE);
         resetValues();
         parentReference.swapComponents();
         parentReference.reload(user);
     }
+
     /**
      * Sets parent reference
-     * @param parentReference parent reference 
+     *
+     * @param parentReference parent reference
      */
     public void setParentReference(ComponentProfile parentReference) {
         this.parentReference = parentReference;
